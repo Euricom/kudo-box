@@ -1,0 +1,15 @@
+.mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
+  color: #c2185b;
+}
+
+
+.carousel-container{
+  max-width:99%;
+  max-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-spacer{
+margin-top:10px;
+}
