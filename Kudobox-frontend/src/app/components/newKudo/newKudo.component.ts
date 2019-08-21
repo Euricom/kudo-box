@@ -7,11 +7,11 @@ import { Router } from '@angular/router';
 import {kudoImages} from '../../data/kudoImages.js';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: 'app-new-kudo',
+  templateUrl: './newKudo.component.html',
+  styleUrls: ['./newKudo.component.scss']
 })
-export class ListComponent implements OnInit {
+export class NewKudoComponent implements OnInit {
 
   @ViewChildren(MatCarouselSlideComponent) public carouselSlides: QueryList<MatCarouselSlideComponent>;
   public slidesList = kudoImages;
