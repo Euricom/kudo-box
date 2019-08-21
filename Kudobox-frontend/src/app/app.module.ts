@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
 import { CreateComponent } from './components/create/create.component';
-import { MatToolbarModule, MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatMenuModule } from '@angular/material';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatCarouselModule,
-    MatCardModule
+    MatCardModule,
+    MatMenuModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
