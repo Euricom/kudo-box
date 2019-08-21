@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ListComponent } from './components/list/list.component';
 import { CreateComponent } from './components/create/create.component';
-import { MatToolbarModule,MatCardModule } from '@angular/material';
+import { MatToolbarModule, MatCardModule } from '@angular/material';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 @NgModule({
