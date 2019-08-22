@@ -11,6 +11,9 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { FormsModule } from '@angular/forms';
+import { KonvaModule } from 'ng2-konva';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,9 @@ import { environment } from '../environments/environment';
     MatCarouselModule,
     MatCardModule,
     MatMenuModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    KonvaModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
