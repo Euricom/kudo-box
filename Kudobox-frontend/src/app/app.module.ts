@@ -1,28 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-    MatToolbarModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatSidenavModule,
-} from '@angular/material';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import { ShareButtonsModule } from '@ngx-share/buttons';
 import { FormsModule } from '@angular/forms';
+import {
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatToolbarModule,
+} from '@angular/material';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { ShareButtonsModule } from '@ngx-share/buttons';
 import { KonvaModule } from 'ng2-konva';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NewKudoComponent } from './components/newKudo/newKudo.component';
 import { CreateComponent } from './components/create/create.component';
-import { environment } from '../environments/environment';
 import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
+import { NewKudoComponent } from './components/newKudo/newKudo.component';
 
 @NgModule({
     declarations: [AppComponent, NewKudoComponent, CreateComponent, MyKudoComponent],
@@ -47,5 +46,6 @@ import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
             enabled: environment.production,
         }),
     ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

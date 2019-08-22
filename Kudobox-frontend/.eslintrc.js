@@ -4,14 +4,18 @@ module.exports = {
     "airbnb",
     "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    "plugin:prettier/recommended" // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    "plugin:prettier/recommended", // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
   parserOptions: {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: "module" // Allows for the use of imports
   },
+  plugins: [
+    'import'
+  ],
   settings: {
-    'import/core-modules': ['history'],
     'import/resolver': {
       node: {
         extensions: ['.js', '.ts',],
@@ -41,7 +45,6 @@ module.exports = {
       'no-plusplus': 'off',
       'no-restricted-globals': ['error', 'event', 'fdescribe'],
       'import/prefer-default-export': 'off',
-      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'jsx-a11y/click-events-have-key-events': 'off',
       'jsx-a11y/no-static-element-interactions': 'off',
       'jsx-a11y/anchor-is-valid': 'off',
@@ -58,6 +61,8 @@ module.exports = {
       '@typescript-eslint/explicit-member-accessibility': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
       "no-useless-constructor":'off',
+      "@typescript-eslint/consistent-type-assertions":'off',
+      "class-methods-use-this":'off',
     },
 
 };
