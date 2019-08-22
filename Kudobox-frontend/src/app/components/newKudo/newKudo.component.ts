@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, ViewChildren, QueryList } from '@angular/core';
 import { MatCarouselSlideComponent, Orientation } from '@ngmodule/material-carousel';
 import { ThemePalette } from '@angular/material';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { kudoImages } from '../../data/kudoImages';
     templateUrl: './newKudo.component.html',
     styleUrls: ['./newKudo.component.scss'],
 })
-export class NewKudoComponent implements OnInit {
+export class NewKudoComponent {
     @ViewChildren(MatCarouselSlideComponent) public carouselSlides: QueryList<MatCarouselSlideComponent>;
     public slidesList = kudoImages;
 

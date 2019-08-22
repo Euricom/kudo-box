@@ -15,6 +15,8 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { ShareButtonsModule } from '@ngx-share/buttons';
+import { FormsModule } from '@angular/forms';
+import { KonvaModule } from 'ng2-konva';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewKudoComponent } from './components/newKudo/newKudo.component';
@@ -39,11 +41,11 @@ import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
         ShareButtonsModule,
         HttpClientModule,
         HttpClientJsonpModule,
+        KonvaModule,
+        FormsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
         }),
     ],
-    providers: [],
-    bootstrap: [AppComponent],
 })
 export class AppModule {}

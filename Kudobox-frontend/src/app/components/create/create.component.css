@@ -1,14 +1,89 @@
-.text-block {
+.container {
+  margin: auto;
+  width: fit-content;
+}
+
+.fontList {
+  margin: auto;
+  width: fit-content;
+}
+
+#textAreaForImage {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: black;
-  color: white;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  outline: none;
+  resize: none;
+  color: #c2185b;
+  top: 130px;
+  left: 40px;
+  width: 500px;
+  height: 400px;
+  line-height: 35px;
 }
 
 .create-kudo-container{
-  width:300px;
+  /*width:300px;*/
   position: relative;
+  margin: auto;
+  width: fit-content;
+}
+
+ul {
+  list-style: none;
+}
+li {
+  display: inline-block;
+  margin-right: 15px;
+  height: 50px;
+}
+
+#font1 {
+font-family: 'Comic Sans MS';
+}
+
+#font2 {
+font-family: 'Times New Roman';
+}
+
+#font3 {
+font-family: 'Arial Black';
+}
+
+.fontsBtn {
+  background: none;
+  border: none;
+  color:#c2185b;
+  outline: none;
+  height: 50px;
+  font-size: 20px;
+}
+
+.fontsBtn:hover:not(.active) {
+  background: url('../../../assets/splatter_small_trans.png') no-repeat;
+  color: white;
+}
+
+.active {
+  background: url('../../../assets/splatter_small.png') no-repeat;
+  color: white;
+}
+
+.btnNext {
+  margin-top: 52px;
+  float: right;
+  height: 40px;
+  width: 70px;
+  border: none;
+  background-color: #c2185b;
+  color: white;
+  font-size: 20px;
+  outline: none;
+}
+
+.btnNext:hover {
+  background-color: #a1174d;
 }
