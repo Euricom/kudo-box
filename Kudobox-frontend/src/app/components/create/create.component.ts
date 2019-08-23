@@ -44,9 +44,6 @@ export class CreateComponent implements OnInit {
         fontFamily: this.fontFamily,
         lineHeight: 1.7,
     });
-
-    textarea = <HTMLTextAreaElement>document.getElementById('textAreaForImage');
-
     constructor(private route: ActivatedRoute, private router: Router, private _kudoService: KudoService) {}
 
     ngOnInit() {
