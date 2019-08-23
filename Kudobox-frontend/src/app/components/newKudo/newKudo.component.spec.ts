@@ -1,20 +1,19 @@
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { CreateComponent } from './create.component';
+// import { NewKudoComponent } from './newKudo.component';
 
-// describe('CreateComponent', () => {
-//   let component: CreateComponent;
-//   let fixture: ComponentFixture<CreateComponent>;
+// describe('NewKudoComponent', () => {
+//   let component: NewKudoComponent;
+//   let fixture: ComponentFixture<NewKudoComponent>;
 
 //   beforeEach(async(() => {
 //     TestBed.configureTestingModule({
-//       declarations: [ CreateComponent ]
-//     })
-//     .compileComponents();
+//       declarations: [NewKudoComponent]
+//     }).compileComponents();
 //   }));
 
 //   beforeEach(() => {
-//     fixture = TestBed.createComponent(CreateComponent);
+//     fixture = TestBed.createComponent(NewKudoComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

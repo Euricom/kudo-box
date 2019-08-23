@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter, Input, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Observable, of } from 'rxjs';
 import { KonvaComponent } from 'ng2-konva';
 
@@ -7,14 +8,14 @@ import {kudoImages} from '../../data/kudoImages.js';
 import { KudoService } from '../../shared/kudo.service';
 
 interface Window {
-  Image: any;
+    Image: any;
 }
 declare const window: Window;
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+    selector: 'app-create',
+    templateUrl: './create.component.html',
+    styleUrls: ['./create.component.css'],
 })
 export class CreateComponent implements OnInit {
   @ViewChild('stage', {static: false}) stage: KonvaComponent;
@@ -67,10 +68,28 @@ export class CreateComponent implements OnInit {
       this.configImage.emit({
         image: image,
         width: 600,
-        height: 500
-      })
+        height: 500,
+    });
+    public configImage: EventEmitter<any> = new EventEmitter();
+
+    public configText: Observable<any> = of({
+        text: '',
+        x: 40,
+        y: 130,
+        fontSize: 20,
+        width: 400,
+        height: 300,
+        fill: '#c2185b',
+        fontFamily: this.fontFamily,
+        lineHeight: 1.7,
+    });
+
+    textarea = <HTMLTextAreaElement>document.getElementById('textAreaForImage');
+
+    public handleClick(component) {
+        const textarea = <HTMLTextAreaElement>document.getElementById('textAreaForImage');
+        textarea.focus();
     }
-  }
 
   public handleClick(component) {
     const textarea = <HTMLTextAreaElement>document.getElementById("textAreaForImage");
@@ -86,6 +105,23 @@ export class CreateComponent implements OnInit {
 
     this.router.navigate([`/kudo/send`]);
 
-  }
+    showImage(src: string) {
+        const image = new window.Image();
+        image.src = src;
+        image.onload = () => {
+            this.configImage.emit({
+                image,
+                width: 600,
+                height: 500,
+            });
+        };
+    }
 
+    createCanvas(text) {
+        this.text.getStage().setText(text);
+        this.textLayer.getStage().draw();
+        this.defaultText = '';
+
+        this.image = this.stage.getStage().toDataURL();
+    }
 }
