@@ -16,6 +16,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { KonvaModule } from 'ng2-konva';
+import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
 
 import { SendComponent } from './components/send/send.component';
 
@@ -31,6 +32,14 @@ import { NewKudoComponent } from './components/newKudo/newKudo.component';
 @NgModule({
     declarations: [AppComponent, NewKudoComponent, CreateComponent, MyKudoComponent, SendComponent],
     imports: [
+        MsAdalAngular6Module.forRoot({
+            tenant: '0b53d2c1-bc55-4ab3-a161-927d289257f2',
+            clientId: 'de411acd-f5d7-4040-8da6-3d3adce56901',
+            redirectUri: 'http://localhost:4200/auth',
+            endpoints: {},
+            navigateToLoginRequestUri: false,
+            cacheLocation: 'localStorage',
+        }),
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -51,7 +60,7 @@ import { NewKudoComponent } from './components/newKudo/newKudo.component';
             enabled: environment.production,
         }),
     ],
-    providers: [KudoService],
+    providers: [AuthenticationGuard, KudoService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
