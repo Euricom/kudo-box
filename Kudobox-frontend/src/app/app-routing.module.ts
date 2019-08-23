@@ -8,10 +8,10 @@ import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
 import { SendComponent } from './components/send/send.component';
 
 const routes: Routes = [
-    { path: 'kudo/create/:id', component: CreateComponent },
-    { path: 'kudo/send', component: SendComponent },
-    { path: 'kudo', component: NewKudoComponent /*, canActivate: [AuthenticationGuard] */ },
-    { path: 'myKudo', component: MyKudoComponent },
+    { path: 'kudo/create/:id', component: CreateComponent, canActivate: [AuthenticationGuard] },
+    { path: 'kudo/send', component: SendComponent, canActivate: [AuthenticationGuard] },
+    { path: 'kudo', component: NewKudoComponent, canActivate: [AuthenticationGuard] },
+    { path: 'myKudo', component: MyKudoComponent, canActivate: [AuthenticationGuard] },
     { path: '', redirectTo: 'kudo', pathMatch: 'full', canActivate: [AuthenticationGuard] },
 ];
 
