@@ -6,6 +6,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 const Kudo = require('./models/kudo');
 
+//config
+const config = require('./config/config')
+
 //db
 
 // defining the Express app
@@ -27,17 +30,18 @@ app.use(morgan('combined'));
 
 require('./data/mongo')();
 
-app.listen(3000,function() {
-  console.log(`API Server listening on port ${3000}`);
+app.listen(config.port,function() {
+  console.log(`API Server listening on port ${config.port}`);
   console.log('Open browser at:');
-  console.log('  http://localhost:3000');
+  console.log( `http://localhost:${config.port}`);
 });
 
 // defining an endpoint to return all kudos
 app.get('/kudo', (req, res) => {
+  
   Kudo.find((err, kudo) => {
     if (err){
-        console.log(err);
+      res.sendStatus(400); 
     }
     else{
         res.json(kudo);
