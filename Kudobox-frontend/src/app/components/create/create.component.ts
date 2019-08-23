@@ -1,11 +1,10 @@
 import { Component, OnInit, EventEmitter, Input, ViewChild } from '@angular/core';
-import {kudoImages} from '../../data/kudoImages.js';
-import { ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-
 import { KonvaComponent } from 'ng2-konva';
 
+import {kudoImages} from '../../data/kudoImages.js';
+import { KudoService } from '../../shared/kudo.service';
 
 interface Window {
   Image: any;
@@ -21,8 +20,6 @@ export class CreateComponent implements OnInit {
   @ViewChild('stage', {static: false}) stage: KonvaComponent;
   @ViewChild('textLayer', {static: false}) textLayer: KonvaComponent;
   @ViewChild('text', {static: false}) text: KonvaComponent;
-
-  public image;
 
   public baseImageUrl: string;
   public fontFamily: string = 'Comic Sans MS';
@@ -49,12 +46,7 @@ export class CreateComponent implements OnInit {
 
   textarea = <HTMLTextAreaElement>document.getElementById("textAreaForImage");
 
-  public handleClick(component) {
-    const textarea = <HTMLTextAreaElement>document.getElementById("textAreaForImage");
-    textarea.focus();
-  }
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router, private _kudoService: KudoService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -80,13 +72,19 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  public handleClick(component) {
+    const textarea = <HTMLTextAreaElement>document.getElementById("textAreaForImage");
+    textarea.focus();
+  }
+
   createCanvas(text) {
     this.text.getStage().setText(text);
     this.textLayer.getStage().draw();
     this.defaultText = '';
 
-    this.image = this.stage.getStage().toDataURL();
+    this._kudoService.imageDataURL = this.stage.getStage().toDataURL();
 
+    this.router.navigate([`/kudo/send`]);
 
   }
 

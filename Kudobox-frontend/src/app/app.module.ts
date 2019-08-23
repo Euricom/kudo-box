@@ -13,12 +13,16 @@ import { environment } from '../environments/environment';
 
 import { FormsModule } from '@angular/forms';
 import { KonvaModule } from 'ng2-konva';
+import { SendComponent } from './components/send/send.component';
+
+import { KudoService } from './shared/kudo.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
-    CreateComponent
+    CreateComponent,
+    SendComponent
     ],
   imports: [
     BrowserModule,
@@ -32,7 +36,7 @@ import { KonvaModule } from 'ng2-konva';
     KonvaModule,
     FormsModule
   ],
-  providers: [],
+  providers: [KudoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

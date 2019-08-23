@@ -1,0 +1,7 @@
+<div class="container">
+  <h2>Select Kudo recipient</h2>
+  <select class="custom-select" multiple (change)="onChange($event.target.value)" size="20">
+    <option *ngFor="let user of users" [value]="user">{{user}}</option>
+  </select>
+  <button type="button" class="btnSend" (click)="sendKudo()">Send</button>
+</div>
