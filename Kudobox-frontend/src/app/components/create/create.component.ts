@@ -1,10 +1,11 @@
 import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
-
 import { KonvaComponent } from 'ng2-konva';
+
 import { kudoImages } from '../../data/kudoImages';
+import { KudoService } from '../../shared/kudo.service';
 
 interface Window {
     Image: any;
@@ -20,8 +21,6 @@ export class CreateComponent implements OnInit {
     @ViewChild('stage', { static: false }) stage: KonvaComponent;
     @ViewChild('textLayer', { static: false }) textLayer: KonvaComponent;
     @ViewChild('text', { static: false }) text: KonvaComponent;
-
-    public image;
 
     public baseImageUrl: string;
     public fontFamily = 'Comic Sans MS';
@@ -45,15 +44,7 @@ export class CreateComponent implements OnInit {
         fontFamily: this.fontFamily,
         lineHeight: 1.7,
     });
-
-    textarea = <HTMLTextAreaElement>document.getElementById('textAreaForImage');
-
-    public handleClick(component) {
-        const textarea = <HTMLTextAreaElement>document.getElementById('textAreaForImage');
-        textarea.focus();
-    }
-
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private router: Router, private _kudoService: KudoService) {}
 
     ngOnInit() {
         this.route.params.subscribe(params => {
@@ -67,6 +58,16 @@ export class CreateComponent implements OnInit {
         this.fontFamily = font;
     }
 
+    createCanvas(text) {
+        this.text.getStage().setText(text);
+        this.textLayer.getStage().draw();
+        this.defaultText = '';
+
+        this._kudoService.imageDataURL = this.stage.getStage().toDataURL();
+
+        this.router.navigate([`/kudo/send`]);
+    }
+
     showImage(src: string) {
         const image = new window.Image();
         image.src = src;
@@ -77,13 +78,5 @@ export class CreateComponent implements OnInit {
                 height: 500,
             });
         };
-    }
-
-    createCanvas(text) {
-        this.text.getStage().setText(text);
-        this.textLayer.getStage().draw();
-        this.defaultText = '';
-
-        this.image = this.stage.getStage().toDataURL();
     }
 }
