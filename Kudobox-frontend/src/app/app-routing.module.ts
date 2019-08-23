@@ -10,7 +10,7 @@ import { SendComponent } from './components/send/send.component';
 const routes: Routes = [
     { path: 'kudo/create/:id', component: CreateComponent },
     { path: 'kudo/send', component: SendComponent },
-    { path: 'kudo', component: NewKudoComponent, canActivate: [AuthenticationGuard] },
+    { path: 'kudo', component: NewKudoComponent /*, canActivate: [AuthenticationGuard] */ },
     { path: 'myKudo', component: MyKudoComponent },
     { path: '', redirectTo: 'kudo', pathMatch: 'full', canActivate: [AuthenticationGuard] },
 ];

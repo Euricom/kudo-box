@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { KonvaComponent } from 'ng2-konva';
 
-import { kudoImages } from '../../data/kudoImages.js';
+import { kudoImages } from '../../data/kudoImages';
 import { KudoService } from '../../shared/kudo.service';
 
 interface Window {
@@ -23,8 +23,8 @@ export class CreateComponent implements OnInit {
     @ViewChild('text', { static: false }) text: KonvaComponent;
 
     public baseImageUrl: string;
-    public fontFamily: string = 'Comic Sans MS';
-    defaultText: string = 'Type some text here...';
+    public fontFamily = 'Comic Sans MS';
+    defaultText = 'Type some text here...';
 
     public configStage: Observable<any> = of({
         container: 'container',
@@ -44,9 +44,6 @@ export class CreateComponent implements OnInit {
         fontFamily: this.fontFamily,
         lineHeight: 1.7,
     });
-
-    textarea = <HTMLTextAreaElement>document.getElementById('textAreaForImage');
-
     constructor(private route: ActivatedRoute, private router: Router, private _kudoService: KudoService) {}
 
     ngOnInit() {
