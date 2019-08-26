@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { KonvaComponent } from 'ng2-konva';
 
 import { kudoImages } from '../../data/kudoImages';
@@ -21,6 +21,8 @@ export class CreateComponent implements OnInit {
     @ViewChild('stage', { static: false }) stage: KonvaComponent;
     @ViewChild('textLayer', { static: false }) textLayer: KonvaComponent;
     @ViewChild('text', { static: false }) text: KonvaComponent;
+
+    routeSubscription: Subscription;
 
     public baseImageUrl: string;
     public fontFamily = 'Comic Sans MS';
@@ -47,11 +49,15 @@ export class CreateComponent implements OnInit {
     constructor(private route: ActivatedRoute, private router: Router, private _kudoService: KudoService) {}
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
+        this.routeSubscription = this.route.params.subscribe(params => {
             const image = kudoImages.find(i => i.id === parseInt(params.id, 10));
             this.baseImageUrl = image.url;
         });
         this.showImage(this.baseImageUrl);
+    }
+
+    ngOnDestroy() {
+        this.routeSubscription.unsubscribe();
     }
 
     changeFont(font) {
