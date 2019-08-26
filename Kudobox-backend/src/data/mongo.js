@@ -13,4 +13,8 @@ module.exports = function(){
   db.once('open', function(){
     console.log('connected');
   })
+  if(config.env === 'development'){
+    mongoose.set('debug', true);
+  }
+
 };
