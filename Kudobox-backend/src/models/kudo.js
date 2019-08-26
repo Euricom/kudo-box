@@ -12,7 +12,10 @@ let Kudo = new Schema({
     },    
     createdBy: {
         type: String
-    }    
+    },
+    receiver:{
+        type: String
+    }   
 });
 
 Kudo.pre('save',function(next){

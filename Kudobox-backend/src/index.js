@@ -5,6 +5,10 @@ const cors = require('cors');
 // const helmet = require('helmet');
 const morgan = require('morgan');
 const Kudo = require('./models/kudo');
+const authentication = require('./middleware/authentication');
+
+//config
+const config = require('./config/config')
 
 //db
 
@@ -20,6 +24,8 @@ app.use(bodyParser.json());
 // enabling CORS for all requests
 app.use(cors());
 
+app.use('/',authentication);
+
 // add morgan to log HTTP requests
 app.use(morgan('combined'));
 
@@ -27,17 +33,30 @@ app.use(morgan('combined'));
 
 require('./data/mongo')();
 
-app.listen(3000,function() {
-  console.log(`API Server listening on port ${3000}`);
+function proctectRoute(req,res,next){
+  // if user exists the token was sent with the request
+  if(req.user){
+   //if user exists then go to next middleware
+     next();
+  }
+// token was not sent with request send error to user
+  else{
+     res.status(500).json({error:'login is required'});
+  }
+}
+
+app.listen(config.port,function() {
+  console.log(`API Server listening on port ${config.port}`);
   console.log('Open browser at:');
-  console.log('  http://localhost:3000');
+  console.log( `http://localhost:${config.port}`);
 });
 
 // defining an endpoint to return all kudos
-app.get('/kudo', (req, res) => {
+app.get('/kudo',(req, res,next) => {
+  
   Kudo.find((err, kudo) => {
     if (err){
-        console.log(err);
+      res.status(err);
     }
     else{
         res.json(kudo);
@@ -45,10 +64,10 @@ app.get('/kudo', (req, res) => {
 });
 });
 
-app.get('/kudo/:id', async (req, res) => {  
+app.get('/kudo/:id', async (req, res,next) => {  
   await Kudo.findById(req.params.id,(err,kudo) => {
     if (err){
-      res.sendStatus(404);    }
+      res.status(err); }
     else{
         res.json(kudo);
     }
