@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { KudoService } from '../../shared/kudo.service';
+import { KudoService } from '../../services/kudo.service';
 
 @Component({
     selector: 'app-send',
@@ -12,7 +12,7 @@ import { KudoService } from '../../shared/kudo.service';
 })
 export class SendComponent implements OnInit {
     public imageDataURL: string;
-    public isFormInvalid: boolean = false;
+    public isFormInvalid = false;
     public searchText;
     public sizeList: number;
 
@@ -116,11 +116,7 @@ export class SendComponent implements OnInit {
         },
     ];
 
-    private readonly _notifier: NotifierService;
-
-    constructor(private _kudoService: KudoService, private _router: Router, private _notifierService: NotifierService) {
-        this._notifier = _notifierService;
-    }
+    constructor(private _kudoService: KudoService, private _router: Router, private _notifier: NotifierService) {}
 
     ngOnInit() {
         this.imageDataURL = this._kudoService.imageDataURL;

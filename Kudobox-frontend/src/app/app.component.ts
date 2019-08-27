@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
+import { Observable } from 'rxjs';
+import { User } from 'oidc-client';
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -9,9 +12,9 @@ import { MsAdalAngular6Service } from 'microsoft-adal-angular6';
 export class AppComponent {
     title = 'kudobox';
 
-    constructor(private _adalService: MsAdalAngular6Service) {}
+    constructor(private authService: AuthService, private route: Router) {}
 
     logout() {
-        this._adalService.logout();
+        this.authService.startLogout();
     }
 }
