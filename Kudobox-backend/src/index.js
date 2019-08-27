@@ -26,6 +26,9 @@ var options = {
   allowMultiAudiencesInToken: config.creds.allowMultiAudiencesInToken,
   audience: config.creds.audience,
   loggingLevel: config.creds.loggingLevel,
+  loggingNoPII: config.creds.loggingNoPII,
+  clockSkew: config.creds.clockSkew,
+  scope: config.creds.scope,
 };
 //current owner
 var owner = null;
@@ -35,25 +38,35 @@ var log = bunyan.createLogger({
   name: 'Kudobox logger'
 });
 
+var bearerStrategy = new OIDCBearerStrategy(options,
+  function(token, done) {
+    log.info('verifying the user');
+    log.info(token, 'was the token retreived');
+    findById(token.oid, function(err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        // "Auto-registration"
+        log.info('User was added automatically as they were new. Their oid is: ', token.oid);
+        users.push(token);
+        owner = token.oid;
+        return done(null, token);
+      }
+      owner = token.oid;
+      return done(null, user, token);
+    });
+  }
+);
+
 
 // defining the Express app
 const app = express();
+passport.use(bearerStrategy);
 
 app.use(passport.initialize()); // Starts passport
 app.use(passport.session()); // Provides session support
 
-var bearerStrategy = new OIDCBearerStrategy(options,
-  function(token, done) {
-      log.info(token, 'was the token retreived');
-      if (!token.oid)
-          done(new Error('oid is not found in token'));
-      else {
-          owner = token.oid;
-          done(null, token);
-      }
-  }
-);
-passport.use(bearerStrategy);
 
 // // kudoding Helmet to enhance your API's security
 app.use(helmet());
@@ -83,7 +96,7 @@ app.listen(config.port,function() {
 });
 
 // defining an endpoint to return all kudos
-app.get('api/kudo',(req, res,next) => {
+app.get('/api/kudo',(req, res,next) => {
   
   Kudo.find((err, kudo) => {
     if (err){

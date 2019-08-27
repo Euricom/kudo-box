@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 
-import { KudoService } from '../../shared/kudo.service';
+import { KudoService } from '../../services/kudo.service';
 
 @Component({
     selector: 'app-send',
@@ -35,11 +35,11 @@ export class SendComponent implements OnInit {
         'Kenneth Lenaerts',
     ];
 
-    private readonly _notifier: NotifierService;
-
-    constructor(private _kudoService: KudoService, private _router: Router, private _notifierService: NotifierService) {
-        this._notifier = _notifierService;
-    }
+    constructor(
+        private _kudoService: KudoService,
+        private _router: Router,
+        private _notifierService: NotifierService,
+    ) {}
 
     ngOnInit() {
         this.imageDataURL = this._kudoService.imageDataURL;
@@ -54,9 +54,9 @@ export class SendComponent implements OnInit {
             image: this.imageDataURL,
             user: this.user,
         };
-        this._kudoService.sendKudo(kudo);
+        this._kudoService.sendKudo(kudo).subscribe();
 
-        this._notifier.notify('success', "You're kudo is successfully sent!");
+        this._notifierService.notify('success', "You're kudo is successfully sent!");
 
         this._router.navigate([`/kudo/`]);
     }
