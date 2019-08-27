@@ -37,3 +37,21 @@
     /*change color of label*/
     color: white !important;
 }
+
+@media only screen and (max-width: 992px) {
+    .searchForm {
+        position: relative;
+        padding-left: 20px;
+        text-align: left;
+        right: 0;
+        top: 0;
+    }
+
+    .mat-card {
+        width: 300px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+}
