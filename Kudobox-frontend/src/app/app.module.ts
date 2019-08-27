@@ -1,6 +1,9 @@
-import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+/* eslint-disable @typescript-eslint/camelcase */
+import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule, isDevMode } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import * as Logger from 'js-logger';
+
 import {
     MatButtonModule,
     MatCardModule,
@@ -18,12 +21,14 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { ShareButtonsModule } from '@ngx-share/buttons';
 import { KonvaModule } from 'ng2-konva';
-import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 // search module
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
+import { config } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,10 +36,15 @@ import { CreateComponent } from './components/create/create.component';
 import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
 import { NewKudoComponent } from './components/newKudo/newKudo.component';
 import { SendComponent } from './components/send/send.component';
-import { KudoService } from './shared/kudo.service';
-import { TokenInterceptor } from './interceptors/token.interceptor';
+import { KudoService } from './services/kudo.service';
+import { OidcGuardService } from './services/OidcGuardService';
+import { AuthService } from './services/auth.service';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { LogoutCallbackComponent } from './components/logout-callback/logout-callback.component';
 import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+
 import { CarouselKudosComponent } from './components/carousel-kudos/carousel-kudos.component';
 import { ListKudosComponent } from './components/list-kudos/list-kudos.component';
 
@@ -86,20 +96,26 @@ const customNotifierOptions: NotifierOptions = {
         CreateComponent,
         MyKudoComponent,
         SendComponent,
+        AuthCallbackComponent,
+        LogoutCallbackComponent,
+        AppComponent,
+        NewKudoComponent,
+        CreateComponent,
+        MyKudoComponent,
+        SendComponent,
+        AllKudosComponent,
+        ScrollTopComponent,
+        AppComponent,
+        NewKudoComponent,
+        CreateComponent,
+        MyKudoComponent,
+        SendComponent,
         AllKudosComponent,
         ScrollTopComponent,
         CarouselKudosComponent,
         ListKudosComponent,
     ],
     imports: [
-        MsAdalAngular6Module.forRoot({
-            tenant: environment.azure.tenantID,
-            clientId: environment.azure.clientID,
-            redirectUri: environment.azure.redirectUri,
-            endpoints: environment.azure.endpoints,
-            navigateToLoginRequestUri: environment.azure.navigateToLoginRequestUri,
-            cacheLocation: environment.azure.cacheLocation,
-        }),
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -123,13 +139,29 @@ const customNotifierOptions: NotifierOptions = {
             enabled: environment.production,
         }),
         NotifierModule.withConfig(customNotifierOptions),
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         Ng2SearchPipeModule,
     ],
     providers: [
-        AuthenticationGuard,
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         KudoService,
+        OidcGuardService,
+        AuthService,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+    constructor() {
+        // Setup logging
+        const consoleHandler = (Logger as any).createDefaultHandler();
+
+        Logger.useDefaults();
+        Logger.setLevel(environment.logLevel);
+        Logger.setHandler((messages, context) => {
+            if (isDevMode()) {
+                consoleHandler(messages, context);
+            }
+        });
+    }
+}
