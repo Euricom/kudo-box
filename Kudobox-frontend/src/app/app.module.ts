@@ -9,6 +9,8 @@ import {
     MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatFormFieldModule,
+    MatInputModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,6 +21,8 @@ import { KonvaModule } from 'ng2-konva';
 import { MsAdalAngular6Module, AuthenticationGuard } from 'microsoft-adal-angular6';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
+// search module
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +33,9 @@ import { NewKudoComponent } from './components/newKudo/newKudo.component';
 import { SendComponent } from './components/send/send.component';
 import { KudoService } from './shared/kudo.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
+import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+import { CarouselKudosComponent } from './componens/newKudo/carousel-kudos/carousel-kudos.component';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -72,15 +79,24 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent, NewKudoComponent, CreateComponent, MyKudoComponent, SendComponent],
+    declarations: [
+        AppComponent,
+        NewKudoComponent,
+        CreateComponent,
+        MyKudoComponent,
+        SendComponent,
+        AllKudosComponent,
+        ScrollTopComponent,
+        CarouselKudosComponent,
+    ],
     imports: [
         MsAdalAngular6Module.forRoot({
-            tenant: '0b53d2c1-bc55-4ab3-a161-927d289257f2',
-            clientId: 'de411acd-f5d7-4040-8da6-3d3adce56901',
-            redirectUri: 'http://localhost:4200/auth',
-            endpoints: {},
-            navigateToLoginRequestUri: false,
-            cacheLocation: 'localStorage',
+            tenant: environment.azure.tenantID,
+            clientId: environment.azure.clientID,
+            redirectUri: environment.azure.redirectUri,
+            endpoints: environment.azure.endpoints,
+            navigateToLoginRequestUri: environment.azure.navigateToLoginRequestUri,
+            cacheLocation: environment.azure.cacheLocation,
         }),
         BrowserModule,
         AppRoutingModule,
@@ -93,6 +109,8 @@ const customNotifierOptions: NotifierOptions = {
         MatListModule,
         MatButtonModule,
         MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
         ShareButtonsModule,
         HttpClientModule,
         HttpClientJsonpModule,
@@ -102,6 +120,7 @@ const customNotifierOptions: NotifierOptions = {
             enabled: environment.production,
         }),
         NotifierModule.withConfig(customNotifierOptions),
+        Ng2SearchPipeModule,
     ],
     providers: [
         AuthenticationGuard,

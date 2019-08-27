@@ -17,11 +17,13 @@
         <mat-nav-list>
             <a mat-list-item [routerLink]="'/kudo'" (click)="sidenav.toggle()"> New Kudo </a>
             <a mat-list-item [routerLink]="'/myKudo'" (click)="sidenav.toggle()"> My Kudos </a>
+            <a mat-list-item [routerLink]="'/allKudos'" (click)="sidenav.toggle()"> Wall of fame </a>
             <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Close</a>
         </mat-nav-list>
     </mat-sidenav>
     dzadzadzadza
     <mat-sidenav-content>
         <router-outlet></router-outlet>
+        <app-scroll-top></app-scroll-top>
     </mat-sidenav-content>
 </mat-sidenav-container>
