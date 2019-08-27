@@ -68,6 +68,7 @@ module.exports = {
       "@typescript-eslint/consistent-type-assertions":'off',
       "class-methods-use-this":'off',
       "no-underscore-dangle":'off',
+      "@typescript-eslint/no-use-before-define":"off",
     },
 
 };

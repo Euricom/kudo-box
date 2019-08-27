@@ -1,8 +1,10 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import * as Logger from 'js-logger';
 
 export const environment = {
+    logLevel: Logger.DEBUG,
     production: false,
     azure: {
         tenantID: '0b53d2c1-bc55-4ab3-a161-927d289257f2',

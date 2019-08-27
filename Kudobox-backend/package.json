@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js localhost 3000",
-    "debug": "nodemon --inspect src/index.js localhost 3000",
+    "start": "nodemon src/index.js localhost 4001",
+    "debug": "nodemon --inspect src/index.js localhost 4001",
     "build:prod": "np"
   },
   "keywords": [],

@@ -5,7 +5,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { KonvaComponent } from 'ng2-konva';
 
 import { kudoImages } from '../../data/kudoImages';
-import { KudoService } from '../../shared/kudo.service';
+import { KudoService } from '../../services/kudo.service';
 
 interface Window {
     Image: any;
