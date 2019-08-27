@@ -1,36 +1,55 @@
 <div class="container">
-  <div class="fontList">
-    <ul>
-      <li>
-        <button class="fontsBtn" id="font1" (click)="changeFont('Comic Sans MS')" [class.active]="'Comic Sans MS' === fontFamily">Comic Sans MS</button>
-        <!--<input type='radio' value='Comic Sans MS' name='radio' id='font1' checked (change)="changeFont($event.target.value)"/>
+    <div class="fontList">
+        <ul>
+            <li>
+                <button
+                    class="fontsBtn"
+                    id="font1"
+                    (click)="changeFont('Comic Sans MS')"
+                    [class.active]="'Comic Sans MS' === fontFamily"
+                >
+                    Comic Sans MS
+                </button>
+                <!--<input type='radio' value='Comic Sans MS' name='radio' id='font1' checked (change)="changeFont($event.target.value)"/>
         <label id="labelFont1" for='font1'>Comic Sans MS</label>-->
-      </li>
-      <li>
-        <button class="fontsBtn" id="font2" (click)="changeFont('Times New Roman')" [class.active]="'Times New Roman' === fontFamily">Times New Roman</button>
-        <!--<input type='radio' value='Times New Roman' name='radio'  id='font2' (change)="changeFont($event.target.value)"/>
+            </li>
+            <li>
+                <button
+                    class="fontsBtn"
+                    id="font2"
+                    (click)="changeFont('Times New Roman')"
+                    [class.active]="'Times New Roman' === fontFamily"
+                >
+                    Times New Roman
+                </button>
+                <!--<input type='radio' value='Times New Roman' name='radio'  id='font2' (change)="changeFont($event.target.value)"/>
         <label id="labelFont2" for='font2'>Times New Roman</label>-->
-      </li>
-      <li>
-        <button class="fontsBtn" id="font3" (click)="changeFont('Arial Black')" [class.active]="'Arial Black' === fontFamily">Arial Black</button>
-        <!--<input type='radio' value='Arial Black' name='radio'  id='font3' (change)="changeFont($event.target.value)"/>
+            </li>
+            <li>
+                <button
+                    class="fontsBtn"
+                    id="font3"
+                    (click)="changeFont('Arial Black')"
+                    [class.active]="'Arial Black' === fontFamily"
+                >
+                    Arial Black
+                </button>
+                <!--<input type='radio' value='Arial Black' name='radio'  id='font3' (change)="changeFont($event.target.value)"/>
         <label id="labelFont3" for='font3'>Arial Black</label>-->
-      </li>
-    </ul>
-  </div>
+            </li>
+        </ul>
+    </div>
 
-  <div class="create-kudo-container">
-    <ko-stage #stage [config]="configStage">
-      <ko-layer #imageLayer>
-        <ko-image [config]="configImage" (click)="handleClick($event)"></ko-image>
-      </ko-layer>
-      <ko-layer #textLayer>
-        <ko-text #text [config]="configText"></ko-text>
-      </ko-layer>
-      <!--<textarea id="textAreaForImage">Some text here...</textarea>-->
-    </ko-stage>
-    <textarea id="textAreaForImage" #textarea [style.font-family]="fontFamily" [(ngModel)]="defaultText"></textarea>
-    <!--<img src="{{baseImageUrl}}">-->
-  </div>
-  <button type="button" class="btnNext" (click)="createCanvas(textarea.value)">Next</button>
+    <div class="create-kudo-container">
+        <ko-stage #stage [config]="configStage">
+            <ko-layer #imageLayer>
+                <ko-image #image [config]="configImage" (click)="handleClick($event)"></ko-image>
+            </ko-layer>
+            <ko-layer #textLayer>
+                <ko-text #text [config]="configText"></ko-text>
+            </ko-layer>
+        </ko-stage>
+        <textarea id="textAreaForImage" #textarea [style.font-family]="fontFamily" [(ngModel)]="defaultText"></textarea>
+        <button type="button" class="btnNext" (click)="createCanvas(textarea.value)">Next</button>
+    </div>
 </div>

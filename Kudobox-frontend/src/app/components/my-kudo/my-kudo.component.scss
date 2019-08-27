@@ -26,3 +26,13 @@
 .mat-card-footer {
     padding-left: 15px;
 }
+
+@media only screen and (max-width: 992px) {
+    .mat-card {
+        width: 300px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+}

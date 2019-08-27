@@ -1,6 +1,6 @@
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatCardModule,
@@ -35,7 +35,8 @@ import { KudoService } from './shared/kudo.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
-import { CarouselKudosComponent } from './componens/newKudo/carousel-kudos/carousel-kudos.component';
+import { CarouselKudosComponent } from './components/carousel-kudos/carousel-kudos.component';
+import { ListKudosComponent } from './components/list-kudos/list-kudos.component';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -88,6 +89,7 @@ const customNotifierOptions: NotifierOptions = {
         AllKudosComponent,
         ScrollTopComponent,
         CarouselKudosComponent,
+        ListKudosComponent,
     ],
     imports: [
         MsAdalAngular6Module.forRoot({
@@ -116,6 +118,7 @@ const customNotifierOptions: NotifierOptions = {
         HttpClientJsonpModule,
         KonvaModule,
         FormsModule,
+        ReactiveFormsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
         }),

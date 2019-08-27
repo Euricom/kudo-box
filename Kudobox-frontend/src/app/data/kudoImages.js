@@ -11,4 +11,5 @@ export const kudoImages = [
     { id: 5, url: '/assets/totally_awesome.png', name: 'Niels' },
     { id: 6, url: '/assets/very_happy.png', name: 'Niels' },
     { id: 7, url: '/assets/well_done.png', name: 'Niels' },
+    { id: 8, url: '/assets/well_done.png', name: 'Niels' },
 ];
