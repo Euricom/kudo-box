@@ -12,6 +12,8 @@ import {
     MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatFormFieldModule,
+    MatInputModule,
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +23,8 @@ import { ShareButtonsModule } from '@ngx-share/buttons';
 import { KonvaModule } from 'ng2-konva';
 
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
+// search module
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
@@ -38,6 +42,8 @@ import { AuthService } from './services/auth.service';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LogoutCallbackComponent } from './components/logout-callback/logout-callback.component';
+import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
+import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -89,6 +95,13 @@ const customNotifierOptions: NotifierOptions = {
         SendComponent,
         AuthCallbackComponent,
         LogoutCallbackComponent,
+        AppComponent,
+        NewKudoComponent,
+        CreateComponent,
+        MyKudoComponent,
+        SendComponent,
+        AllKudosComponent,
+        ScrollTopComponent,
     ],
     imports: [
         BrowserModule,
@@ -102,6 +115,8 @@ const customNotifierOptions: NotifierOptions = {
         MatListModule,
         MatButtonModule,
         MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
         ShareButtonsModule,
         HttpClientModule,
         HttpClientJsonpModule,
@@ -113,6 +128,7 @@ const customNotifierOptions: NotifierOptions = {
         NotifierModule.withConfig(customNotifierOptions),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
+        Ng2SearchPipeModule,
     ],
     providers: [
         KudoService,

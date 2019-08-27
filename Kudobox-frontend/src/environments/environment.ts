@@ -4,27 +4,15 @@
 import * as Logger from 'js-logger';
 
 export const environment = {
-    production: false,
     logLevel: Logger.DEBUG,
-
-    authentication: {
+    production: false,
+    azure: {
+        tenantID: '0b53d2c1-bc55-4ab3-a161-927d289257f2',
+        clientID: 'de411acd-f5d7-4040-8da6-3d3adce56901',
         redirectUri: 'http://localhost:4200/auth',
-        jwksUri:
-            'https://msdneurib2c.b2clogin.com/msdneurib2c.onmicrosoft.com/discovery/v2.0/keys?p=b2c_1_onlineteamscanv2',
-        postLogoutRedirectUri: 'http://localhost:666/logout',
-        authority: 'https://msdneurib2c.b2clogin.com/msdneurib2c.onmicrosoft.com/v2.0',
-        client_id: '762503ad-985b-4915-b4e5-9ff99239205e',
-        response_type: 'id_token token',
-        scope: 'openid profile https://msdneurib2c.onmicrosoft.com/OnlineTeamScanDevApi/user_impersonation',
-        response_mode: 'fragment',
-        issuer: 'https://msdneurib2c.b2clogin.com/9906da13-6cc7-4433-b327-dc1d40e77748/v2.0/',
-        end_session_endpoint:
-            'https://msdneurib2c.b2clogin.com/msdneurib2c.onmicrosoft.com/oauth2/v2.0/logout?p=b2c_1_onlineteamscanv2',
-        authorization_endpoint:
-            'https://msdneurib2c.b2clogin.com/msdneurib2c.onmicrosoft.com/oauth2/v2.0/authorize?p=b2c_1_onlineteamscanv2',
-        userinfo_endpoint: 'https://graph.microsoft.com/oidc/userinfo',
-        filterProtocolClaims: true,
-        loadUserInfo: false,
+        endpoints: {},
+        navigateToLoginRequestUri: false,
+        cacheLocation: 'localStorage',
     },
 };
 
