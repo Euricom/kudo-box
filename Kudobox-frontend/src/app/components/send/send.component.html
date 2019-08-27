@@ -1,7 +1,31 @@
 <div class="container">
-  <h2>Select Kudo recipient</h2>
-  <select class="custom-select" multiple (change)="onChange($event.target.value)" size="20">
-    <option *ngFor="let user of users" [value]="user">{{user}}</option>
-  </select>
-  <button type="button" class="btnSend" (click)="sendKudo()">Send</button>
+    <h2>Select Kudo recipient</h2>
+    <form class="searchForm">
+        <!--<mat-form-field>-->
+        <input
+            placeholder="Search by name"
+            class="form-control searchBar"
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            autocomplete="off"
+        />
+        <!--</mat-form-field>-->
+    </form>
+    <form (ngSubmit)="sendKudo()" [formGroup]="userForm">
+        <select
+            formControlName="userName"
+            class="custom-select"
+            size="{{ sizeList }}"
+            [ngClass]="{
+                'is-invalid':
+                    (userForm.get('userName').touched || userForm.get('userName').dirty) &&
+                    !userForm.get('userName').valid
+            }"
+        >
+            <option *ngFor="let user of users | filter: searchText" [value]="user.name">{{ user.name }}</option>
+        </select>
+        <span class="invalid" *ngIf="isFormInvalid">Please choose a person</span>
+        <button type="submit" class="btnSend">Send</button>
+    </form>
 </div>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, isDevMode } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as Logger from 'js-logger';
 
 import {
@@ -44,6 +44,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LogoutCallbackComponent } from './components/logout-callback/logout-callback.component';
 import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+
+import { CarouselKudosComponent } from './components/carousel-kudos/carousel-kudos.component';
+import { ListKudosComponent } from './components/list-kudos/list-kudos.component';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -102,6 +105,15 @@ const customNotifierOptions: NotifierOptions = {
         SendComponent,
         AllKudosComponent,
         ScrollTopComponent,
+        AppComponent,
+        NewKudoComponent,
+        CreateComponent,
+        MyKudoComponent,
+        SendComponent,
+        AllKudosComponent,
+        ScrollTopComponent,
+        CarouselKudosComponent,
+        ListKudosComponent,
     ],
     imports: [
         BrowserModule,
@@ -122,6 +134,7 @@ const customNotifierOptions: NotifierOptions = {
         HttpClientJsonpModule,
         KonvaModule,
         FormsModule,
+        ReactiveFormsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
         }),
