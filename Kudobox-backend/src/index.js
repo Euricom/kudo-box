@@ -12,6 +12,7 @@ var OIDCBearerStrategy = require('passport-azure-ad').BearerStrategy;
 const Logger = require('js-logger');
 //config
 const config = require('./config/config')
+ const httpError = require('./util/httpError');
 
 //options
 var options = {
@@ -45,13 +46,21 @@ Logger.setHandler((messages, context) => {
 });
 
 var bearerStrategy = new OIDCBearerStrategy(options,
-  function(req,token, done) {
+  async function(req,token, done) {
     Logger.info('DO USER STUFF HERE');
     Logger.info('=========== START TOKEN RECEIVED ===========');
     Logger.info(token);
     Logger.info('=========== END TOKEN RECEIVED ===========');
     Logger.info('url:' + req.originalUrl)
-    done(null, token);
+    const currentUser = await User.findOne({email:token.preferred_username});
+    if(currentUser){
+      req.currentUser = currentUser;
+      done(null,token)
+    }else{
+      done( httpError.notFound(token.email))
+    }
+  
+
     // findById(token.oid, function(err, user) {
     //   if (err) {
     //     return done(err);
@@ -107,8 +116,8 @@ app.listen(config.port,function() {
 
 // defining an endpoint to return all users
 app.get('/api/user',(req, res,next) => {
-  
-  User.find((err, users) => {
+  // exclude own user from users list
+  User.find({_id: {$ne: req.currentUser._id}},(err, users) => {
     if (err){
       res.status(err);
     }
@@ -130,8 +139,8 @@ app.get('/api/kudo',(req, res,next) => {
 });
 });
 
-app.get('/api/kudo/:id', async (req, res,next) => {  
-  Kudo.find({createdBy:req.params.id},(err,kudo) => {
+app.get('/api/mykudo/', async (req, res,next) => {  
+  Kudo.find({receiver:req.currentUser._id},(err,kudo) => {
     if (err){
       res.status(err); }
     else{
