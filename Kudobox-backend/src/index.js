@@ -130,8 +130,8 @@ app.get('/api/kudo',(req, res,next) => {
 });
 });
 
-app.get('api/kudo/:id', async (req, res,next) => {  
-  await Kudo.findById(req.params.id,(err,kudo) => {
+app.get('/api/kudo/:id', async (req, res,next) => {  
+  Kudo.find({createdBy:req.params.id},(err,kudo) => {
     if (err){
       res.status(err); }
     else{
@@ -141,14 +141,14 @@ app.get('api/kudo/:id', async (req, res,next) => {
 });
 
 // endpoint to create a kudo
-app.post('api/kudo',  async (req, res) => {
+app.post('/api/kudo',  async (req, res) => {
   const newKudo = new Kudo(req.body);
   await newKudo.save();
   res.send({ message: 'New kudo inserted.' });
 });
 
 // endpoint to delete a kudo
-app.delete('api/kudo/:id', async (req, res) => {
+app.delete('/api/kudo/:id', async (req, res) => {
   await Kudo.deleteOne({_id: req.params.id});
   res.send({ message: 'Kudo removed.' });
 });
