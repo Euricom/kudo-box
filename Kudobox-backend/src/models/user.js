@@ -3,11 +3,7 @@ const shortId = require('shortid');
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-    _id: {
-        type: String,
-        default: shortId.generate,
-    },
+const userSchema = new Schema({   
     name: String,
     email: String,
 });

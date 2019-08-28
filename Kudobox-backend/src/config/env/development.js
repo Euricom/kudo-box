@@ -1,6 +1,10 @@
+const Logger = require('js-logger');
+
+
 const config =(module.exports = {});
 
 config.env = 'development';
+config.logLevel = Logger.DEBUG;
 config.port = process.env.PORT || 4001;
 config.mongo ={
     uri: process.env.MONGO_URI || 'mongodb://localhost:27017',

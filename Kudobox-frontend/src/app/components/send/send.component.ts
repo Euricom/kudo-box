@@ -132,7 +132,7 @@ export class SendComponent implements OnInit {
                 image: this.imageDataURL,
                 user: this.userForm.value.userName,
             };
-            this._kudoService.sendKudo(kudo);
+            this._kudoService.sendKudo(kudo).subscribe();
 
             this._notifier.notify('success', "You're kudo is successfully sent!");
 
