@@ -5,13 +5,14 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const Kudo = require('./models/kudo');
+const User = require('./models/user')
 const authentication = require('./middleware/authentication');
-const bunyan = require('bunyan')
 var passport = require('passport');
 var OIDCBearerStrategy = require('passport-azure-ad').BearerStrategy;
-
+const Logger = require('js-logger');
 //config
 const config = require('./config/config')
+ const httpError = require('./util/httpError');
 
 //options
 var options = {
@@ -30,32 +31,50 @@ var options = {
   clockSkew: config.creds.clockSkew,
   scope: config.creds.scope,
 };
-//current owner
-var owner = null;
+//users
+var users = [];
 
 // Our logger
-var log = bunyan.createLogger({
-  name: 'Kudobox logger'
+const consoleHandler = Logger.createDefaultHandler();
+
+Logger.useDefaults();
+Logger.setLevel(config.logLevel);
+Logger.setHandler((messages, context) => {
+    if (config.env === 'development') {
+        consoleHandler(messages, context);
+    }
 });
 
 var bearerStrategy = new OIDCBearerStrategy(options,
-  function(token, done) {
-    log.info('verifying the user');
-    log.info(token, 'was the token retreived');
-    findById(token.oid, function(err, user) {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        // "Auto-registration"
-        log.info('User was added automatically as they were new. Their oid is: ', token.oid);
-        users.push(token);
-        owner = token.oid;
-        return done(null, token);
-      }
-      owner = token.oid;
-      return done(null, user, token);
-    });
+  async function(req,token, done) {
+    Logger.info('DO USER STUFF HERE');
+    Logger.info('=========== START TOKEN RECEIVED ===========');
+    Logger.info(token);
+    Logger.info('=========== END TOKEN RECEIVED ===========');
+    Logger.info('url:' + req.originalUrl)
+    const currentUser = await User.findOne({email:token.preferred_username});
+    if(currentUser){
+      req.currentUser = currentUser;
+      done(null,token)
+    }else{
+      done( httpError.notFound(token.email))
+    }
+  
+
+    // findById(token.oid, function(err, user) {
+    //   if (err) {
+    //     return done(err);
+    //   }
+    //   if (!user) {
+    //     // "Auto-registration"
+    //     Logger.info('User was added automatically as they were new. Their oid is: ', token.oid);
+    //     users.push(token);
+    //     owner = token.oid;
+    //     return done(null, token);
+    //   }
+    //   owner = token.oid;
+    //   return done(null, user, token);
+    // });
   }
 );
 
@@ -95,21 +114,33 @@ app.listen(config.port,function() {
   console.log( `http://localhost:${config.port}`);
 });
 
-// defining an endpoint to return all kudos
-app.get('/api/kudo',(req, res,next) => {
-  
-  Kudo.find((err, kudo) => {
+// defining an endpoint to return all users
+app.get('/api/user',(req, res,next) => {
+  // exclude own user from users list
+  User.find({_id: {$ne: req.currentUser._id}},(err, users) => {
     if (err){
       res.status(err);
     }
     else{
-        res.json(kudo);
+        res.json(users);
+    }
+});
+});
+// defining an endpoint to return all kudos
+app.get('/api/kudo',(req, res,next) => {
+  
+  Kudo.find((err, kudos) => {
+    if (err){
+      res.status(err);
+    }
+    else{
+        res.json(kudos);
     }
 });
 });
 
-app.get('api/kudo/:id', async (req, res,next) => {  
-  await Kudo.findById(req.params.id,(err,kudo) => {
+app.get('/api/mykudo/', async (req, res,next) => {  
+  Kudo.find({receiver:req.currentUser._id},(err,kudo) => {
     if (err){
       res.status(err); }
     else{
@@ -119,14 +150,14 @@ app.get('api/kudo/:id', async (req, res,next) => {
 });
 
 // endpoint to create a kudo
-app.post('api/kudo',  async (req, res) => {
+app.post('/api/kudo',  async (req, res) => {
   const newKudo = new Kudo(req.body);
   await newKudo.save();
   res.send({ message: 'New kudo inserted.' });
 });
 
 // endpoint to delete a kudo
-app.delete('api/kudo/:id', async (req, res) => {
+app.delete('/api/kudo/:id', async (req, res) => {
   await Kudo.deleteOne({_id: req.params.id});
   res.send({ message: 'Kudo removed.' });
 });
