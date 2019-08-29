@@ -1,7 +1,6 @@
 <div class="container">
     <h2>Select Kudo recipient</h2>
     <form class="searchForm">
-        <!--<mat-form-field>-->
         <input
             placeholder="Search by name"
             class="form-control searchBar"
@@ -10,20 +9,20 @@
             [(ngModel)]="searchText"
             autocomplete="off"
         />
-        <!--</mat-form-field>-->
     </form>
     <form (ngSubmit)="sendKudo()" [formGroup]="userForm">
         <select
-            formControlName="userName"
+            formControlName="email"
             class="custom-select"
             size="{{ sizeList }}"
             [ngClass]="{
                 'is-invalid':
-                    (userForm.get('userName').touched || userForm.get('userName').dirty) &&
-                    !userForm.get('userName').valid
+                    (userForm.get('email').touched || userForm.get('email').dirty) && !userForm.get('email').valid
             }"
         >
-            <option *ngFor="let user of users | filter: searchText" [value]="user.name">{{ user.name }}</option>
+            <option *ngFor="let user of users | async | filter: searchText" [value]="user.email">{{
+                user.name
+            }}</option>
         </select>
         <span class="invalid" *ngIf="isFormInvalid">Please choose a person</span>
         <button type="submit" class="btnSend">Send</button>

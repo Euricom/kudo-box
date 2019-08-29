@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
+
 import { kudoImages } from '../../data/kudoImages';
+import { KudoService } from '../../services/kudo.service';
 
 @Component({
     selector: 'app-my-kudo',
@@ -7,11 +9,26 @@ import { kudoImages } from '../../data/kudoImages';
     styleUrls: ['./my-kudo.component.scss'],
 })
 export class MyKudoComponent implements OnInit {
-    public kudos: Array<object>;
-    public linkToShare: string = 'https://google.com';
-    public image = 'https://partycity6.scene7.com/is/image/PartyCity/_pdp_sq_?$_1000x1000_$&$product=PartyCity/237864';
+    public kudos;
+    public kudoImages;
+
+    public image;
+
+    constructor(private _kudoService: KudoService) {}
 
     ngOnInit() {
-        this.kudos = kudoImages;
+        this.kudoImages = kudoImages;
+        this._kudoService.getMyKudos().subscribe(data => {
+            this.kudos = data;
+        });
+    }
+
+    getKudoImage(id: number) {
+        const image = this.kudoImages.filter(kudo => {
+            if (kudo.id === id) {
+                return kudo.url;
+            }
+        });
+        return image[0].url;
     }
 }

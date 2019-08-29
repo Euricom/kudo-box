@@ -8,6 +8,14 @@
     width: fit-content;
 }
 
+.mat-card {
+    padding: 20px;
+}
+
+.my-kudo-card {
+    margin-bottom: 30px;
+}
+
 #textAreaForImage {
     position: absolute;
     padding: 0px;
@@ -18,18 +26,11 @@
     outline: none;
     resize: none;
     color: #c2185b;
-    top: 130px;
-    left: 40px;
-    width: 500px;
-    height: 400px;
-    line-height: 35px;
-}
-
-.create-kudo-container {
-    /*width:300px;*/
-    position: relative;
-    margin: auto;
-    width: fit-content;
+    top: 140px;
+    left: 55px;
+    width: 600px;
+    height: 350px;
+    line-height: 33px;
 }
 
 ul {
@@ -72,9 +73,13 @@ li {
     color: white;
 }
 
+.containerBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
 .btnNext {
-    margin-top: 52px;
-    float: right;
     height: 40px;
     width: 70px;
     border: none;
@@ -89,53 +94,58 @@ li {
     background-color: #a1174d;
 }
 
-@media only screen and (max-width: 600px) {
-    .create-kudo-container {
-        width: 400px;
-        height: 400px;
-    }
+.invalid {
+    color: red;
+    margin: auto 0;
+}
 
-    #textAreaForImage {
-        top: 72px;
-        left: 21px;
-        width: 350px;
-        height: 220px;
-        line-height: 23px;
-        font-size: 15px;
-    }
-
+@media only screen and (max-width: 750px) {
     ul {
         display: flex;
         justify-content: center;
     }
 
-    .btnNext {
-        margin-top: -170px;
-        position: absolute;
-        right: 0;
+    .containerImage {
+        width: 500px;
     }
-}
 
-@media only screen and (max-width: 400px) {
-    .create-kudo-container {
-        width: 300px;
-        height: 300px;
+    .my-kudo-card-image {
+        width: 500px;
     }
 
     #textAreaForImage {
-        font-size: 10px;
-        top: 47px;
-        left: 16px;
-        line-height: 16px;
-    }
-
-    .btnNext {
-        margin-top: -270px;
-        position: absolute;
-        right: 0;
-    }
-
-    .fontsBtn {
         font-size: 15px;
+        top: 110px;
+        left: 45px;
+        line-height: 25px;
+        width: 450px;
+        height: 250px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .my-kudo-card {
+        width: 300px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+
+    .fontsBtn,
+    .btnNext {
+        font-size: 15px;
+    }
+
+    #textAreaForImage {
+        font-size: 12px;
+        top: 70px;
+        left: 35px;
+        width: 275px;
+        height: 150px;
+        line-height: 19px;
     }
 }
