@@ -151,7 +151,7 @@ const customNotifierOptions: NotifierOptions = {
         AuthService,
         ErrorHandlerService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        { provide: ErrorHandler, useClass: ErrorHandlerService }
+        { provide: ErrorHandler, useClass: ErrorHandlerService },
     ],
     bootstrap: [AppComponent],
 })

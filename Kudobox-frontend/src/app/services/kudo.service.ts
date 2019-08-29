@@ -33,7 +33,7 @@ export class KudoService {
         return this.http.post('/api/kudo', body).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);
-                //return empty();
+                // return empty();
                 return throwError('BIGBIG ERROR');
             }),
         );

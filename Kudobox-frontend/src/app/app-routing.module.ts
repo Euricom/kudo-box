@@ -17,6 +17,12 @@ const routes: Routes = [
     { path: 'allKudos', component: AllKudosComponent, canActivate: [OidcGuardService] },
     { path: 'auth', component: AuthCallbackComponent },
     { path: '', redirectTo: 'kudo', pathMatch: 'full', canActivate: [OidcGuardService] },
+    {
+        path: 'wall-of-fame',
+        loadChildren: () => import('./wall-off-fame/wall-off-fame.module').then(m => m.WallOffFameModule),
+    },
+    { path: 'my-kudos', loadChildren: () => import('./my-kudos/my-kudos.module').then(m => m.MyKudosModule) },
+    { path: 'kudos', loadChildren: () => import('./kudos/kudos.module').then(m => m.KudosModule) },
 ];
 
 @NgModule({

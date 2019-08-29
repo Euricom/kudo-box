@@ -1,0 +1,10 @@
+<mat-card class="my-kudo-card" *ngFor="let kudo of kudos">
+  <img class="my-kudo-card-image" src="{{ kudo.url }}" />
+  <mat-card-footer>
+    <p>Received from {{ kudo.name }}</p>
+    <p>Date {{ kudo.date | date: 'EEEE d/M/yy h:mm' }}</p>
+    <share-buttons class="share-buttons-align-center" [theme]="'default'"
+      [include]="['facebook', 'twitter', 'linkedin']" [show]="3" [autoSetMeta]="false" [url]="image" [image]="image">
+    </share-buttons>
+  </mat-card-footer>
+</mat-card>
