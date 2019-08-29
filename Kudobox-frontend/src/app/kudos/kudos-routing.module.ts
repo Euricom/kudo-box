@@ -8,8 +8,8 @@ import { KudosSendComponent } from './kudos-send/kudos-send.component';
 
 const routes: Routes = [
     { path: '', component: KudosComponent, canActivate: [OidcGuardService] },
-    { path: '/create/:id', component: KudosCreateComponent, canActivate: [OidcGuardService] },
-    { path: '/send', component: KudosSendComponent, canActivate: [OidcGuardService] },
+    { path: 'create/:id', component: KudosCreateComponent, canActivate: [OidcGuardService] },
+    { path: 'send', component: KudosSendComponent, canActivate: [OidcGuardService] },
 ];
 
 @NgModule({
