@@ -1,3 +1,9 @@
+:host {
+    width: 1800px;
+    margin: 0 auto;
+    display: block;
+}
+
 .allKudos {
     display: flex;
     justify-content: center;
@@ -20,11 +26,12 @@
 
 .allKudosHeader {
     text-align: center;
+    position: relative;
 }
 
 .searchForm {
     position: absolute;
-    right: 135px;
+    right: 20px;
     top: 10px;
 }
 
@@ -38,13 +45,35 @@
     color: white !important;
 }
 
+@media only screen and (max-width: 1800px) {
+    :host {
+        max-width: 1200px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    :host {
+        max-width: 550px;
+    }
+
+    .searchForm {
+        position: relative;
+        text-align: left;
+        margin-left: 20px;
+    }
+}
+
 @media only screen and (max-width: 992px) {
+    :host {
+        max-width: 800px;
+    }
     .searchForm {
         position: relative;
         padding-left: 20px;
+        /*padding-left: 20px;
         text-align: left;
         right: 0;
-        top: 0;
+        top: 0;*/
     }
 
     .mat-card {
@@ -53,5 +82,11 @@
 
     .my-kudo-card-image {
         width: 300px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    :host {
+        max-width: 400px;
     }
 }

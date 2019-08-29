@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { empty } from 'rxjs';
+import { throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -33,7 +33,8 @@ export class KudoService {
         return this.http.post('/api/kudo', body).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);
-                return empty();
+                //return empty();
+                return throwError('BIGBIG ERROR');
             }),
         );
     }
