@@ -32,7 +32,7 @@ export class CreateComponent implements OnInit {
     defaultText = 'Type some text here...';
 
     public configStage: Observable<any> = of({
-        container: 'container',
+        //   container: 'container',
         width: 600,
         height: 500,
     });
