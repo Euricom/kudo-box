@@ -15,7 +15,9 @@ exports.badRequest = function(data) {
 exports.notFound = function() {
     return Boom.notFound('The resource is not found');
 };
-
+exports.notFound = function(user) {
+    return Boom.notFound(`The user with email ${user} is not found`);
+};
 exports.methodNotAllowed = function(message, data) {
     return Boom.methodNotAllowed(message, data);
 };

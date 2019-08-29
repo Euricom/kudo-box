@@ -30,7 +30,7 @@ export class KudoService {
 
     sendKudo(kudo) {
         const body = JSON.stringify(kudo);
-        return this.http.post('http://localhost:3000/api/kudo', body).pipe(
+        return this.http.post('/api/kudo', body).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);
                 //return empty();

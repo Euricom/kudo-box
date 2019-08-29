@@ -69,6 +69,7 @@ module.exports = {
       "class-methods-use-this":'off',
       "no-underscore-dangle":'off',
       "@typescript-eslint/no-use-before-define":"off",
+      "no-undef":"off",
     },
 
 };

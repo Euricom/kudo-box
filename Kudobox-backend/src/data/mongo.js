@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('../config/config');
-
+const initDataGenerator = require('./initDataGenerator')
+const User = require('../models/user')
 
 module.exports = function(){
   console.log('Initialize mongodb...');
@@ -15,6 +16,13 @@ module.exports = function(){
   })
   if(config.env === 'development'){
     mongoose.set('debug', true);
+    User.findOne({})
+    .then(function(user) {
+        if (!user) {
+          initDataGenerator.generate();          
+        }});
+        
   }
+ 
 
 };

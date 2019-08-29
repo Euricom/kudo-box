@@ -1,12 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let Kudo = new Schema({
-    backgroundId: {
+    imageString: {
         type: String
-    },
-    text: {
-        type: String
-    },
+    },    
     createdOn: {
         type: Date 
     },    
