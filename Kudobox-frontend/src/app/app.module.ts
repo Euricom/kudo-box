@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as Logger from 'js-logger';
 
@@ -47,6 +47,8 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 
 import { CarouselKudosComponent } from './components/carousel-kudos/carousel-kudos.component';
 import { ListKudosComponent } from './components/list-kudos/list-kudos.component';
+
+import { ErrorHandlerService } from './services/error-handler.service';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -147,7 +149,9 @@ const customNotifierOptions: NotifierOptions = {
         KudoService,
         OidcGuardService,
         AuthService,
+        ErrorHandlerService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: ErrorHandler, useClass: ErrorHandlerService }
     ],
     bootstrap: [AppComponent],
 })
