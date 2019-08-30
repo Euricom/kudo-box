@@ -1,13 +1,4 @@
-/*.my-kudo-card {
-    width: 100vw;
-}
-
-.my-kudo-card-image {
-  width: 90vw;
-  height: auto;
-}*/
-
-:host {
+.container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -27,6 +18,27 @@
     padding-left: 15px;
 }
 
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #c2185b;
+    top: 119px;
+    left: 54px;
+    width: 450px;
+    height: 250px;
+    line-height: 25px;
+}
+
+p {
+    font-size: 25px;
+}
+
 @media only screen and (max-width: 992px) {
     .mat-card {
         width: 300px;
@@ -34,5 +46,18 @@
 
     .my-kudo-card-image {
         width: 300px;
+    }
+
+    #textAreaForImage {
+        top: 85px;
+        left: 45px;
+        font-size: 15px;
+        width: 275px;
+        height: 150px;
+        line-height: 17px;
+    }
+
+    p {
+        font-size: 15px;
     }
 }

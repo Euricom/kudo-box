@@ -1,23 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { Kudo } from '../models/kudo';
 
 @Injectable({
     providedIn: 'root',
 })
-export class KudoService {
-    private _imageDataURL: string;
+export class KudoService implements OnInit {
+    private _kudo: Kudo;
     private _user: string;
+    private _usersList;
 
     constructor(private http: HttpClient) {}
 
-    set imageDataURL(imageDataURL: string) {
-        this._imageDataURL = imageDataURL;
+    ngOnInit() {
+        this._usersList = this.getUsersList();
     }
 
-    get imageDataURL(): string {
-        return this._imageDataURL;
+    get kudo() {
+        return this._kudo;
+    }
+
+    set kudo(kudo) {
+        this._kudo = kudo;
     }
 
     set user(user: string) {
@@ -28,14 +34,29 @@ export class KudoService {
         return this._user;
     }
 
+    get usersList() {
+        return this._usersList;
+    }
+
+    set usersList(users) {
+        this._usersList = users;
+    }
+
     sendKudo(kudo) {
         const body = JSON.stringify(kudo);
         return this.http.post('/api/kudo', body).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);
-                // return empty();
                 return throwError('BIGBIG ERROR');
             }),
         );
+    }
+
+    getUsersList() {
+        return this.http.get('/api/user');
+    }
+
+    getMyKudos() {
+        return this.http.get('/api/mykudo/');
     }
 }

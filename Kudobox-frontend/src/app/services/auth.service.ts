@@ -63,11 +63,10 @@ export class AuthService {
 
     startLoginAuthentication(): Promise<void> {
         this.log.info('AuthService.startLoginAuthentication() has been called.');
-        const origin: any = <any>window.location;
-        const url = window.location.href;
-        const segmentWithParameters = url.substr(origin.length);
+        /*const origin: any = <any>window.location;
+        const url = window.location.href;*/
 
-        return this.manager.signinRedirect({ state: segmentWithParameters });
+        return this.manager.signinRedirect({ state: window.location.pathname });
     }
 
     completeAuthentication(): Promise<void> {
@@ -77,7 +76,7 @@ export class AuthService {
             .then(user => {
                 this.user = user;
                 this.setUser();
-                this.router.navigateByUrl('kudo');
+                this.router.navigateByUrl(this.user.state);
             })
             .catch(err => {
                 this.log.error(err);
