@@ -32,7 +32,6 @@ export class CreateComponent implements OnInit {
             const image = kudoImages.find(i => i.id === parseInt(params.id, 10));
             this.baseImageUrl = image.url;
             this.kudoId = params.id;
-            console.log('this.baseImageUrl', this.baseImageUrl);
         });
     }
 
@@ -50,7 +49,7 @@ export class CreateComponent implements OnInit {
                 kudoId: this.kudoId,
                 text: text,
                 fontFamily: this.fontFamily,
-                user: '',
+                receiver: '',
             };
 
             this._kudoService.kudo = kudo;

@@ -138,17 +138,52 @@ app.get("/api/kudo", (req, res, next) => {
 });
 
 app.get("/api/mykudo/", async (req, res, next) => {
-  Kudo.find({ receiver: req.currentUser._id }, (err, kudo) => {
-    if (err) {
-      res.status(err);
-    } else {
-      res.json(kudo);
+  Kudo.find({ receiver: req.currentUser._id })
+    .populate("sender")
+    .exec((err, kudo) => {
+      if (err) {
+        res.status(err);
+      } else {
+        res.json(kudo);
+      }
+    });
+});
+
+app.get("/api/unreadKudos/", (req, res, next) => {
+  Kudo.find({ receiver: req.currentUser._id, status: "unread" }).count(
+    (err, kudoCount) => {
+      if (err) {
+        res.status(err);
+      } else {
+        res.json(kudoCount);
+      }
     }
-  });
+  );
+});
+
+app.put("/api/changeStatus/", (req, res, next) => {
+  Kudo.find(
+    { receiver: req.currentUser._id, status: "unread" },
+    (err, kudos) => {
+      if (err) {
+        res.status(err);
+      } else {
+        kudos.forEach(kudo => {
+          kudo.status = req.body.status;
+          kudo.save();
+        });
+        res.send({ message: "Status are updated" });
+      }
+    }
+  );
 });
 
 // endpoint to create a kudo
 app.post("/api/kudo", async (req, res) => {
+  let kudo = req.body;
+  kudo.sender = req.currentUser._id;
+  kudo.status = "unread";
+
   const newKudo = new Kudo(req.body);
   await newKudo.save();
   res.send({ message: "New kudo inserted." });

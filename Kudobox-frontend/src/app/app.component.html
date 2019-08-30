@@ -16,7 +16,9 @@
     <mat-sidenav #sidenav>
         <mat-nav-list>
             <a mat-list-item [routerLink]="'/kudo'" (click)="sidenav.toggle()"> New Kudo </a>
-            <a mat-list-item [routerLink]="'/myKudo'" (click)="sidenav.toggle()"> My Kudos </a>
+            <a mat-list-item [routerLink]="'/myKudo'" (click)="sidenav.toggle()">
+                My Kudos <span class="kudoCount" *ngIf="kudoCount > 0">({{ kudoCount }})</span>
+            </a>
             <a mat-list-item [routerLink]="'/allKudos'" (click)="sidenav.toggle()"> Wall of fame </a>
             <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Close</a>
         </mat-nav-list>
