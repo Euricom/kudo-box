@@ -1,38 +1,68 @@
-/*.my-kudo-card {
-    width: 100vw;
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.my-kudo-card-image {
-  width: 90vw;
-  height: auto;
-}*/
-
-:host {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+h1 {
+    text-align: center;
 }
 
 .mat-card {
-  width: 500px;
-  margin: 20px;
-  padding: 30px;
+    width: 500px;
+    margin: 20px;
+    padding: 30px;
 }
 
 .my-kudo-card-image {
-  width: 500px;
+    width: 500px;
 }
 
 .mat-card-footer {
-  padding-left: 15px;
+    padding-left: 15px;
+}
+
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #c2185b;
+    top: 119px;
+    left: 54px;
+    width: 450px;
+    height: 250px;
+    line-height: 25px;
+}
+
+.noKudos {
+    font-size: 25px;
+    text-align: center;
 }
 
 @media only screen and (max-width: 992px) {
-  .mat-card {
-    width: 300px;
-  }
+    .mat-card {
+        width: 300px;
+    }
 
-  .my-kudo-card-image {
-    width: 300px;
-  }
+    .my-kudo-card-image {
+        width: 300px;
+    }
+
+    #textAreaForImage {
+        top: 85px;
+        left: 45px;
+        font-size: 15px;
+        width: 275px;
+        height: 150px;
+        line-height: 17px;
+    }
+
+    p {
+        font-size: 15px;
+    }
 }

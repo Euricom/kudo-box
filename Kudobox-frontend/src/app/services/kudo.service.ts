@@ -43,7 +43,6 @@ export class KudoService implements OnInit {
     }
 
     sendKudo(kudo) {
-        const body = JSON.stringify(kudo);
         return this.http.post('/api/kudo', kudo).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);

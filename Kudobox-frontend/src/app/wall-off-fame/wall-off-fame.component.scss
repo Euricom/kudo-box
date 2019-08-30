@@ -1,93 +1,119 @@
 :host {
-  width: 1800px;
-  margin: 0 auto;
-  display: block;
+    width: 1800px;
+    margin: 0 auto;
+    display: block;
 }
 
 .allKudos {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+h1 {
+    text-align: center;
 }
 
 .mat-card {
-  width: 500px;
-  margin: 20px;
-  padding: 30px;
+    width: 500px;
+    margin: 20px;
+    padding: 30px;
 }
 
 .my-kudo-card-image {
-  width: 500px;
-}
-
-.mat-card-footer {
-  padding-left: 15px;
+    width: 500px;
 }
 
 .allKudosHeader {
-  text-align: center;
-  position: relative;
+    text-align: center;
+    position: relative;
+}
+
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #c2185b;
+    top: 119px;
+    left: 54px;
+    width: 450px;
+    height: 250px;
+    line-height: 25px;
 }
 
 .searchForm {
-  position: absolute;
-  right: 20px;
-  top: 10px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
 }
 
 ::ng-deep.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: white !important;
+    /*change color of underline when focused*/
+    background-color: white !important;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: white !important;
+    /*change color of label*/
+    color: white !important;
 }
 
 @media only screen and (max-width: 1800px) {
-  :host {
-    max-width: 1200px;
-  }
+    :host {
+        max-width: 1200px;
+    }
 }
 
 @media only screen and (max-width: 1200px) {
-  :host {
-    max-width: 550px;
-  }
+    :host {
+        max-width: 550px;
+    }
 
-  .searchForm {
-    position: relative;
-    text-align: left;
-    margin-left: 20px;
-  }
+    .searchForm {
+        position: relative;
+        text-align: left;
+        margin-left: 20px;
+    }
 }
 
 @media only screen and (max-width: 992px) {
-  :host {
-    max-width: 800px;
-  }
+    :host {
+        max-width: 800px;
+    }
 
-  .searchForm {
-    position: relative;
-    padding-left: 20px;
-    /*padding-left: 20px;
-      text-align: left;
-      right: 0;
-      top: 0;*/
-  }
+    .mat-card {
+        width: 300px;
+    }
 
-  .mat-card {
-    width: 300px;
-  }
+    .my-kudo-card-image {
+        width: 300px;
+    }
 
-  .my-kudo-card-image {
-    width: 300px;
-  }
+    #textAreaForImage {
+        top: 85px;
+        left: 45px;
+        font-size: 15px;
+        width: 275px;
+        height: 150px;
+        line-height: 17px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    .searchForm {
+        position: relative;
+        padding-left: 20px;
+    }
 }
 
 @media only screen and (max-width: 800px) {
-  :host {
-    max-width: 400px;
-  }
+    :host {
+        max-width: 400px;
+    }
 }

@@ -35,6 +35,6 @@ export class CarouselKudosComponent {
     constructor(private router: Router) {}
 
     slideClicked(id: number) {
-        this.router.navigate([`/kudo/create/${id}`]);
+        this.router.navigate([`/kudos/create/${id}`]);
     }
 }

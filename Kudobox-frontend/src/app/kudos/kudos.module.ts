@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { MatCardModule } from '@angular/material';
 import { KudosRoutingModule } from './kudos-routing.module';
@@ -18,6 +20,6 @@ import { KudosSendComponent } from './kudos-send/kudos-send.component';
         KudosCreateComponent,
         KudosSendComponent,
     ],
-    imports: [CommonModule, KudosRoutingModule, MatCardModule, MatCarouselModule],
+    imports: [CommonModule, KudosRoutingModule, MatCardModule, MatCarouselModule, FormsModule, ReactiveFormsModule, Ng2SearchPipeModule],
 })
 export class KudosModule {}

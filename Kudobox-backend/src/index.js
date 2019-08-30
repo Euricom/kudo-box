@@ -128,13 +128,15 @@ app.get("/api/user", (req, res, next) => {
 });
 // defining an endpoint to return all kudos
 app.get("/api/kudo", (req, res, next) => {
-  Kudo.find((err, kudos) => {
-    if (err) {
-      res.status(err);
-    } else {
-      res.json(kudos);
-    }
-  });
+  Kudo.find()
+    .populate("receiver")
+    .exec((err, kudos) => {
+      if (err) {
+        res.status(err);
+      } else {
+        res.json(kudos);
+      }
+    });
 });
 
 app.get("/api/mykudo/", async (req, res, next) => {
@@ -186,6 +188,7 @@ app.post("/api/kudo", async (req, res) => {
 
   const newKudo = new Kudo(req.body);
   await newKudo.save();
+  console.log("save kudo", newKudo);
   res.send({ message: "New kudo inserted." });
 });
 

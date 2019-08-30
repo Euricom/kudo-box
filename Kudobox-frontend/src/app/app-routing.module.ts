@@ -10,13 +10,13 @@ import { AuthCallbackComponent } from './components/auth-callback/auth-callback.
 import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
 
 const routes: Routes = [
-    { path: 'kudo/create/:id', component: CreateComponent, canActivate: [OidcGuardService] },
+    /*{ path: 'kudo/create/:id', component: CreateComponent, canActivate: [OidcGuardService] },
     { path: 'kudo/send', component: SendComponent, canActivate: [OidcGuardService] },
     { path: 'kudo', component: NewKudoComponent, canActivate: [OidcGuardService] },
     { path: 'myKudo', component: MyKudoComponent, canActivate: [OidcGuardService] },
-    { path: 'allKudos', component: AllKudosComponent, canActivate: [OidcGuardService] },
+    { path: 'allKudos', component: AllKudosComponent, canActivate: [OidcGuardService] },*/
     { path: 'auth', component: AuthCallbackComponent },
-    { path: '', redirectTo: 'kudo', pathMatch: 'full', canActivate: [OidcGuardService] },
+    { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
     {
         path: 'wall-of-fame',
         loadChildren: () => import('./wall-off-fame/wall-off-fame.module').then(m => m.WallOffFameModule),
