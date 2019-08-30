@@ -13,7 +13,6 @@ export class CarouselKudosComponent {
     @ViewChildren(MatCarouselSlideComponent) public carouselSlides: QueryList<MatCarouselSlideComponent>;
     public slidesList = kudoImages;
 
-    //
     public showContent = false;
 
     public timings = '250ms ease-in';
@@ -32,7 +31,6 @@ export class CarouselKudosComponent {
     public useMouseWheel = false;
     public orientation: Orientation = 'ltr';
     public log: string[] = [];
-    //
 
     constructor(private router: Router) {}
 

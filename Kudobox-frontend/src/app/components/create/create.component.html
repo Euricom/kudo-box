@@ -10,8 +10,6 @@
                 >
                     Comic Sans MS
                 </button>
-                <!--<input type='radio' value='Comic Sans MS' name='radio' id='font1' checked (change)="changeFont($event.target.value)"/>
-        <label id="labelFont1" for='font1'>Comic Sans MS</label>-->
             </li>
             <li>
                 <button
@@ -22,8 +20,6 @@
                 >
                     Times New Roman
                 </button>
-                <!--<input type='radio' value='Times New Roman' name='radio'  id='font2' (change)="changeFont($event.target.value)"/>
-        <label id="labelFont2" for='font2'>Times New Roman</label>-->
             </li>
             <li>
                 <button
@@ -34,22 +30,25 @@
                 >
                     Arial Black
                 </button>
-                <!--<input type='radio' value='Arial Black' name='radio'  id='font3' (change)="changeFont($event.target.value)"/>
-        <label id="labelFont3" for='font3'>Arial Black</label>-->
             </li>
         </ul>
     </div>
 
-    <div class="create-kudo-container">
-        <ko-stage #stage [config]="configStage">
-            <ko-layer #imageLayer>
-                <ko-image #image [config]="configImage" (click)="handleClick($event)"></ko-image>
-            </ko-layer>
-            <ko-layer #textLayer>
-                <ko-text #text [config]="configText"></ko-text>
-            </ko-layer>
-        </ko-stage>
-        <textarea id="textAreaForImage" #textarea [style.font-family]="fontFamily" [(ngModel)]="defaultText"></textarea>
-        <button type="button" class="btnNext" (click)="createCanvas(textarea.value)">Next</button>
-    </div>
+    <mat-card class="my-kudo-card">
+        <div class="containerImage">
+            <img src="{{ baseImageUrl }}" class="my-kudo-card-image" />
+            <textarea
+                id="textAreaForImage"
+                [style.font-family]="fontFamily"
+                placeholder="Type some text here..."
+                #textarea
+            ></textarea>
+        </div>
+        <div class="containerBtn">
+            <span class="invalid" [style.visibility]="isTextareaFilled ? 'hidden' : 'visible'"
+                >Please, type something nice</span
+            >
+            <button type="button" class="btnNext" (click)="createCanvas(textarea.value)">Next</button>
+        </div>
+    </mat-card>
 </div>

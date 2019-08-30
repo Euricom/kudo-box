@@ -7,7 +7,7 @@ import { kudoImages } from '../../data/kudoImages';
     styleUrls: ['./list-kudos.component.scss'],
 })
 export class ListKudosComponent implements OnInit {
-    public kudos: Array<object>;
+    public kudos;
     constructor() {}
 
     ngOnInit() {

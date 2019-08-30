@@ -1,17 +1,24 @@
-<mat-card class="my-kudo-card" *ngFor="let kudo of kudos">
-    <img class="my-kudo-card-image" src="{{ kudo.url }}" />
-    <mat-card-footer>
-        <p>Received from {{ kudo.name }}</p>
-        <p>Date {{ kudo.date | date: 'EEEE d/M/yy h:mm' }}</p>
-        <share-buttons
-            class="share-buttons-align-center"
-            [theme]="'default'"
-            [include]="['facebook', 'twitter', 'linkedin']"
-            [show]="3"
-            [autoSetMeta]="false"
-            [url]="image"
-            [image]="image"
-        >
-        </share-buttons>
-    </mat-card-footer>
-</mat-card>
+<h1>My kudos</h1>
+<div class="container" *ngIf="kudos?.length > 0">
+    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos">
+        <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
+        <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
+        <mat-card-footer>
+            <p>Received from {{ kudo.sender.name }}</p>
+            <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
+            <share-buttons
+                class="share-buttons-align-center"
+                [theme]="'default'"
+                [include]="['facebook', 'twitter', 'linkedin']"
+                [show]="3"
+                [autoSetMeta]="false"
+                [url]="image"
+                [image]="image"
+            >
+            </share-buttons>
+        </mat-card-footer>
+    </mat-card>
+</div>
+<div class="noKudos" *ngIf="kudos?.length === 0">
+    <p>I'm sorry, you didn't receive a kudo yet :-(</p>
+</div>
