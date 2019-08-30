@@ -4,6 +4,7 @@ import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { KudoService } from '../../services/kudo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-send',
@@ -14,6 +15,7 @@ export class SendComponent implements OnInit {
     public isFormInvalid = false;
     public searchText;
     public sizeList: number;
+    sendKudoSubscription: Subscription;
 
     userForm: FormGroup;
 
@@ -23,19 +25,23 @@ export class SendComponent implements OnInit {
 
     ngOnInit() {
         this.userForm = new FormGroup({
-            email: new FormControl('', Validators.required),
+            user: new FormControl('', Validators.required),
         });
         this.onResize();
         this.users = this._kudoService.getUsersList();
     }
 
+    ngOnDestroy() {
+        this.sendKudoSubscription.unsubscribe();
+    }
+
     sendKudo() {
         if (this.userForm.status === 'VALID') {
             let kudo = this._kudoService.kudo;
-            kudo.user = this.userForm.value.email;
+            kudo.receiver = this.userForm.value.user;
 
-            this._kudoService.sendKudo(kudo).subscribe(
-                data => {
+            this.sendKudoSubscription = this._kudoService.sendKudo(kudo).subscribe(
+                () => {
                     this._notifier.notify('success', "You're kudo is successfully sent!");
                 },
                 err => {

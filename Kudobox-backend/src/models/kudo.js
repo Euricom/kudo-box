@@ -1,22 +1,33 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-let Kudo = new Schema({
-    imageString: {
-        type: String
-    },    
-    createdOn: {
-        type: Date 
-    },    
-    createdBy: {
-        type: String
-    },
-    receiver:{
-        type: String
-    }   
+let KudoSchema = new Schema({
+  createdOn: {
+    type: Date
+  },
+  receiver: {
+    type: String,
+    ref: "User"
+  },
+  sender: {
+    type: String,
+    ref: "User"
+  },
+  kudoId: {
+    type: Number
+  },
+  text: {
+    type: String
+  },
+  fontFamily: {
+    type: String
+  },
+  status: {
+    type: String
+  }
 });
 
-Kudo.pre('save',function(next){
-    this.createdOn = new Date();
-    next();
+KudoSchema.pre("save", function(next) {
+  this.createdOn = new Date();
+  next();
 });
-module.exports = mongoose.model('Kudo', Kudo);
+module.exports = mongoose.model("Kudo", KudoSchema);

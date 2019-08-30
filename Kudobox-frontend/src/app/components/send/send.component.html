@@ -12,17 +12,15 @@
     </form>
     <form (ngSubmit)="sendKudo()" [formGroup]="userForm">
         <select
-            formControlName="email"
+            formControlName="user"
             class="custom-select"
             size="{{ sizeList }}"
             [ngClass]="{
                 'is-invalid':
-                    (userForm.get('email').touched || userForm.get('email').dirty) && !userForm.get('email').valid
+                    (userForm.get('user').touched || userForm.get('user').dirty) && !userForm.get('user').valid
             }"
         >
-            <option *ngFor="let user of users | async | filter: searchText" [value]="user.email">{{
-                user.name
-            }}</option>
+            <option *ngFor="let user of users | async | filter: searchText" [value]="user._id">{{ user.name }}</option>
         </select>
         <span class="invalid" *ngIf="isFormInvalid">Please choose a person</span>
         <button type="submit" class="btnSend">Send</button>

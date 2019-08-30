@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 
 import { kudoImages } from '../../data/kudoImages';
 import { KudoService } from '../../services/kudo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-my-kudo',
@@ -11,6 +12,8 @@ import { KudoService } from '../../services/kudo.service';
 export class MyKudoComponent implements OnInit {
     public kudos;
     public kudoImages;
+    myKudosSubscription: Subscription;
+    changeStatusSubscription: Subscription;
 
     public image;
 
@@ -18,9 +21,17 @@ export class MyKudoComponent implements OnInit {
 
     ngOnInit() {
         this.kudoImages = kudoImages;
-        this._kudoService.getMyKudos().subscribe(data => {
+        this.myKudosSubscription = this._kudoService.getMyKudos().subscribe(data => {
             this.kudos = data;
+            this.changeStatusSubscription = this._kudoService.changeStatus('read').subscribe(() => {
+                console.log('Kudos are updated');
+            });
         });
+    }
+
+    ngOnDestroy() {
+        this.myKudosSubscription.unsubscribe();
+        this.changeStatusSubscription.unsubscribe();
     }
 
     getKudoImage(id: number) {

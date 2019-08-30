@@ -44,7 +44,7 @@ export class KudoService implements OnInit {
 
     sendKudo(kudo) {
         const body = JSON.stringify(kudo);
-        return this.http.post('/api/kudo', body).pipe(
+        return this.http.post('/api/kudo', kudo).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);
                 return throwError('BIGBIG ERROR');
@@ -53,10 +53,49 @@ export class KudoService implements OnInit {
     }
 
     getUsersList() {
-        return this.http.get('/api/user');
+        return this.http.get('/api/user').pipe(
+            catchError(e => {
+                console.log(`error:`, e);
+                return throwError('BIGBIG ERROR');
+            }),
+        );
     }
 
     getMyKudos() {
-        return this.http.get('/api/mykudo/');
+        return this.http.get('/api/mykudo/').pipe(
+            catchError(e => {
+                console.log(`error:`, e);
+                return throwError('BIGBIG ERROR');
+            }),
+        );
+    }
+
+    getAllKudos() {
+        return this.http.get('/api/kudo/').pipe(
+            catchError(e => {
+                console.log(`error:`, e);
+                return throwError('BIGBIG ERROR');
+            }),
+        );
+    }
+
+    getUnreadKudos() {
+        console.log('getUnreadKudos');
+        return this.http.get('/api/unreadKudos/').pipe(
+            catchError(e => {
+                console.log(`error:`, e);
+                return throwError('BIGBIG ERROR');
+            }),
+        );
+    }
+
+    changeStatus(status: string) {
+        console.log('change status');
+        return this.http.put('/api/changeStatus/', { status: status }).pipe(
+            catchError(e => {
+                console.log(`error:`, e);
+                return throwError('BIGBIG ERROR');
+            }),
+        );
     }
 }
