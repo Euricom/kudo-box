@@ -32,7 +32,7 @@ module.exports = {
     });
 
     // add kudos
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 1000; i++) {
       let randomKudo = dummy(KudoModel, {});
       let kudo = new KudoModel(randomKudo);
       kudo.sender = users[Math.floor(Math.random() * users.length)]._id;

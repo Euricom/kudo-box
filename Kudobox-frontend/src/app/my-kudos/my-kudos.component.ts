@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 
+import { Subscription } from 'rxjs';
 import { kudoImages } from '../data/kudoImages';
 import { KudoService } from '../services/kudo.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-my-kudos',
@@ -14,7 +14,6 @@ export class MyKudosComponent implements OnInit {
     public kudoImages;
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
-
     public image;
 
     constructor(private _kudoService: KudoService) {}
@@ -39,6 +38,7 @@ export class MyKudosComponent implements OnInit {
             if (kudo.id === id) {
                 return kudo.url;
             }
+            return false;
         });
         return image[0].url;
     }
