@@ -2,20 +2,18 @@
     position: fixed;
     bottom: 5px;
     right: 5px;
-    font-size: 20px;
+    font-size: 50px;
     text-align: center;
     border-radius: 5px;
     outline: none;
     background: none;
     border: none;
+    height: 50px;
+    width: 100px;
     margin: 40px;
     color: #c2185b;
 }
 
 .scrollToTop:hover {
     color: #a1174d;
-}
-
-.fa.fa-arrow-circle-up {
-    font-size: 50px;
 }

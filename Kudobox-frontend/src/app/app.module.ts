@@ -25,6 +25,7 @@ import { KonvaModule } from 'ng2-konva';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 // search module
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
@@ -39,11 +40,14 @@ import { SendComponent } from './components/send/send.component';
 import { KudoService } from './services/kudo.service';
 import { OidcGuardService } from './services/OidcGuardService';
 import { AuthService } from './services/auth.service';
-import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+//import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { AuthCallbackComponent } from './core/auth-callback/auth-callback.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { LogoutCallbackComponent } from './components/logout-callback/logout-callback.component';
+//import { LogoutCallbackComponent } from './components/logout-callback/logout-callback.component';
+import { LogoutCallbackComponent } from './core/logout-callback/logout-callback.component';
 import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
-import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+//import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 
 import { CarouselKudosComponent } from './components/carousel-kudos/carousel-kudos.component';
 import { ListKudosComponent } from './components/list-kudos/list-kudos.component';
@@ -132,6 +136,7 @@ const customNotifierOptions: NotifierOptions = {
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         Ng2SearchPipeModule,
+        FontAwesomeModule,
     ],
     providers: [
         KudoService,

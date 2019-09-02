@@ -1,4 +1,5 @@
 import { Component, HostListener, ElementRef } from '@angular/core';
+import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-scroll-top',
@@ -6,11 +7,13 @@ import { Component, HostListener, ElementRef } from '@angular/core';
     styleUrls: ['./scroll-top.component.scss'],
 })
 export class ScrollTopComponent {
+    faArrowCircleUp = faArrowCircleUp;
     isShow: boolean;
     topPosToStartShowing = 100;
 
     @HostListener('window:scroll')
-    checkScroll() {
+    onWindowScroll() {
+        console.log('YOU SCROLLED');
         // window의 scroll top
         // Both window.pageYOffset and document.documentElement.scrollTop returns the same result in all the cases. window.pageYOffset is not supported below IE 9.
 

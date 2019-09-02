@@ -6,7 +6,8 @@ import { NewKudoComponent } from './components/newKudo/newKudo.component';
 import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
 import { SendComponent } from './components/send/send.component';
 import { OidcGuardService } from './services/OidcGuardService';
-import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+//import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { AuthCallbackComponent } from './core/auth-callback/auth-callback.component';
 import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
 
 const routes: Routes = [
