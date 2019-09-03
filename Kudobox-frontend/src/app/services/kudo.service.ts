@@ -19,11 +19,12 @@ export class KudoService implements OnInit {
     }
 
     get kudo() {
-        return this._kudo;
+        return JSON.parse(localStorage.getItem('newKudo'));
     }
 
     set kudo(kudo) {
         this._kudo = kudo;
+        localStorage.setItem('newKudo', JSON.stringify(this._kudo));
     }
 
     set user(user: string) {
@@ -46,7 +47,7 @@ export class KudoService implements OnInit {
         return this.http.post('/api/kudo', kudo).pipe(
             catchError(e => {
                 console.log(`error: ${e}`);
-                return throwError('BIGBIG ERROR');
+                return throwError(e.statusText);
             }),
         );
     }
@@ -55,7 +56,7 @@ export class KudoService implements OnInit {
         return this.http.get('/api/user').pipe(
             catchError(e => {
                 console.log(`error:`, e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e.statusText);
             }),
         );
     }
@@ -64,7 +65,7 @@ export class KudoService implements OnInit {
         return this.http.get('/api/mykudo/').pipe(
             catchError(e => {
                 console.log(`error:`, e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e.statusText);
             }),
         );
     }
@@ -73,7 +74,7 @@ export class KudoService implements OnInit {
         return this.http.get('/api/kudo/').pipe(
             catchError(e => {
                 console.log(`error:`, e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e.statusText);
             }),
         );
     }
@@ -83,7 +84,7 @@ export class KudoService implements OnInit {
         return this.http.get('/api/unreadKudos/').pipe(
             catchError(e => {
                 console.log(`error:`, e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e.statusText);
             }),
         );
     }
@@ -93,7 +94,7 @@ export class KudoService implements OnInit {
         return this.http.put('/api/changeStatus/', { status: status }).pipe(
             catchError(e => {
                 console.log(`error:`, e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e.statusText);
             }),
         );
     }
