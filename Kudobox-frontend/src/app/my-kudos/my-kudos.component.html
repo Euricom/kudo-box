@@ -4,8 +4,10 @@
         <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
         <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
         <mat-card-footer>
-            <p>Received from {{ kudo.sender.name }}</p>
-            <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
+            <div class="generalInfo">
+                <p>Received from {{ kudo.sender.name }}</p>
+                <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
+            </div>
             <share-buttons
                 class="share-buttons-align-center"
                 [theme]="'default'"

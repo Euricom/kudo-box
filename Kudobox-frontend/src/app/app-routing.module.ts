@@ -7,6 +7,7 @@ import { AuthCallbackComponent } from './core/auth-callback/auth-callback.compon
 const routes: Routes = [
     { path: 'auth', component: AuthCallbackComponent },
     { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
+    /*{ path: '', redirectTo: 'kudos', pathMatch: 'full' },*/
     {
         path: 'wall-of-fame',
         loadChildren: () => import('./wall-off-fame/wall-off-fame.module').then(m => m.WallOffFameModule),

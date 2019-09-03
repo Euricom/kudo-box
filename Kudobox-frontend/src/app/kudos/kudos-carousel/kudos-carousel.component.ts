@@ -23,7 +23,7 @@ export class KudosCarouselComponent {
     public hideIndicators = false;
     public color: ThemePalette = 'primary';
     public maxWidth = '100%';
-    public proportion = 75;
+    public proportion = 100;
     public slides = this.slidesList.length;
     public overlayColor = '#00000040';
     public hideOverlay = true;

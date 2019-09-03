@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 
 import { Subscription } from 'rxjs';
-import { kudoImages } from '../data/kudoImages';
 import { KudoService } from '../services/kudo.service';
+import { kudoImages } from '../data/kudoImages.js';
 
 @Component({
     selector: 'app-my-kudos',

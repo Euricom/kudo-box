@@ -37,7 +37,7 @@ module.exports = {
       let kudo = new KudoModel(randomKudo);
       kudo.sender = users[Math.floor(Math.random() * users.length)]._id;
       kudo.receiver = users[Math.floor(Math.random() * users.length)]._id;
-      kudo.kudoId = Math.floor(Math.random() * 6) + 1;
+      kudo.kudoId = Math.floor(Math.random() * 3) + 1;
       kudo.text = "This is some text for the KUDO!!!!";
       kudo.fontFamily =
         fontFamilies[Math.floor(Math.random() * fontFamilies.length)];
