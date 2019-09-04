@@ -1,18 +1,31 @@
 :host {
     display: flex;
     flex-flow: column;
+    padding-top: 64px;
+    box-sizing: border-box;
+    min-height: 100%;
 }
 
-.menu-spacer {
-    flex: 1 1 auto;
+.mat-toolbar {
+    flex-shrink: 0;
+    height: 64px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 
 .mat-toolbar-row {
     background-color: #72b43c;
 }
 
+.menu-spacer {
+    flex: 1 1 auto;
+}
+
 .mat-sidenav-container {
-    flex-grow: 1;
+    flex: 1;
 }
 
 .kudoCount {

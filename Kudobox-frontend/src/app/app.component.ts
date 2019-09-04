@@ -26,14 +26,11 @@ export class AppComponent implements AfterViewInit {
     constructor(private authService: AuthService, private route: Router, private _kudoService: KudoService) {}
 
     ngAfterViewInit() {
-      console.log('ngAfterViewInit', navigator.onLine);
-        if (navigator.onLine) {
-            this.sideNavSubscription = this.sidenav.openedStart.subscribe(() => {
-                this._kudoService.getUnreadKudos().subscribe((data: number) => {
-                    this.kudoCount = data;
-                });
+        this.sideNavSubscription = this.sidenav.openedStart.subscribe(() => {
+            this._kudoService.getUnreadKudos().subscribe((data: number) => {
+                this.kudoCount = data;
             });
-        }
+        });
     }
 
     ngOnDestroy() {

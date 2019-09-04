@@ -109,22 +109,30 @@ export class KudoService implements OnInit {
     }
 
     getAllKudos() {
-        return this.http.get(`${environment.apiUrl}/api/kudo/`).pipe(
-            catchError(e => {
-                console.log(`error3:`, e);
-                return throwError(e.statusText);
-            }),
-        );
+        if (navigator.onLine) {
+            return this.http.get(`${environment.apiUrl}/api/kudo/`).pipe(
+                catchError(e => {
+                    console.log(`error3:`, e);
+                    return throwError(e.statusText);
+                }),
+            );
+        } else {
+            return of({});
+        }
     }
 
     getUnreadKudos() {
         console.log('getUnreadKudos');
-        return this.http.get(`${environment.apiUrl}/api/unreadKudos/`).pipe(
-            catchError(e => {
-                console.log(`error4:`, e);
-                return throwError(e.statusText);
-            }),
-        );
+        if (navigator.onLine) {
+            return this.http.get(`${environment.apiUrl}/api/unreadKudos/`).pipe(
+                catchError(e => {
+                    console.log(`error4:`, e);
+                    return throwError(e.statusText);
+                }),
+            );
+        } else {
+            return of({});
+        }
     }
 
     changeStatus(status: string) {

@@ -22,12 +22,9 @@ export class WallOffFameComponent implements OnInit {
     ngOnInit() {
         this.kudoImages = kudoImages;
         this.isOnline = navigator.onLine;
-        console.log('isOnline', navigator.onLine);
-        if (navigator.onLine) {
-            this.allKudosSubscription = this._kudoService.getAllKudos().subscribe(data => {
-                this.kudos = data;
-            });
-        }
+        this.allKudosSubscription = this._kudoService.getAllKudos().subscribe(data => {
+            this.kudos = data;
+        });
     }
 
     ngOnDestroy() {
