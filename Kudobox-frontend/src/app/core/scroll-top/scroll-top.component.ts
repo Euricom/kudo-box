@@ -13,7 +13,6 @@ export class ScrollTopComponent {
 
     @HostListener('window:scroll')
     onWindowScroll() {
-        console.log('YOU SCROLLED');
         // window의 scroll top
         // Both window.pageYOffset and document.documentElement.scrollTop returns the same result in all the cases. window.pageYOffset is not supported below IE 9.
 

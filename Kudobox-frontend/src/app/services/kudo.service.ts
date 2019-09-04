@@ -131,7 +131,7 @@ export class KudoService implements OnInit {
                 }),
             );
         } else {
-            return of({});
+            return of(0);
         }
     }
 
