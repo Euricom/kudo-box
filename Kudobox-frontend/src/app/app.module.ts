@@ -106,14 +106,15 @@ const customNotifierOptions: NotifierOptions = {
         KonvaModule,
         FormsModule,
         ReactiveFormsModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production,
-        }),
         NotifierModule.withConfig(customNotifierOptions),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         Ng2SearchPipeModule,
         FontAwesomeModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+            // registrationStrategy: 'registerImmediately',
+        }),
     ],
     providers: [
         KudoService,

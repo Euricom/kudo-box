@@ -11,13 +11,11 @@ export class OidcGuardService implements CanActivate {
 
     constructor(private authService: AuthService) {}
 
-    canActivate(): boolean {
+    canActivate(): boolean | Promise<boolean> {
         if (this.authService.isLoggedIn()) {
             return true;
         }
 
-        this.authService.startLoginAuthentication();
-        this.log.info('Route navigation blocked by OidcGuardService');
-        return false;
+        return this.authService.startLoginAuthentication().then(() => this.authService.isLoggedIn());
     }
 }

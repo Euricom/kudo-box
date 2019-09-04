@@ -65,9 +65,6 @@ export class AuthService {
 
     startLoginAuthentication(): Promise<void> {
         this.log.info('AuthService.startLoginAuthentication() has been called.');
-        /*const origin: any = <any>window.location;
-        const url = window.location.href;*/
-
         return this.manager.signinRedirect({ state: window.location.pathname });
     }
 

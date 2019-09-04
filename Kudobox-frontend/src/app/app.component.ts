@@ -1,11 +1,10 @@
-import { Component, OnInit, AfterViewInit, AfterViewChecked, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { User } from 'oidc-client';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatSidenav } from '@angular/material';
+import { faPlusCircle, faAward, faBox, faBoxOpen, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from './services/auth.service';
 import { KudoService } from './services/kudo.service';
-import { MatSidenavContainer, MatSidenav } from '@angular/material';
-import { faPlusCircle, faAward, faBox, faBoxOpen, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-root',

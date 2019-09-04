@@ -192,6 +192,19 @@ app.post("/api/kudo", async (req, res) => {
   res.send({ message: "New kudo inserted." });
 });
 
+
+app.post("/api/kudo/batch", async (req, res) => {
+  let kudos = req.body;
+  const sender = req.currentUser._id;
+  const status = "unread";
+  let promiseList = [];
+
+  kudos.forEach(kudo => promiseList.push(new Kudo(kudo).save()))
+  
+  await Promise.all(promiseList)
+  console.log("save kudos");
+  res.send({ message: "New kudo inserted." });
+});
 // endpoint to delete a kudo
 app.delete("/api/kudo/:id", async (req, res) => {
   await Kudo.deleteOne({ _id: req.params.id });
