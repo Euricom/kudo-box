@@ -10,9 +10,6 @@ const routes: Routes = [
     { path: '', component: KudosComponent, canActivate: [OidcGuardService] },
     { path: 'create/:id', component: KudosCreateComponent, canActivate: [OidcGuardService] },
     { path: 'send', component: KudosSendComponent, canActivate: [OidcGuardService] },
-    /* { path: '', component: KudosComponent },
-    { path: 'create/:id', component: KudosCreateComponent },
-    { path: 'send', component: KudosSendComponent },*/
 ];
 
 @NgModule({

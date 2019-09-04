@@ -15,6 +15,7 @@ export class KudosComponent implements OnInit, OnDestroy {
         this.checkWidth();
         window.addEventListener('online', this.updateOnlineStatus);
         this.updateOnlineStatus();
+        this._kudoService.getUsersList().subscribe();
     }
     updateOnlineStatus = () => {
         if (navigator.onLine) {

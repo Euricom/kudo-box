@@ -15,9 +15,7 @@ export class KudoService implements OnInit {
 
     constructor(private http: HttpClient) {}
 
-    ngOnInit() {
-        this._usersList = this.getUsersList();
-    }
+    ngOnInit() {}
 
     get kudo() {
         return JSON.parse(localStorage.getItem('newKudo'));
@@ -87,7 +85,9 @@ export class KudoService implements OnInit {
         if (navigator.onLine) {
             return this.http.get(`${environment.apiUrl}/api/user`).pipe(
                 tap(users => {
+                    console.log('users saved');
                     localStorage.setItem('users', JSON.stringify(users));
+                    return of(users);
                 }),
                 catchError(e => {
                     console.log(`error1:`, e);
@@ -116,9 +116,8 @@ export class KudoService implements OnInit {
                     return throwError(e.statusText);
                 }),
             );
-        } else {
-            return of({});
         }
+        return of({});
     }
 
     getUnreadKudos() {
@@ -133,6 +132,7 @@ export class KudoService implements OnInit {
         } else {
             return of(0);
         }
+        return of({});
     }
 
     changeStatus(status: string) {

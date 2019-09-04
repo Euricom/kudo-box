@@ -42,6 +42,8 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LogoutCallbackComponent } from './core/logout-callback/logout-callback.component';
 import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 import { ErrorHandlerService } from './services/error-handler.service';
+import { OfflineComponent } from './core/offline/offline.component';
+import { OfflineGuardService } from './services/OfflineGuardService';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -85,12 +87,7 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        AuthCallbackComponent,
-        LogoutCallbackComponent,
-        ScrollTopComponent,
-    ],
+    declarations: [AppComponent, AuthCallbackComponent, LogoutCallbackComponent, ScrollTopComponent, OfflineComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -124,6 +121,7 @@ const customNotifierOptions: NotifierOptions = {
     providers: [
         KudoService,
         OidcGuardService,
+        OfflineGuardService,
         AuthService,
         ErrorHandlerService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

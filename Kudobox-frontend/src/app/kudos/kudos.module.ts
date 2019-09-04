@@ -20,6 +20,14 @@ import { KudosSendComponent } from './kudos-send/kudos-send.component';
         KudosCreateComponent,
         KudosSendComponent,
     ],
-    imports: [CommonModule, KudosRoutingModule, MatCardModule, MatCarouselModule, FormsModule, ReactiveFormsModule, Ng2SearchPipeModule],
+    imports: [
+        CommonModule,
+        KudosRoutingModule,
+        MatCardModule,
+        MatCarouselModule,
+        FormsModule,
+        ReactiveFormsModule,
+        Ng2SearchPipeModule,
+    ],
 })
 export class KudosModule {}
