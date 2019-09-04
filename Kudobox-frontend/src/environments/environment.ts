@@ -6,6 +6,7 @@ import * as Logger from 'js-logger';
 export const environment = {
     logLevel: Logger.DEBUG,
     production: false,
+    apiUrl: 'http://localhost:4001',
     azure: {
         tenantID: '0b53d2c1-bc55-4ab3-a161-927d289257f2',
         clientID: 'de411acd-f5d7-4040-8da6-3d3adce56901',
@@ -108,7 +109,7 @@ export const environment = {
                 issuer: 'https://login.microsoftonline.com/0b53d2c1-bc55-4ab3-a161-927d289257f2/v2.0',
             },
         ],
-    }
+    },
 };
 
 /*
