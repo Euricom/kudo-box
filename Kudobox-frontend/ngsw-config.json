@@ -14,16 +14,8 @@
             "installMode": "lazy",
             "updateMode": "prefetch",
             "resources": {
-                "files": ["/assets/**", "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"]
-            }
-        },
-        {
-            "name": "fonts",
-            "resources": {
-                "urls": [
-                    "https://fonts.googleapis.com/css?family=Lexend+Zetta",
-                    "https://fonts.googleapis.com/css?family=Times+New+Roman"
-                ]
+                "files": ["/assets/**", "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"],
+                "urls": ["https://fonts.googleapis.com/**"]
             }
         }
     ]

@@ -41,3 +41,9 @@ fa-icon {
 .mat-sidenav {
     width: 190px;
 }
+
+@media only screen and (max-width: 600px) {
+    .mat-toolbar {
+        height: 56px;
+    }
+}
