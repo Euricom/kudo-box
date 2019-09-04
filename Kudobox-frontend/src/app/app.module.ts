@@ -85,7 +85,12 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent, AuthCallbackComponent, LogoutCallbackComponent, ScrollTopComponent],
+    declarations: [
+        AppComponent,
+        AuthCallbackComponent,
+        LogoutCallbackComponent,
+        ScrollTopComponent,
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,

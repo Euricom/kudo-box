@@ -1,23 +1,26 @@
-<div class="allKudosHeader">
-    <h1>Wall Of Fame</h1>
-    <form class="searchForm">
-        <mat-form-field>
-            <input
-                matInput
-                placeholder="Search by name"
-                class="form-control"
-                type="text"
-                name="search"
-                [(ngModel)]="searchText"
-                autocomplete="off"
-            />
-        </mat-form-field>
-    </form>
-</div>
+<div *ngIf="isOnline">
+    <div class="allKudosHeader">
+        <h1>Wall Of Fame</h1>
+        <form class="searchForm">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="Search by name"
+                    class="form-control"
+                    type="text"
+                    name="search"
+                    [(ngModel)]="searchText"
+                    autocomplete="off"
+                />
+            </mat-form-field>
+        </form>
+    </div>
 
-<div class="allKudos">
-    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText">
-        <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
-        <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
-    </mat-card>
+    <div class="allKudos">
+        <mat-card class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText">
+            <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
+            <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
+        </mat-card>
+    </div>
 </div>
+<app-offline *ngIf="!isOnline"></app-offline>

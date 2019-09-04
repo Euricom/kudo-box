@@ -2,13 +2,13 @@ import { Injectable, ErrorHandler } from '@angular/core';
 import { NotifierService } from 'angular-notifier';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class ErrorHandlerService implements ErrorHandler {
+    constructor(private _notifier: NotifierService) {}
 
-  constructor(private _notifier: NotifierService) { }
-
-  handleError(error: any) {
-    this._notifier.notify('error', error);
-  }
+    handleError(error: any) {
+        console.log('handle error', error);
+        this._notifier.notify('error', error);
+    }
 }

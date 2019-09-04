@@ -56,7 +56,7 @@ export class KudoService implements OnInit {
         return this.http.post(`${environment.apiUrl}/api/kudo/batch`, kudos).pipe(
             tap(() => localStorage.removeItem('offlineKudos')),
             catchError(e => {
-                console.log(`error: ${e}`);
+                console.log(`error10: ${e}`);
                 return throwError('BIGBIG ERROR');
             }),
         );
@@ -66,7 +66,7 @@ export class KudoService implements OnInit {
         if (navigator.onLine) {
             return this.http.post(`${environment.apiUrl}/api/kudo`, kudo).pipe(
                 catchError(e => {
-                    console.log(`error: ${e}`);
+                    console.log(`error9: ${e}`);
                     return throwError('BIGBIG ERROR');
                 }),
             );
@@ -82,13 +82,15 @@ export class KudoService implements OnInit {
     }
 
     getUsersList() {
+        console.log('HALLO');
+        console.log('getuserslist', navigator.onLine);
         if (navigator.onLine) {
             return this.http.get(`${environment.apiUrl}/api/user`).pipe(
                 tap(users => {
                     localStorage.setItem('users', JSON.stringify(users));
                 }),
                 catchError(e => {
-                    console.log(`error:`, e);
+                    console.log(`error1:`, e);
                     return throwError('BIGBIG ERROR');
                 }),
             );
@@ -100,7 +102,7 @@ export class KudoService implements OnInit {
         return this.http.get(`${environment.apiUrl}/api/mykudo/`).pipe(
             tap(myKudos => localStorage.setItem('myKudos', JSON.stringify(myKudos))),
             catchError(e => {
-                console.log(`error:`, e);
+                console.log(`error2:`, e);
                 return throwError(e.statusText);
             }),
         );
@@ -109,7 +111,7 @@ export class KudoService implements OnInit {
     getAllKudos() {
         return this.http.get(`${environment.apiUrl}/api/kudo/`).pipe(
             catchError(e => {
-                console.log(`error:`, e);
+                console.log(`error3:`, e);
                 return throwError(e.statusText);
             }),
         );
@@ -119,7 +121,7 @@ export class KudoService implements OnInit {
         console.log('getUnreadKudos');
         return this.http.get(`${environment.apiUrl}/api/unreadKudos/`).pipe(
             catchError(e => {
-                console.log(`error:`, e);
+                console.log(`error4:`, e);
                 return throwError(e.statusText);
             }),
         );
@@ -129,7 +131,7 @@ export class KudoService implements OnInit {
         console.log('change status');
         return this.http.put(`${environment.apiUrl}/api/changeStatus/`, { status }).pipe(
             catchError(e => {
-                console.log(`error:`, e);
+                console.log(`error5:`, e);
                 return throwError(e.statusText);
             }),
         );

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { kudoImages } from '../data/kudoImages';
 import { KudoService } from '../services/kudo.service';
 import { Subscription } from 'rxjs';
+import { tryParse } from 'selenium-webdriver/http';
 
 @Component({
     selector: 'app-wall-off-fame',
@@ -13,15 +14,20 @@ export class WallOffFameComponent implements OnInit {
     public kudoImages;
     public kudos;
     public searchText;
+    public isOnline = false;
     allKudosSubscription: Subscription;
 
     constructor(private _kudoService: KudoService) {}
 
     ngOnInit() {
         this.kudoImages = kudoImages;
-        this.allKudosSubscription = this._kudoService.getAllKudos().subscribe(data => {
-            this.kudos = data;
-        });
+        this.isOnline = navigator.onLine;
+        console.log('isOnline', navigator.onLine);
+        if (navigator.onLine) {
+            this.allKudosSubscription = this._kudoService.getAllKudos().subscribe(data => {
+                this.kudos = data;
+            });
+        }
     }
 
     ngOnDestroy() {
