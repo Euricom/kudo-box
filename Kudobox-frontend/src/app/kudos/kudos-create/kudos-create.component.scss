@@ -1,0 +1,173 @@
+.container {
+    margin: auto;
+    width: fit-content;
+}
+
+.fontList {
+    margin: auto;
+    width: fit-content;
+}
+
+.mat-card {
+    padding: 20px;
+    width: 500px;
+    margin: 0 auto;
+    box-shadow: none;
+}
+
+.my-kudo-card {
+    margin-bottom: 30px;
+}
+
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #72b43c;
+    top: 152px;
+    left: 94px;
+    width: 355px;
+    height: 225px;
+    line-height: 35.5px;
+}
+
+.my-kudo-card-image {
+    width: 500px;
+}
+
+ul {
+    list-style: none;
+}
+li {
+    display: inline-block;
+    margin-right: 15px;
+    height: 50px;
+}
+
+#font1 {
+    font-family: 'Comic Sans MS';
+}
+
+#font2 {
+    font-family: 'Times New Roman';
+}
+
+#font3 {
+    font-family: 'Lexend Zetta';
+}
+
+.fontsBtn {
+    background: none;
+    border: none;
+    /* color: #72b43c;*/
+    color: white;
+    outline: none;
+    height: 50px;
+    font-size: 20px;
+}
+
+.fontsBtn:hover:not(.active) {
+    background: url('../../../assets/splatter_small_green_trans.png') no-repeat;
+    color: white;
+}
+
+.active {
+    background: url('../../../assets/splatter_small_green.png') no-repeat;
+    color: white;
+}
+
+.containerBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btnNext {
+    height: 40px;
+    width: 70px;
+    border: none;
+    background-color: #72b43c;
+    color: white;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btnNext:hover {
+    background-color: #5a8e2f;
+}
+
+.invalid {
+    color: red;
+    margin: auto 0;
+}
+
+@media only screen and (max-width: 992px) {
+    #textAreaForImage {
+        line-height: 35.5px;
+        top: 152px;
+        left: 92px;
+        width: 355px;
+        height: 225px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    .containerImage {
+        width: 500px;
+    }
+
+    .my-kudo-card-image {
+        width: 500px;
+    }
+
+    #textAreaForImage {
+        font-size: 15px;
+        top: 154px;
+        left: 95px;
+        line-height: 35.5px;
+        width: 352px;
+        height: 202px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .my-kudo-card {
+        width: 300px;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
+
+    .containerImage {
+        width: 300px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+
+    .fontsBtn,
+    .btnNext {
+        font-size: 15px;
+    }
+
+    #textAreaForImage {
+        font-size: 10px;
+        top: 100px;
+        left: 65px;
+        width: 220px;
+        height: 125px;
+        line-height: 21px;
+    }
+}

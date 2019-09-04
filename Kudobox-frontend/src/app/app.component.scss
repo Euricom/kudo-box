@@ -1,11 +1,14 @@
 :host {
     display: flex;
     flex-flow: column;
-    height: 100%;
 }
 
 .menu-spacer {
     flex: 1 1 auto;
+}
+
+.mat-toolbar-row {
+    background-color: #72b43c;
 }
 
 .mat-sidenav-container {
@@ -14,4 +17,14 @@
 
 .kudoCount {
     margin-left: 10px;
+}
+
+fa-icon {
+    padding-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.mat-sidenav {
+    width: 190px;
 }

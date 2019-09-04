@@ -1,0 +1,75 @@
+h1 {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mat-card {
+    width: 500px;
+    box-shadow: none;
+}
+
+.my-kudo-card-image {
+    width: 500px;
+}
+
+.mat-card-footer {
+    padding-left: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #72b43c;
+    top: 149px;
+    left: 89px;
+    width: 355px;
+    height: 225px;
+    line-height: 35.5px;
+}
+
+.noKudos {
+    font-size: 25px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 992px) {
+    .mat-card {
+        width: 300px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+
+    #textAreaForImage {
+        top: 95px;
+        left: 58px;
+        font-size: 14px;
+        width: 225px;
+        height: 125px;
+        line-height: 21.5px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .mat-card-footer {
+        display: block;
+    }
+}

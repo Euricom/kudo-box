@@ -70,6 +70,8 @@ module.exports = {
       "no-underscore-dangle":'off',
       "@typescript-eslint/no-use-before-define":"off",
       "no-undef":"off",
+      "@typescript-eslint/no-empty-function":"off",
+      "prefer-destructuring":"off"
     },
 
 };

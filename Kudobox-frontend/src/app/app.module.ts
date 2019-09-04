@@ -25,6 +25,8 @@ import { KonvaModule } from 'ng2-konva';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 // search module
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 
 import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
@@ -32,22 +34,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CreateComponent } from './components/create/create.component';
-import { MyKudoComponent } from './components/my-kudo/my-kudo.component';
-import { NewKudoComponent } from './components/newKudo/newKudo.component';
-import { SendComponent } from './components/send/send.component';
 import { KudoService } from './services/kudo.service';
 import { OidcGuardService } from './services/OidcGuardService';
 import { AuthService } from './services/auth.service';
-import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { AuthCallbackComponent } from './core/auth-callback/auth-callback.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { LogoutCallbackComponent } from './components/logout-callback/logout-callback.component';
-import { AllKudosComponent } from './components/all-kudos/all-kudos.component';
-import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
-
-import { CarouselKudosComponent } from './components/carousel-kudos/carousel-kudos.component';
-import { ListKudosComponent } from './components/list-kudos/list-kudos.component';
-
+import { LogoutCallbackComponent } from './core/logout-callback/logout-callback.component';
+import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 import { ErrorHandlerService } from './services/error-handler.service';
 
 const customNotifierOptions: NotifierOptions = {
@@ -92,19 +85,7 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NewKudoComponent,
-        CreateComponent,
-        MyKudoComponent,
-        SendComponent,
-        AuthCallbackComponent,
-        LogoutCallbackComponent,
-        AllKudosComponent,
-        ScrollTopComponent,
-        CarouselKudosComponent,
-        ListKudosComponent,
-    ],
+    declarations: [AppComponent, AuthCallbackComponent, LogoutCallbackComponent, ScrollTopComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -125,13 +106,15 @@ const customNotifierOptions: NotifierOptions = {
         KonvaModule,
         FormsModule,
         ReactiveFormsModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {
-            enabled: environment.production,
-        }),
         NotifierModule.withConfig(customNotifierOptions),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         Ng2SearchPipeModule,
+        FontAwesomeModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+            // registrationStrategy: 'registerImmediately',
+        }),
     ],
     providers: [
         KudoService,
@@ -144,7 +127,7 @@ const customNotifierOptions: NotifierOptions = {
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    constructor() {
+    constructor(library: FaIconLibrary) {
         // Setup logging
         const consoleHandler = (Logger as any).createDefaultHandler();
 
@@ -155,5 +138,8 @@ export class AppModule {
                 consoleHandler(messages, context);
             }
         });
+
+        const icons = [faFacebookF, faTwitter, faLinkedinIn];
+        library.addIcons(...icons);
     }
 }

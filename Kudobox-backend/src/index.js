@@ -128,13 +128,15 @@ app.get("/api/user", (req, res, next) => {
 });
 // defining an endpoint to return all kudos
 app.get("/api/kudo", (req, res, next) => {
-  Kudo.find((err, kudos) => {
-    if (err) {
-      res.status(err);
-    } else {
-      res.json(kudos);
-    }
-  });
+  Kudo.find()
+    .populate("receiver")
+    .exec((err, kudos) => {
+      if (err) {
+        res.status(err);
+      } else {
+        res.json(kudos);
+      }
+    });
 });
 
 app.get("/api/mykudo/", async (req, res, next) => {
@@ -186,9 +188,23 @@ app.post("/api/kudo", async (req, res) => {
 
   const newKudo = new Kudo(req.body);
   await newKudo.save();
+  console.log("save kudo", newKudo);
   res.send({ message: "New kudo inserted." });
 });
 
+
+app.post("/api/kudo/batch", async (req, res) => {
+  let kudos = req.body;
+  const sender = req.currentUser._id;
+  const status = "unread";
+  let promiseList = [];
+
+  kudos.forEach(kudo => promiseList.push(new Kudo(kudo).save()))
+  
+  await Promise.all(promiseList)
+  console.log("save kudos");
+  res.send({ message: "New kudo inserted." });
+});
 // endpoint to delete a kudo
 app.delete("/api/kudo/:id", async (req, res) => {
   await Kudo.deleteOne({ _id: req.params.id });

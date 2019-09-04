@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mat-card {
+    width: 500px;
+    margin: 20px;
+    padding: 30px;
+    box-shadow: none;
+}
+
+.my-kudo-card-image {
+    width: 500px;
+}

@@ -1,0 +1,118 @@
+:host {
+    width: 1600px;
+    margin: 0 auto;
+    display: block;
+}
+
+.allKudos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+h1 {
+    text-align: center;
+}
+
+.mat-card {
+    width: 500px;
+    box-shadow: none;
+}
+
+.my-kudo-card-image {
+    width: 500px;
+}
+
+.allKudosHeader {
+    text-align: center;
+    position: relative;
+}
+
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 22px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #72b43c;
+    top: 148px;
+    left: 90px;
+    width: 355px;
+    height: 225px;
+    line-height: 35.5px;
+}
+
+.searchForm {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}
+
+::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: white !important;
+}
+
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: white !important;
+}
+
+@media only screen and (max-width: 1800px) {
+    :host {
+        max-width: 1064px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    :host {
+        max-width: 500px;
+    }
+
+    .searchForm {
+        position: relative;
+        text-align: left;
+        margin-left: 20px;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    :host {
+        max-width: 664px;
+    }
+
+    .mat-card {
+        width: 300px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+
+    #textAreaForImage {
+        top: 95px;
+        left: 61px;
+        font-size: 14px;
+        width: 275px;
+        height: 150px;
+        line-height: 21.5px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
+    .searchForm {
+        position: relative;
+        padding-left: 20px;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    :host {
+        max-width: 332px;
+    }
+}
