@@ -10,6 +10,9 @@
 
 .mat-card {
     padding: 20px;
+    width: 500px;
+    margin: 0 auto;
+    box-shadow: none;
 }
 
 .my-kudo-card {
@@ -25,12 +28,16 @@
     background: none;
     outline: none;
     resize: none;
-    color: #c2185b;
-    top: 140px;
-    left: 55px;
-    width: 600px;
-    height: 350px;
-    line-height: 33px;
+    color: #72b43c;
+    top: 152px;
+    left: 94px;
+    width: 355px;
+    height: 225px;
+    line-height: 35.5px;
+}
+
+.my-kudo-card-image {
+    width: 500px;
 }
 
 ul {
@@ -51,25 +58,26 @@ li {
 }
 
 #font3 {
-    font-family: 'Arial Black';
+    font-family: 'Lexend Zetta';
 }
 
 .fontsBtn {
     background: none;
     border: none;
-    color: #c2185b;
+    /* color: #72b43c;*/
+    color: white;
     outline: none;
     height: 50px;
     font-size: 20px;
 }
 
 .fontsBtn:hover:not(.active) {
-    background: url('../../../assets/splatter_small_trans.png') no-repeat;
+    background: url('../../../assets/splatter_small_green_trans.png') no-repeat;
     color: white;
 }
 
 .active {
-    background: url('../../../assets/splatter_small.png') no-repeat;
+    background: url('../../../assets/splatter_small_green.png') no-repeat;
     color: white;
 }
 
@@ -83,7 +91,7 @@ li {
     height: 40px;
     width: 70px;
     border: none;
-    background-color: #c2185b;
+    background-color: #72b43c;
     color: white;
     font-size: 20px;
     outline: none;
@@ -91,12 +99,22 @@ li {
 }
 
 .btnNext:hover {
-    background-color: #a1174d;
+    background-color: #5a8e2f;
 }
 
 .invalid {
     color: red;
     margin: auto 0;
+}
+
+@media only screen and (max-width: 992px) {
+    #textAreaForImage {
+        line-height: 35.5px;
+        top: 152px;
+        left: 92px;
+        width: 355px;
+        height: 225px;
+    }
 }
 
 @media only screen and (max-width: 750px) {
@@ -115,11 +133,11 @@ li {
 
     #textAreaForImage {
         font-size: 15px;
-        top: 110px;
-        left: 45px;
-        line-height: 25px;
-        width: 450px;
-        height: 250px;
+        top: 154px;
+        left: 95px;
+        line-height: 35.5px;
+        width: 352px;
+        height: 202px;
     }
 }
 
@@ -129,6 +147,10 @@ li {
         display: block;
         margin: 0 auto;
         margin-bottom: 20px;
+    }
+
+    .containerImage {
+        width: 300px;
     }
 
     .my-kudo-card-image {
@@ -141,11 +163,11 @@ li {
     }
 
     #textAreaForImage {
-        font-size: 12px;
-        top: 70px;
-        left: 35px;
-        width: 275px;
-        height: 150px;
-        line-height: 19px;
+        font-size: 10px;
+        top: 100px;
+        left: 65px;
+        width: 220px;
+        height: 125px;
+        line-height: 21px;
     }
 }

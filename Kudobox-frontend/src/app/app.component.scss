@@ -7,10 +7,24 @@
     flex: 1 1 auto;
 }
 
+.mat-toolbar-row {
+    background-color: #72b43c;
+}
+
 .mat-sidenav-container {
     flex-grow: 1;
 }
 
 .kudoCount {
     margin-left: 10px;
+}
+
+fa-icon {
+    padding-right: 15px;
+    width: 30px;
+    text-align: center;
+}
+
+.mat-sidenav {
+    width: 190px;
 }

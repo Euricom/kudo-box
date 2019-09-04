@@ -1,5 +1,5 @@
 :host {
-    width: 1800px;
+    width: 1600px;
     margin: 0 auto;
     display: block;
 }
@@ -16,8 +16,7 @@ h1 {
 
 .mat-card {
     width: 500px;
-    margin: 20px;
-    padding: 30px;
+    box-shadow: none;
 }
 
 .my-kudo-card-image {
@@ -33,17 +32,17 @@ h1 {
     position: absolute;
     padding: 0px;
     margin: 0px;
-    font-size: 20px;
+    font-size: 22px;
     border: none;
     background: none;
     outline: none;
     resize: none;
-    color: #c2185b;
-    top: 119px;
-    left: 54px;
-    width: 450px;
-    height: 250px;
-    line-height: 25px;
+    color: #72b43c;
+    top: 148px;
+    left: 90px;
+    width: 355px;
+    height: 225px;
+    line-height: 35.5px;
 }
 
 .searchForm {
@@ -64,13 +63,13 @@ h1 {
 
 @media only screen and (max-width: 1800px) {
     :host {
-        max-width: 1200px;
+        max-width: 1064px;
     }
 }
 
 @media only screen and (max-width: 1200px) {
     :host {
-        max-width: 550px;
+        max-width: 500px;
     }
 
     .searchForm {
@@ -82,7 +81,7 @@ h1 {
 
 @media only screen and (max-width: 992px) {
     :host {
-        max-width: 800px;
+        max-width: 664px;
     }
 
     .mat-card {
@@ -94,12 +93,12 @@ h1 {
     }
 
     #textAreaForImage {
-        top: 85px;
-        left: 45px;
-        font-size: 15px;
+        top: 95px;
+        left: 61px;
+        font-size: 14px;
         width: 275px;
         height: 150px;
-        line-height: 17px;
+        line-height: 21.5px;
     }
 
     p {
@@ -114,6 +113,6 @@ h1 {
 
 @media only screen and (max-width: 800px) {
     :host {
-        max-width: 400px;
+        max-width: 332px;
     }
 }

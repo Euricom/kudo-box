@@ -6,13 +6,22 @@ import { AuthCallbackComponent } from './core/auth-callback/auth-callback.compon
 // canActivate: [OidcGuardService]
 const routes: Routes = [
     { path: 'auth', component: AuthCallbackComponent },
-    { path: '', redirectTo: 'kudos', pathMatch: 'full' },
+    { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
     {
         path: 'wall-of-fame',
         loadChildren: () => import('./wall-off-fame/wall-off-fame.module').then(m => m.WallOffFameModule),
+        canActivate: [OidcGuardService],
     },
-    { path: 'my-kudos', loadChildren: () => import('./my-kudos/my-kudos.module').then(m => m.MyKudosModule) },
-    { path: 'kudos', loadChildren: () => import('./kudos/kudos.module').then(m => m.KudosModule) },
+    {
+        path: 'my-kudos',
+        loadChildren: () => import('./my-kudos/my-kudos.module').then(m => m.MyKudosModule),
+        canActivate: [OidcGuardService],
+    },
+    {
+        path: 'kudos',
+        loadChildren: () => import('./kudos/kudos.module').then(m => m.KudosModule),
+        canActivate: [OidcGuardService],
+    },
 ];
 
 @NgModule({

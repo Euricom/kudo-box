@@ -2,17 +2,26 @@
 @import '~@ngx-share/button/themes/default/default-theme';
 @import '~angular-notifier/styles';
 
+@import url('https://fonts.googleapis.com/css?family=Lexend+Zetta');
+@import url('https://fonts.googleapis.com/css?family=Times+New+Roman');
+
 html,
 body {
-  height: 100%;
-  background-color: #303030;
+    height: 100%;
+    background-color: #6d6e72;
 }
 
 body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 .mat-drawer-container {
-  margin-top: -15px;
+    margin-top: -15px;
+    /*background-color: #424242;*/
+    background-color: #6d6e72;
+}
+
+.mat-card {
+    background-color: #6d6e72;
 }

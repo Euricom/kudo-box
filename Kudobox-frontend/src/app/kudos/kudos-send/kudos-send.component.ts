@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { KudoService } from '../../services/kudo.service';
 import { Subscription } from 'rxjs';
+import { KudoService } from '../../services/kudo.service';
 
 @Component({
     selector: 'kudos-send',
@@ -38,6 +38,7 @@ export class KudosSendComponent implements OnInit {
     sendKudo() {
         if (this.userForm.status === 'VALID') {
             let kudo = this._kudoService.kudo;
+            console.log('KUDO', kudo);
             kudo.receiver = this.userForm.value.user;
 
             this.sendKudoSubscription = this._kudoService.sendKudo(kudo).subscribe(
@@ -54,7 +55,7 @@ export class KudosSendComponent implements OnInit {
         }
     }
 
-    @HostListener('window:resize', ['$event'])
+    @HostListener('window:resize')
     onResize() {
         if (window.innerHeight < 400) {
             this.sizeList = 5;
