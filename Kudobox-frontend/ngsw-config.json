@@ -13,7 +13,7 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": ["/assets/**", "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"],
+        "files": ["/assets/**", "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"]
       }
     },
     {
@@ -21,8 +21,8 @@
       "resources": {
         "urls": [
           "https://fonts.googleapis.com/css?family=Lexend+Zetta",
+          "https://fonts.googleapis.com/css?family=Times+New+Roman"
         ]
-        "https://fonts.googleapis.com/css?family=Times+New+Roman"
       }
     }
   ]
