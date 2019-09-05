@@ -1,38 +1,38 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
-        <button mat-icon-button>
-            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-        </button>
-        <h1>KudoBox</h1>
-        <span class="menu-spacer"></span>
-        <div>
-            <a mat-button (click)="logout()"> Logout </a>
-        </div>
-    </mat-toolbar-row>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>KudoBox</h1>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button (click)="logout()"> Logout </a>
+    </div>
+  </mat-toolbar-row>
 </mat-toolbar>
 <notifier-container></notifier-container>
 
 <mat-sidenav-container>
-    <mat-sidenav #sidenav>
-        <mat-nav-list>
-            <a mat-list-item [routerLink]="'/kudos'" (click)="sidenav.toggle()"
-                ><fa-icon [icon]="faPlusCircle"></fa-icon>New Kudo
-            </a>
-            <a mat-list-item [routerLink]="'/my-kudos'" (click)="sidenav.toggle()">
-                <fa-icon [icon]="faBox" *ngIf="kudoCount > 0"></fa-icon
-                ><fa-icon [icon]="faBoxOpen" *ngIf="kudoCount === 0"></fa-icon>My Kudos
-                <span class="kudoCount" *ngIf="kudoCount > 0">({{ kudoCount }})</span>
-            </a>
-            <a mat-list-item [routerLink]="'/wall-of-fame'" (click)="sidenav.toggle()"
-                ><fa-icon [icon]="faAward"></fa-icon>Wall of fame
-            </a>
-            <a mat-list-item (click)="sidenav.toggle()" mat-list-item
-                ><fa-icon [icon]="faTimesCircle"></fa-icon>Close</a
-            >
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-        <app-scroll-top></app-scroll-top>
-    </mat-sidenav-content>
+  <mat-sidenav #sidenav>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="'/kudos'" (click)="sidenav.toggle()">
+        <fa-icon [icon]="faPlusCircle"></fa-icon>New Kudo
+      </a>
+      <a mat-list-item [routerLink]="'/my-kudos'" (click)="sidenav.toggle()">
+        <fa-icon [icon]="faBox" *ngIf="kudoCount > 0"></fa-icon>
+        <fa-icon [icon]="faBoxOpen" *ngIf="kudoCount === 0"></fa-icon>My Kudos
+        <span class="kudoCount" *ngIf="kudoCount > 0">({{ kudoCount }})</span>
+      </a>
+      <a mat-list-item [routerLink]="'/wall-of-fame'" (click)="sidenav.toggle()">
+        <fa-icon [icon]="faAward"></fa-icon>Wall of fame
+      </a>
+      <a mat-list-item (click)="sidenav.toggle()" mat-list-item>
+        <fa-icon [icon]="faTimesCircle"></fa-icon>Close
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+    <app-scroll-top></app-scroll-top>
+  </mat-sidenav-content>
 </mat-sidenav-container>

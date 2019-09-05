@@ -107,41 +107,10 @@ export function getClientSettings(): UserManagerSettings {
         authority: environment.oidc.authority,
         client_id: environment.oidc.client_id,
         redirect_uri: environment.oidc.redirect_uri,
-        response_type:environment.oidc.response_type,
+        response_type: environment.oidc.response_type,
         scope: environment.oidc.scope,
         loadUserInfo: environment.oidc.loadUserInfo,
-        metadata: {
-            authorization_endpoint:
-                environment.oidc.metadata.authorization_endpoint,
-            token_endpoint: environment.oidc.metadata.token_endpoint,
-            token_endpoint_auth_methods_supported: environment.oidc.metadata.token_endpoint_auth_methods_supported,
-            jwks_uri: environment.oidc.metadata.jwks_uri,
-            response_modes_supported: environment.oidc.metadata.response_modes_supported,
-            subject_types_supported: environment.oidc.metadata.subject_types_supported,
-            id_token_signing_alg_values_supported: environment.oidc.metadata.id_token_signing_alg_values_supported,
-            http_logout_supported: environment.oidc.metadata.http_logout_supported,
-            frontchannel_logout_supported: environment.oidc.metadata.frontchannel_logout_supported,
-            end_session_endpoint:
-                environment.oidc.metadata.end_session_endpoint,
-            response_types_supported: environment.oidc.metadata.response_types_supported,
-            scopes_supported: environment.oidc.metadata.scopes_supported,
-            issuer: environment.oidc.metadata.issuer,
-            claims_supported: environment.oidc.metadata.claims_supported,
-            request_uri_parameter_supported: environment.oidc.metadata.request_uri_parameter_supported,
-            userinfo_endpoint: environment.oidc.metadata.userinfo_endpoint,
-            tenant_region_scope: environment.oidc.metadata.tenant_region_scope,
-            cloud_instance_name: environment.oidc.metadata.cloud_instance_name,
-            cloud_graph_host_name: environment.oidc.metadata.cloud_graph_host_name,
-            msgraph_host: environment.oidc.metadata.msgraph_host,
-            rbac_url: environment.oidc.metadata.rbac_url,
-        },
         post_logout_redirect_uri: environment.oidc.post_logout_redirect_uri,
-        // silent_redirect_uri: 'http://localhost:4200/renew-callback.html',
-        // accessTokenExpiringNotificationTime: 10,
-        // automaticSilentRenew: true,
-        // eslint-disable-next-line no-undef
         userStore: new WebStorageStateStore({ store: window.localStorage }),
-
-        signingKeys: environment.oidc.signingKeys
     };
 }
