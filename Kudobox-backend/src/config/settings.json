@@ -1,0 +1,13 @@
+{
+    "creds": {
+        "identityMetadata": "https://login.microsoftonline.com/0b53d2c1-bc55-4ab3-a161-927d289257f2/v2.0/.well-known/openid-configuration",
+        "clientID": "ac1b97c4-ddc2-4768-b514-d303002bd393",
+        "validateIssuer": false,
+        "passReqToCallback": true,
+        "issuer": "https://login.microsoftonline.com/0b53d2c1-bc55-4ab3-a161-927d289257f2/v2.0",
+        "allowMultiAudiencesInToken": false,
+        "loggingLevel": "info",
+        "isB2C": false,
+        "loggingNoPII": false
+    }
+}

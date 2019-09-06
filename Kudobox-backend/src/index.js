@@ -6,33 +6,12 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const Kudo = require("./models/kudo");
 const User = require("./models/user");
-const authentication = require("./middleware/authentication");
 var passport = require("passport");
 var OIDCBearerStrategy = require("passport-azure-ad").BearerStrategy;
 const Logger = require("js-logger");
 //config
 const config = require("./config/config");
 const httpError = require("./util/httpError");
-
-//options
-var options = {
-  // The URL of the metadata document for your app. We will put the keys for token validation from the URL found in the jwks_uri tag of the in the metadata.
-  identityMetadata: config.creds.identityMetadata,
-  clientID: config.creds.clientID,
-  validateIssuer: config.creds.validateIssuer,
-  issuer: config.creds.issuer,
-  passReqToCallback: config.creds.passReqToCallback,
-  isB2C: config.creds.isB2C,
-  policyName: config.creds.policyName,
-  allowMultiAudiencesInToken: config.creds.allowMultiAudiencesInToken,
-  audience: config.creds.audience,
-  loggingLevel: config.creds.loggingLevel,
-  loggingNoPII: config.creds.loggingNoPII,
-  clockSkew: config.creds.clockSkew,
-  scope: config.creds.scope
-};
-//users
-var users = [];
 
 // Our logger
 const consoleHandler = Logger.createDefaultHandler();
@@ -44,6 +23,20 @@ Logger.setHandler((messages, context) => {
     consoleHandler(messages, context);
   }
 });
+//options for bearerStrategy
+var options = {
+  // The URL of the metadata document for your app. We will put the keys for token validation from the URL found in the jwks_uri tag of the in the metadata.
+  identityMetadata: config.creds.identityMetadata,
+  clientID: config.creds.clientID,
+  validateIssuer: config.creds.validateIssuer,
+  issuer: config.creds.issuer,
+  passReqToCallback: config.creds.passReqToCallback,
+  isB2C: config.creds.isB2C,
+  allowMultiAudiencesInToken: config.creds.allowMultiAudiencesInToken,
+  loggingLevel: config.creds.loggingLevel,
+  loggingNoPII: config.creds.loggingNoPII,
+  scope: config.creds.scope
+};
 
 var bearerStrategy = new OIDCBearerStrategy(options, async function(
   req,
@@ -62,21 +55,6 @@ var bearerStrategy = new OIDCBearerStrategy(options, async function(
   } else {
     done(httpError.notFound(token.email));
   }
-
-  // findById(token.oid, function(err, user) {
-  //   if (err) {
-  //     return done(err);
-  //   }
-  //   if (!user) {
-  //     // "Auto-registration"
-  //     Logger.info('User was added automatically as they were new. Their oid is: ', token.oid);
-  //     users.push(token);
-  //     owner = token.oid;
-  //     return done(null, token);
-  //   }
-  //   owner = token.oid;
-  //   return done(null, user, token);
-  // });
 });
 
 // defining the Express app
@@ -110,9 +88,11 @@ app.use(morgan("combined"));
 require("./data/mongo")();
 
 app.listen(config.port, function() {
-  console.log(`API Server listening on port ${config.port}`);
-  console.log("Open browser at:");
-  console.log(`http://localhost:${config.port}`);
+    if(config.env === 'development'){
+    console.log(`API Server listening on port ${config.port}`);
+    console.log("Open browser at:");
+    console.log(`http://localhost:${config.port}`);
+  }
 });
 
 // defining an endpoint to return all users
