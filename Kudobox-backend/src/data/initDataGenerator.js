@@ -1,6 +1,7 @@
 const UserModel = require("../models/user");
 const KudoModel = require("../models/kudo");
 const dummy = require("mongoose-dummy");
+const usersList = require("../data/users.json");
 
 const emailsFromRealUsers = [
   "matthias.ooye@euri.com",
@@ -10,8 +11,25 @@ const emailsFromRealUsers = [
 const fontFamilies = ["Comic Sans MS", "Times New Roman", "Arial Black"];
 
 module.exports = {
-  generate: async function() {
+  generate: function() {
+    console.log("start adding data");
     let promiseList = [];
+
+    console.log("users", usersList.length);
+    let teller = 0;
+    usersList.forEach(user => {
+      console.log("new user", teller++);
+      let u = {
+        name: user.displayName,
+        email: user.mail
+      };
+      const newUser = new UserModel(u);
+      promiseList.push(newUser.save());
+    });
+
+    return Promise.all(promiseList);
+
+    /*let promiseList = [];
     //add users
     for (let i = 0; i < 100; i++) {
       let randomUser = dummy(UserModel, {});
@@ -45,6 +63,6 @@ module.exports = {
       promiseList.push(kudo.save());
     }
 
-    return Promise.all(promiseList);
+    return Promise.all(promiseList);*/
   }
 };
