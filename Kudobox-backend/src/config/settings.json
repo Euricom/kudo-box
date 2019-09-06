@@ -9,5 +9,8 @@
         "loggingLevel": "info",
         "isB2C": false,
         "loggingNoPII": false
+    },
+    "connectionStrings": {
+        "mongo": "mongodb://localhost:27017/kudobox"
     }
 }

@@ -6,10 +6,8 @@ const Kudo = require("../models/kudo");
 
 module.exports = function() {
   console.log("Initialize mongodb...");
-  const url = config.mongo.uri;
-  const dbName = config.mongo.dbName;
-  const mongoDBURL = `${url}/${dbName}`;
-  mongoose.connect(mongoDBURL, {
+  const connectionString = config.mongo;
+  mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
