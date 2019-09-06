@@ -88,7 +88,7 @@ app.use(morgan("combined"));
 require("./data/mongo")();
 
 app.listen(config.port, function() {
-    if(config.env === 'development'){
+  if (config.env === "development") {
     console.log(`API Server listening on port ${config.port}`);
     console.log("Open browser at:");
     console.log(`http://localhost:${config.port}`);
@@ -110,6 +110,7 @@ app.get("/api/user", (req, res, next) => {
 app.get("/api/kudo", (req, res, next) => {
   Kudo.find()
     .populate("receiver")
+    .sort({ createdOn: "descending" })
     .exec((err, kudos) => {
       if (err) {
         res.status(err);
@@ -122,6 +123,7 @@ app.get("/api/kudo", (req, res, next) => {
 app.get("/api/mykudo/", async (req, res, next) => {
   Kudo.find({ receiver: req.currentUser._id })
     .populate("sender")
+    .sort({ createdOn: "descending" })
     .exec((err, kudo) => {
       if (err) {
         res.status(err);
