@@ -7,13 +7,10 @@ const fontFamilies = ["Comic Sans MS", "Times New Roman", "Arial Black"];
 
 module.exports = {
   generateUsers: function() {
-    console.log("start adding data");
     let promiseList = [];
 
-    console.log("users", usersList.length);
     let teller = 0;
     usersList.forEach(user => {
-      console.log("new user", teller++);
       let u = {
         name: user.displayName,
         email: user.mail

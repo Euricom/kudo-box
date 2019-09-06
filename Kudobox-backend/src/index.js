@@ -170,7 +170,6 @@ app.post("/api/kudo", async (req, res) => {
 
   const newKudo = new Kudo(req.body);
   await newKudo.save();
-  console.log("save kudo", newKudo);
   res.send({ message: "New kudo inserted." });
 });
 
@@ -183,7 +182,6 @@ app.post("/api/kudo/batch", async (req, res) => {
   kudos.forEach(kudo => promiseList.push(new Kudo(kudo).save()));
 
   await Promise.all(promiseList);
-  console.log("save kudos");
   res.send({ message: "New kudo inserted." });
 });
 // endpoint to delete a kudo
