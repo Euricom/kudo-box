@@ -13,7 +13,7 @@ server.get('*', (req, res) => {
     if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
         res.sendFile(path.resolve(req.url));
     } else {
-        res.sendFile(path.resolve('index.html'));
+        res.sendFile(path.resolve('../index.html'));
     }
 });
 server.listen(process.env.PORT);
