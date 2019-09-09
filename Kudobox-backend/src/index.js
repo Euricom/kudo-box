@@ -72,13 +72,12 @@ app.use(bodyParser.json());
 
 // enabling CORS for all requests
 app.use(cors());
-
-app.use(
-  "/api",
-  passport.authenticate("oauth-bearer", {
+authenticate = function() {
+  return passport.authenticate("oauth-bearer", {
     session: false
-  })
-);
+  });
+};
+//  app.use("/api");
 
 // add morgan to log HTTP requests
 app.use(morgan("combined"));
@@ -89,14 +88,14 @@ require("./data/mongo")();
 
 app.listen(config.port, function() {
   if (config.env === "development") {
-    console.log(`API Server listening on port ${config.port}`);
-    console.log("Open browser at:");
-    console.log(`http://localhost:${config.port}`);
+    Logger.info(`API Server listening on port ${config.port}`);
+    Logger.info("Open browser at:");
+    Logger.info(`http://localhost:${config.port}`);
   }
 });
 
 // defining an endpoint to return all users
-app.get("/api/user", (req, res, next) => {
+app.get("/api/user", authenticate(), (req, res, next) => {
   // exclude own user from users list
   User.find({ _id: { $ne: req.currentUser._id } }, (err, users) => {
     if (err) {
@@ -106,21 +105,29 @@ app.get("/api/user", (req, res, next) => {
     }
   });
 });
-// defining an endpoint to return all kudos
-app.get("/api/kudo", (req, res, next) => {
+// defining an endpoint to return 50 kudos
+app.get("/api/kudo", authenticate(), (req, res, next) => {
+  const skip = parseInt(req.query.skip) || 0;
+  Logger.info("skip", skip);
   Kudo.find()
     .populate("receiver")
     .sort({ createdOn: "descending" })
+    .limit(50)
+    .skip(skip)
     .exec((err, kudos) => {
       if (err) {
+        Logger.info(err);
+
         res.status(err);
       } else {
+        Logger.info(kudos.length);
+
         res.json(kudos);
       }
     });
 });
 
-app.get("/api/mykudo/", async (req, res, next) => {
+app.get("/api/mykudo/", authenticate(), async (req, res, next) => {
   Kudo.find({ receiver: req.currentUser._id })
     .populate("sender")
     .sort({ createdOn: "descending" })
@@ -133,7 +140,7 @@ app.get("/api/mykudo/", async (req, res, next) => {
     });
 });
 
-app.get("/api/unreadKudos/", (req, res, next) => {
+app.get("/api/unreadKudos/", authenticate(), (req, res, next) => {
   Kudo.find({ receiver: req.currentUser._id, status: "unread" }).count(
     (err, kudoCount) => {
       if (err) {
@@ -145,7 +152,7 @@ app.get("/api/unreadKudos/", (req, res, next) => {
   );
 });
 
-app.put("/api/changeStatus/", (req, res, next) => {
+app.put("/api/changeStatus/", authenticate(), (req, res, next) => {
   Kudo.find(
     { receiver: req.currentUser._id, status: "unread" },
     (err, kudos) => {
@@ -163,7 +170,7 @@ app.put("/api/changeStatus/", (req, res, next) => {
 });
 
 // endpoint to create a kudo
-app.post("/api/kudo", async (req, res) => {
+app.post("/api/kudo", authenticate(), async (req, res) => {
   let kudo = req.body;
   kudo.sender = req.currentUser._id;
   kudo.status = "unread";
@@ -173,7 +180,7 @@ app.post("/api/kudo", async (req, res) => {
   res.send({ message: "New kudo inserted." });
 });
 
-app.post("/api/kudo/batch", async (req, res) => {
+app.post("/api/kudo/batch", authenticate(), async (req, res) => {
   let kudos = req.body;
   const sender = req.currentUser._id;
   const status = "unread";
@@ -184,8 +191,23 @@ app.post("/api/kudo/batch", async (req, res) => {
   await Promise.all(promiseList);
   res.send({ message: "New kudo inserted." });
 });
+
+//public kudo
+app.get("/api/publicKudo/:id", (req, res, next) => {
+  Kudo.findById(req.params.id)
+    .populate("sender")
+    .sort({ createdOn: "descending" })
+    .exec((err, kudos) => {
+      if (err) {
+        res.status(err);
+      } else {
+        res.json(kudos);
+      }
+    });
+});
+
 // endpoint to delete a kudo
-app.delete("/api/kudo/:id", async (req, res) => {
+app.delete("/api/kudo/:id", authenticate(), async (req, res) => {
   await Kudo.deleteOne({ _id: req.params.id });
   res.send({ message: "Kudo removed." });
 });

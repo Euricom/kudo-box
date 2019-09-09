@@ -1,3 +1,5 @@
-export class UserObserveable {
-    naam: string;
+export class User {
+    name: string;
+    email: string;
+    id: string;
 }

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { kudoImages } from '../data/kudoImages.js';
 import { KudoService } from '../services/kudo.service';
 import { ActivatedRoute } from '@angular/router';
+import { Kudo } from '../models/kudo.js';
 
 @Component({
     selector: 'app-public-kudo',
@@ -14,21 +15,21 @@ export class PublicKudoComponent implements OnInit {
     public kudoImages;
     public publicKudoSubscription: Subscription;
     public routeSubscription: Subscription;
-    public kudo;
+    public kudo: Kudo;
     public baseImageUrl;
 
     constructor(private route: ActivatedRoute, private _kudoService: KudoService) {}
 
     ngOnInit() {
         this.kudoImages = kudoImages;
-        /*this.routeSubscription = this.route.params.subscribe(params => {
+        this.routeSubscription = this.route.params.subscribe(params => {
             this.publicKudoSubscription = this._kudoService.getPublicKudo(params.id).subscribe(data => {
-                //this.kudo = data;
-                const image = kudoImages.find(i => i.id === parseInt(this.kudo.id, 10));
+                this.kudo = data;
+                const image = kudoImages.find(i => i.id === this.kudo.kudoId);
                 this.baseImageUrl = image.url;
             });
-        });*/
-        this.kudo = {
+        });
+        /*this.kudo = {
             createdOn: '2019-09-09T07:55:52.631Z',
             fontFamily: 'Comic Sans MS',
             kudoId: 1,
@@ -44,6 +45,6 @@ export class PublicKudoComponent implements OnInit {
             __v: 0,
             _id: '5d7605408a3fea4b1428f444',
         };
-        this.baseImageUrl = '/assets/Well_Done.jpg';
+        this.baseImageUrl = '/assets/Well_Done.jpg';*/
     }
 }

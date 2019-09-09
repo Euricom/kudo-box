@@ -1,4 +1,6 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import * as Logger from 'js-logger';
+
 import { KudoService } from '../services/kudo.service';
 
 @Component({
@@ -8,6 +10,7 @@ import { KudoService } from '../services/kudo.service';
 })
 export class KudosComponent implements OnInit, OnDestroy {
     public isMobile: boolean;
+    private log = Logger.get('KudosComponent');
 
     constructor(private _kudoService: KudoService) {}
 
@@ -19,7 +22,7 @@ export class KudosComponent implements OnInit, OnDestroy {
     }
     updateOnlineStatus = () => {
         if (navigator.onLine) {
-            console.log('Syncing kudos', navigator.onLine);
+            this.log.info('Syncing kudos...');
             this._kudoService.syncKudos().subscribe();
         }
     };

@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
+import * as Logger from 'js-logger';
 
 import { Subscription } from 'rxjs';
 import { KudoService } from '../services/kudo.service';
@@ -16,6 +17,7 @@ export class MyKudosComponent implements OnInit {
     changeStatusSubscription: Subscription;
     public image = 'https://google.com';
     public baseLocation = window.location.origin;
+    private log = Logger.get('MyKudosComponent');
 
     constructor(private _kudoService: KudoService) {}
 
@@ -23,9 +25,8 @@ export class MyKudosComponent implements OnInit {
         this.kudoImages = kudoImages;
         this.myKudosSubscription = this._kudoService.getMyKudos().subscribe(data => {
             this.kudos = data;
-            console.log('kudos', this.kudos);
             this.changeStatusSubscription = this._kudoService.changeStatus('read').subscribe(() => {
-                console.log('Kudos are updated');
+                this.log.info('Kudos are updated.');
             });
         });
     }

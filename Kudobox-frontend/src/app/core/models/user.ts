@@ -1,3 +1,3 @@
 export class UserObserveable {
-    naam: string;
+    name: string;
 }
