@@ -4,14 +4,13 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { throwError, empty, Observable, fromEvent, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Kudo } from '../models/kudo';
+import { User } from '../models/user';
 
 @Injectable({
     providedIn: 'root',
 })
 export class KudoService implements OnInit {
     private _kudo: Kudo;
-    private _user: string;
-    private _usersList;
 
     constructor(private http: HttpClient) {}
 
@@ -24,22 +23,6 @@ export class KudoService implements OnInit {
     set kudo(kudo) {
         this._kudo = kudo;
         localStorage.setItem('newKudo', JSON.stringify(this._kudo));
-    }
-
-    set user(user: string) {
-        this._user = user;
-    }
-
-    get user(): string {
-        return this._user;
-    }
-
-    get usersList() {
-        return this._usersList;
-    }
-
-    set usersList(users) {
-        this._usersList = users;
     }
 
     syncKudos() {
@@ -79,12 +62,13 @@ export class KudoService implements OnInit {
         localStorage.setItem('offlineKudos', JSON.stringify(kudos));
     }
 
-    getUsersList() {
+    getUsersList(): Observable<User[]> {
         console.log('HALLO');
         console.log('getuserslist', navigator.onLine);
         if (navigator.onLine) {
-            return this.http.get(`${environment.apiUrl}/api/user`).pipe(
-                tap(users => {
+            return this.http.get<User[]>(`${environment.apiUrl}/api/user`).pipe(
+                tap(data => {
+                    const users = data.map(u => Object.assign(new User(), u));
                     console.log('users saved');
                     localStorage.setItem('users', JSON.stringify(users));
                     return of(users);
@@ -95,11 +79,11 @@ export class KudoService implements OnInit {
                 }),
             );
         }
-        return of(JSON.parse(localStorage.getItem('users')));
+        return of(JSON.parse(localStorage.getItem('users')).map(u => Object.assign(new User(), u)));
     }
 
-    getMyKudos() {
-        return this.http.get(`${environment.apiUrl}/api/mykudo/`).pipe(
+    getMyKudos(): Observable<Kudo[]> {
+        return this.http.get<Kudo[]>(`${environment.apiUrl}/api/mykudo/`).pipe(
             tap(myKudos => localStorage.setItem('myKudos', JSON.stringify(myKudos))),
             catchError(e => {
                 console.log(`error2:`, e);
@@ -108,9 +92,9 @@ export class KudoService implements OnInit {
         );
     }
 
-    getAllKudos(skip): Observable<any[]> {
+    getAllKudos(skip): Observable<Kudo[]> {
         if (navigator.onLine) {
-            return this.http.get<any[]>(`${environment.apiUrl}/api/kudo?skip=${skip}`).pipe(
+            return this.http.get<Kudo[]>(`${environment.apiUrl}/api/kudo?skip=${skip}`).pipe(
                 catchError(e => {
                     console.log(`error3:`, e);
                     return throwError(e.statusText);
@@ -120,10 +104,10 @@ export class KudoService implements OnInit {
         return of([]);
     }
 
-    getUnreadKudos() {
+    getUnreadKudos(): Observable<number> {
         console.log('getUnreadKudos');
         if (navigator.onLine) {
-            return this.http.get(`${environment.apiUrl}/api/unreadKudos/`).pipe(
+            return this.http.get<number>(`${environment.apiUrl}/api/unreadKudos/`).pipe(
                 catchError(e => {
                     console.log(`error4:`, e);
                     return throwError(e.statusText);
@@ -131,8 +115,6 @@ export class KudoService implements OnInit {
             );
         }
         return of(0);
-
-        return of({});
     }
 
     changeStatus(status: string) {
