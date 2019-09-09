@@ -1,3 +1,5 @@
+<meta property="og:image" content="https://www.medicalnewstoday.com/content//images/articles/322/322868/golden-retriever-puppy.jpg" />
+
 <h1>My kudos</h1>
 <div class="container" *ngIf="kudos?.length > 0">
     <mat-card class="my-kudo-card" *ngFor="let kudo of kudos">
@@ -15,7 +17,7 @@
                 [show]="3"
                 [autoSetMeta]="false"
                 [url]="baseLocation + '/public-kudo/' + kudo._id"
-                [image]="'https://www.medicalnewstoday.com/content//images/articles/322/322868/golden-retriever-puppy.jpg'"
+                [title]="This is a test title"
             >
             </share-buttons>
         </mat-card-footer>
