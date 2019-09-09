@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 
 import { environment } from '../../environments/environment';
+import {APP_CONFIG} from "./config.service";
 
 @Injectable({
     providedIn: 'root',
@@ -104,13 +105,13 @@ export class AuthService {
 
 export function getClientSettings(): UserManagerSettings {
     return {
-        authority: environment.oidc.authority,
-        client_id: environment.oidc.client_id,
-        redirect_uri: environment.oidc.redirect_uri,
-        response_type: environment.oidc.response_type,
-        scope: environment.oidc.scope,
-        loadUserInfo: environment.oidc.loadUserInfo,
-        post_logout_redirect_uri: environment.oidc.post_logout_redirect_uri,
+        authority: APP_CONFIG.authority,
+        client_id: APP_CONFIG.client_id,
+        redirect_uri: APP_CONFIG.redirect_uri,
+        response_type: APP_CONFIG.response_type,
+        scope: APP_CONFIG.scope,
+        loadUserInfo: APP_CONFIG.loadUserInfo,
+        post_logout_redirect_uri: APP_CONFIG.post_logout_redirect_uri,
         userStore: new WebStorageStateStore({ store: window.localStorage }),
     };
 }

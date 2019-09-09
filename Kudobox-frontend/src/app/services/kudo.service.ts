@@ -5,6 +5,8 @@ import { throwError, empty, Observable, fromEvent, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Kudo } from '../models/kudo';
 
+import {APP_CONFIG} from "./config.service";
+
 @Injectable({
     providedIn: 'root',
 })
@@ -51,7 +53,7 @@ export class KudoService implements OnInit {
     }
 
     sendKudos(kudos) {
-        return this.http.post(`${environment.apiUrl}/api/kudo/batch`, kudos).pipe(
+        return this.http.post(`${APP_CONFIG.apiUrl}/api/kudo/batch`, kudos).pipe(
             tap(() => localStorage.removeItem('offlineKudos')),
             catchError(e => {
                 console.log(`error10: ${e}`);

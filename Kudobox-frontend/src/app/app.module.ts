@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { HttpClientJsonpModule, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule, isDevMode, ErrorHandler } from '@angular/core';
+import { NgModule, isDevMode, ErrorHandler, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as Logger from 'js-logger';
 
@@ -44,6 +44,13 @@ import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
+
+import { AppConfigService } from './services/config.service';
+export function loadConfigService(configService: AppConfigService): Function {
+    return () => {
+        return configService.load();
+    };
+}
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -126,6 +133,8 @@ const customNotifierOptions: NotifierOptions = {
         ErrorHandlerService,
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: ErrorHandler, useClass: ErrorHandlerService },
+        AppConfigService,
+        { provide: APP_INITIALIZER, useFactory: loadConfigService, deps: [AppConfigService], multi: true },
     ],
     bootstrap: [AppComponent],
 })

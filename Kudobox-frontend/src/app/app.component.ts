@@ -6,6 +6,8 @@ import { faPlusCircle, faAward, faBox, faBoxOpen, faTimesCircle } from '@fortawe
 import { AuthService } from './services/auth.service';
 import { KudoService } from './services/kudo.service';
 
+//import { SettingsService } from './services/settings.service';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -23,7 +25,14 @@ export class AppComponent implements AfterViewInit {
     faBoxOpen = faBoxOpen;
     faTimesCircle = faTimesCircle;
 
-    constructor(private authService: AuthService, private route: Router, private _kudoService: KudoService) {}
+    constructor(
+        private authService: AuthService,
+        private route: Router,
+        private _kudoService: KudoService /*,
+        private _settingsService: SettingsService,*/,
+    ) {
+        //  console.log('settingsService', _settingsService.oidc.client_id);
+    }
 
     ngAfterViewInit() {
         this.sideNavSubscription = this.sidenav.openedStart.subscribe(() => {
