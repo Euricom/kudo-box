@@ -3,31 +3,25 @@ const config = require("../config/config");
 const initDataGenerator = require("./initDataGenerator");
 const User = require("../models/user");
 const Kudo = require("../models/kudo");
+const Logger = require("js-logger");
 
 module.exports = function() {
-  console.log("Initialize mongodb...");
+  Logger.info("Initialize mongodb...");
   const connectionString = config.mongo;
   mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
-  let db = mongoose.connection;
-  db.on("error", console.error.bind(console, "connection error: "));
-  db.once("open", function() {
-    console.log("connected");
+  let connection = mongoose.connection;
+  connection.on("error", console.error.bind(console, "connection error: "));
+  connection.once("open", function() {
+    Logger.info("connected");
   });
   User.findOne({}).then(async user => {
-    if (user) {
-      await User.deleteMany({}, function(err, result) {
-        if (err) {
-          console.log("error delete collection");
-        } else {
-          console.log("delete collection success");
-        }
-        return null;
-      });
+    if (!user) {
+      await initDataGenerator.generateUsers();
     }
-    await initDataGenerator.generateUsers();
+
     if (config.env === "development") {
       mongoose.set("debug", true);
       Kudo.findOne({}).then(async kudo => {

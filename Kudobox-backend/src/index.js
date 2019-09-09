@@ -89,9 +89,9 @@ require("./data/mongo")();
 
 app.listen(config.port, function() {
   if (config.env === "development") {
-    console.log(`API Server listening on port ${config.port}`);
-    console.log("Open browser at:");
-    console.log(`http://localhost:${config.port}`);
+    Logger.info(`API Server listening on port ${config.port}`);
+    Logger.info("Open browser at:");
+    Logger.info(`http://localhost:${config.port}`);
   }
 });
 
