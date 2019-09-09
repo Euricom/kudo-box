@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('./kudos/kudos.module').then(m => m.KudosModule),
         canActivate: [OidcGuardService],
     },
+    {
+        path: 'public-kudo',
+        loadChildren: () => import('./public-kudo/public-kudo.module').then(m => m.PublicKudoModule),
+    },
 ];
 
 @NgModule({

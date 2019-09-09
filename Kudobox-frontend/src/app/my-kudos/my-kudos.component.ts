@@ -14,7 +14,8 @@ export class MyKudosComponent implements OnInit {
     public kudoImages;
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
-    public image;
+    public image = 'https://google.com';
+    public baseLocation = window.location.origin;
 
     constructor(private _kudoService: KudoService) {}
 
@@ -22,6 +23,7 @@ export class MyKudosComponent implements OnInit {
         this.kudoImages = kudoImages;
         this.myKudosSubscription = this._kudoService.getMyKudos().subscribe(data => {
             this.kudos = data;
+            console.log('kudos', this.kudos);
             this.changeStatusSubscription = this._kudoService.changeStatus('read').subscribe(() => {
                 console.log('Kudos are updated');
             });
