@@ -15,7 +15,7 @@ export class MyKudosComponent implements OnInit {
     public kudoImages;
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
-    public image = 'https://google.com';
+    public image = "../../assets/great_job.png";
     public baseLocation = window.location.origin;
     private log = Logger.get('MyKudosComponent');
 
