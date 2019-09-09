@@ -107,15 +107,23 @@ app.get("/api/user",authenticate(), (req, res, next) => {
     }
   });
 });
-// defining an endpoint to return all kudos
+// defining an endpoint to return 50 kudos
 app.get("/api/kudo",authenticate(), (req, res, next) => {
+  const skip = (parseInt(req.query.skip) || 0);
+  Logger.info('skip',skip);
   Kudo.find()
     .populate("receiver")
     .sort({ createdOn: "descending" })
+    .limit(50)
+    .skip(skip)
     .exec((err, kudos) => {
       if (err) {
+        Logger.info(err)
+
         res.status(err);
       } else {
+        Logger.info(kudos.length)
+
         res.json(kudos);
       }
     });

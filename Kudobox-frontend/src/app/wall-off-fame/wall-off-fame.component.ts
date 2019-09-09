@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Subscription, Observable, Subject } from 'rxjs';
+import { tryParse } from 'selenium-webdriver/http';
 import { kudoImages } from '../data/kudoImages';
 import { KudoService } from '../services/kudo.service';
-import { Subscription } from 'rxjs';
-import { tryParse } from 'selenium-webdriver/http';
 
 @Component({
     selector: 'app-wall-off-fame',
@@ -12,23 +12,38 @@ import { tryParse } from 'selenium-webdriver/http';
 })
 export class WallOffFameComponent implements OnInit {
     public kudoImages;
-    public kudos;
+    public kudos = [];
+    public kudos$: Subject<any[]> = new Subject<[]>();
     public searchText;
     public isOnline = false;
-    allKudosSubscription: Subscription;
-
+    private _allKudosSubscriptions: Subscription[] = [];
+    public skip = 0;
     constructor(private _kudoService: KudoService) {}
 
     ngOnInit() {
         this.kudoImages = kudoImages;
         this.isOnline = navigator.onLine;
-        this.allKudosSubscription = this._kudoService.getAllKudos().subscribe(data => {
-            this.kudos = data;
+        this.getWallOfFame();
+        this.kudos$.subscribe(kudos => {
+            this.kudos = [...this.kudos, ...kudos];
         });
     }
 
+    getWallOfFame() {
+        this._allKudosSubscriptions.push(
+            this._kudoService.getAllKudos(this.skip).subscribe(data => {
+                this.kudos$.next(data);
+            }),
+        );
+        this.increaseSkip();
+    }
+
+    increaseSkip() {
+        this.skip += 50;
+    }
+
     ngOnDestroy() {
-        this.allKudosSubscription.unsubscribe();
+        this._allKudosSubscriptions.forEach(s => s.unsubscribe());
     }
 
     getKudoImage(id: number) {

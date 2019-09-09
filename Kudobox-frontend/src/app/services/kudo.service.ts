@@ -108,16 +108,16 @@ export class KudoService implements OnInit {
         );
     }
 
-    getAllKudos() {
+    getAllKudos(skip): Observable<any[]> {
         if (navigator.onLine) {
-            return this.http.get(`${environment.apiUrl}/api/kudo/`).pipe(
+            return this.http.get<any[]>(`${environment.apiUrl}/api/kudo?skip=${skip}`).pipe(
                 catchError(e => {
                     console.log(`error3:`, e);
                     return throwError(e.statusText);
                 }),
             );
         }
-        return of({});
+        return of([]);
     }
 
     getUnreadKudos() {
@@ -129,9 +129,9 @@ export class KudoService implements OnInit {
                     return throwError(e.statusText);
                 }),
             );
-        } else {
-            return of(0);
         }
+        return of(0);
+
         return of({});
     }
 
