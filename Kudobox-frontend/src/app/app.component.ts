@@ -40,4 +40,8 @@ export class AppComponent implements AfterViewInit {
     logout() {
         this.authService.startLogout();
     }
+
+    isLoggedIn() {
+        return this.authService.isLoggedIn();
+    }
 }

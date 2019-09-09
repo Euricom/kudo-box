@@ -108,7 +108,7 @@ export class KudoService implements OnInit {
         );
     }
 
-    getPublicKudo(id: number) {
+    getPublicKudo(id) {
         return this.http.get(`${environment.apiUrl}/api/publicKudo/${id}`).pipe(
             catchError(e => {
                 console.log('GET KUDO ERROR', e);
