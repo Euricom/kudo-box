@@ -2,15 +2,17 @@
 
 <h1>My kudos</h1>
 <div class="container" *ngIf="kudos?.length > 0">
-    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos">
-        <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
-        <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
-        <mat-card-footer>
-            <div class="generalInfo">
-                <p>Received from {{ kudo.sender.name }}</p>
-                <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
-            </div>
-            <share-buttons
+  <mat-card class="my-kudo-card" *ngFor="let kudo of kudos; let i = index;">
+    <div id="capture-{{i}}" class="captureContainer">
+      <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
+      <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
+    </div>
+    <mat-card-footer>
+      <div class="generalInfo">
+        <p>Received from {{ kudo.sender.name }}</p>
+        <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
+      </div>
+      <share-buttons
                 class="share-buttons-align-center"
                 [theme]="'default'"
                 [include]="['facebook', 'twitter', 'linkedin']"
@@ -20,9 +22,10 @@
                 [title]="'This is a test title'"
             >
             </share-buttons>
-        </mat-card-footer>
-    </mat-card>
+      <button type="button" class="btnNext" (click)="shareImage(i,kudo._id)">Share</button>
+    </mat-card-footer>
+  </mat-card>
 </div>
 <div class="noKudos" *ngIf="kudos?.length === 0">
-    <p>I'm sorry, you didn't receive a kudo yet :-(</p>
+  <p>I'm sorry, you didn't receive a kudo yet :-(</p>
 </div>
