@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import * as Logger from 'js-logger';
 // import html2canvas from 'html2canvas';
 import htmlToImage from 'html-to-image';
+import { Meta } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
 import { KudoService } from '../services/kudo.service';
@@ -21,7 +22,7 @@ export class MyKudosComponent implements OnInit {
     public baseLocation = window.location.origin;
     private log = Logger.get('MyKudosComponent');
 
-    constructor(private _kudoService: KudoService) {}
+    constructor(private _kudoService: KudoService,private meta: Meta) {}
 
     ngOnInit() {
         this.kudoImages = kudoImages;
@@ -31,6 +32,7 @@ export class MyKudosComponent implements OnInit {
                 this.log.info('Kudos are updated.');
             });
         });
+        this.meta.addTag({ name: 'image', content: 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage' });
     }
 
     ngOnDestroy() {

@@ -10,7 +10,7 @@
         <p>Received from {{ kudo.sender.name }}</p>
         <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
       </div>
-      <!--<share-buttons
+      <share-buttons
                 class="share-buttons-align-center"
                 [theme]="'default'"
                 [include]="['facebook', 'twitter', 'linkedin']"
@@ -19,7 +19,7 @@
                 [url]="baseLocation + '/public-kudo/' + kudo._id"
                 [image]="image"
             >
-            </share-buttons>-->
+            </share-buttons>
       <button type="button" class="btnNext" (click)="shareImage(i,kudo._id)">Share</button>
     </mat-card-footer>
   </mat-card>
