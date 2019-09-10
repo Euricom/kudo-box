@@ -1,7 +1,7 @@
 <h1>My kudos</h1>
 <div class="container" *ngIf="kudos?.length > 0">
-    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos">
-        <div id="capture">
+    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos; let i = index;">
+        <div id="capture-{{i}}" class="captureContainer">
             <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
             <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
         </div>
@@ -20,7 +20,7 @@
                 [image]="image"
             >
             </share-buttons>-->
-            <button type="button" class="btnNext" (click)="shareImage()">Share</button>
+            <button type="button" class="btnNext" (click)="shareImage(i)">Share</button>
         </mat-card-footer>
     </mat-card>
 </div>
