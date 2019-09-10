@@ -44,7 +44,6 @@ import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
-import { ShareKudoComponent } from './share-kudo/share-kudo.component';
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -88,7 +87,7 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-    declarations: [AppComponent, AuthCallbackComponent, LogoutCallbackComponent, ScrollTopComponent, OfflineComponent, ShareKudoComponent],
+    declarations: [AppComponent, AuthCallbackComponent, LogoutCallbackComponent, ScrollTopComponent, OfflineComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
