@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import * as Logger from 'js-logger';
+import html2canvas from 'html2canvas';
 
 import { Subscription } from 'rxjs';
 import { KudoService } from '../services/kudo.service';
@@ -44,5 +45,19 @@ export class MyKudosComponent implements OnInit {
             return false;
         });
         return image[0].url;
+    }
+
+    shareImage() {
+        console.log('share image');
+        /*html2canvas(document.querySelector('#capture'), { backgroundColor: '#6d6e72' }).then(canvas => {
+            document.body.appendChild(canvas);
+            console.log('CANVAS', canvas.toDataURL());
+        });*/
+
+        html2canvas(document.querySelector('#capture'), {
+            allowTaint: true,
+        }).then(canvas => {
+            document.body.appendChild(canvas);
+        });
     }
 }

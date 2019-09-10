@@ -13,8 +13,14 @@ h1 {
     box-shadow: none;
 }
 
+#capture {
+    position: relative;
+}
+
 .my-kudo-card-image {
     width: 500px;
+
+    display: block;
 }
 
 .mat-card-footer {
@@ -33,16 +39,37 @@ h1 {
     outline: none;
     resize: none;
     color: #72b43c;
-    top: 149px;
-    left: 89px;
+    //top: 149px;
+    top: 132px;
+    //top: 0;
+    //left: 89px;
+    left: 77px;
     width: 355px;
     height: 225px;
     line-height: 35.5px;
+    display: block;
 }
 
 .noKudos {
     font-size: 25px;
     text-align: center;
+}
+
+.btnNext {
+    height: 40px;
+    width: 70px;
+    border: none;
+    background-color: #72b43c;
+    color: white;
+    font-size: 20px;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    margin: 15px 15px 0 0;
+}
+
+.btnNext:hover {
+    background-color: #5a8e2f;
 }
 
 @media only screen and (max-width: 992px) {

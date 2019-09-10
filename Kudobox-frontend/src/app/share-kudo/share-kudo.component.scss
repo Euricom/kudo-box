@@ -1,0 +1,49 @@
+.mat-card {
+    width: 500px;
+    box-shadow: none;
+    margin: 0 auto;
+}
+
+.my-kudo-card-image {
+    width: 500px;
+}
+
+#textAreaForImage {
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    border: none;
+    background: none;
+    outline: none;
+    resize: none;
+    color: #72b43c;
+    top: 149px;
+    left: 89px;
+    width: 355px;
+    height: 225px;
+    line-height: 35.5px;
+}
+
+.mat-card-footer {
+    padding-left: 16px;
+}
+
+@media only screen and (max-width: 992px) {
+    .mat-card {
+        width: 300px;
+    }
+
+    .my-kudo-card-image {
+        width: 300px;
+    }
+
+    #textAreaForImage {
+        top: 95px;
+        left: 58px;
+        font-size: 14px;
+        width: 225px;
+        height: 125px;
+        line-height: 21.5px;
+    }
+}
