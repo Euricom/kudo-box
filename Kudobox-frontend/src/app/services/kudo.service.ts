@@ -65,6 +65,15 @@ export class KudoService implements OnInit {
         localStorage.setItem('offlineKudos', JSON.stringify(kudos));
     }
 
+    saveKudoImage(kudoId, image) {
+        return this.http.post(`${environment.apiUrl}/api/kudo/${kudoId}/saveImage`, image).pipe(
+            catchError(e => {
+                this.log.error('Error sendKudo():', e);
+                return throwError('BIGBIG ERROR');
+            }),
+        );
+    }
+
     getUsersList(): Observable<User[]> {
         if (navigator.onLine) {
             return this.http.get<User[]>(`${environment.apiUrl}/api/user`).pipe(
@@ -97,7 +106,7 @@ export class KudoService implements OnInit {
         return this.http.get<Kudo>(`${environment.apiUrl}/api/publicKudo/${id}`).pipe(
             map(kudo => Object.assign(new Kudo(), kudo)),
             catchError(e => {
-               this.log.error('Error getPublicKudo():', e);
+                this.log.error('Error getPublicKudo():', e);
                 return throwError(e.statusText);
             }),
         );

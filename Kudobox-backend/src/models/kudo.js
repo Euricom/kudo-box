@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
 let KudoSchema = new Schema({
   createdOn: {
     type: Date
@@ -23,6 +24,9 @@ let KudoSchema = new Schema({
   },
   status: {
     type: String
+  },
+  image: {
+    type:String
   }
 });
 
