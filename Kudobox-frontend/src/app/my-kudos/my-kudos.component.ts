@@ -24,17 +24,17 @@ export class MyKudosComponent implements OnInit {
     private log = Logger.get('MyKudosComponent');
 
     constructor(private _kudoService: KudoService, private meta: Meta, private fb: FacebookService) {
-        /*let initParams: InitParams = {
-            appId: '1234566778',
+        const initParams: InitParams = {
+            appId: '431009970868119',
             xfbml: true,
             version: 'v2.8',
         };
-        this.fb.init(initParams);*/
-        /*this.meta.addTag({
+        this.fb.init(initParams);
+        this.meta.addTag({
             property: 'og:image',
             content: 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage',
-        });*/
-        /*this.fb
+        });
+        this.fb
             .ui({
                 method: 'share_open_graph',
                 action_type: 'og.shares',
@@ -45,14 +45,14 @@ export class MyKudosComponent implements OnInit {
                         'og:description': 'this IS the DESCRIPTION',
                         'og:image':
                             'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage', //
-                        'og:image:width': '250', //size of image in pixel
+                        'og:image:width': '250', // size of image in pixel
                         'og:image:height': '257',
                     },
                 }),
             })
             .then(response => {
                 console.log('after fb.ui', response);
-            });*/
+            });
     }
 
     ngOnInit() {
