@@ -22,7 +22,12 @@ export class MyKudosComponent implements OnInit {
     public baseLocation = window.location.origin;
     private log = Logger.get('MyKudosComponent');
 
-    constructor(private _kudoService: KudoService, private meta: Meta) {}
+    constructor(private _kudoService: KudoService, private meta: Meta) {
+        this.meta.addTag({
+            property: 'og:image',
+            content: 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage',
+        });
+    }
 
     ngOnInit() {
         this.kudoImages = kudoImages;
@@ -31,10 +36,6 @@ export class MyKudosComponent implements OnInit {
             this.changeStatusSubscription = this._kudoService.changeStatus('read').subscribe(() => {
                 this.log.info('Kudos are updated.');
             });
-        });
-        this.meta.addTag({
-            property: 'og:image',
-            content: 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage',
         });
     }
 
