@@ -5,7 +5,7 @@ import htmlToImage from 'html-to-image';
 import { Meta } from '@angular/platform-browser';
 import { FacebookService, InitParams } from 'ngx-facebook';
 
-import { Subscription } from 'rxjs';
+import { Subscription, observable } from 'rxjs';
 import { KudoService } from '../services/kudo.service';
 import { kudoImages } from '../data/kudoImages.js';
 
@@ -30,30 +30,6 @@ export class MyKudosComponent implements OnInit {
             version: 'v2.8',
         };
         this.fb.init(initParams);
-        this.meta.addTag({
-            property: 'og:image',
-            content: 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage',
-        });
-        this.fb
-            .ui({
-                method: 'share_open_graph',
-                action_type: 'og.shares',
-                action_properties: JSON.stringify({
-                    object: {
-                        'og:title': 'THIS is THE title',
-                        'og:site_name': 'This IS the SITE name',
-                        'og:description': 'this IS the DESCRIPTION',
-                        'og:image':
-                            'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage', //
-                        'og:image:width': '250', // size of image in pixel
-                        'og:image:height': '257',
-                        'og:url': 'https://kudobox-dev.azurewebsites.net/my-kudos',
-                    },
-                }),
-            })
-            .then(response => {
-                console.log('after fb.ui', response);
-            });
     }
 
     ngOnInit() {
@@ -88,38 +64,32 @@ export class MyKudosComponent implements OnInit {
         const serv = this._kudoService;
         htmlToImage
             .toPng(node)
-            .then(function(dataUrl) {
-                const img = new Image();
-                img.src = dataUrl;
-                console.log('dataUrl', dataUrl);
-                document.body.appendChild(img);
-
-                console.log('test', window.btoa(dataUrl));
-
-                const byteString = window.atob(window.btoa(dataUrl));
-                const arrayBuffer = new ArrayBuffer(byteString.length);
-                const int8Array = new Uint8Array(arrayBuffer);
-                for (let i = 0; i < byteString.length; i++) {
-                    int8Array[i] = byteString.charCodeAt(i);
-                }
-                const blob = new Blob([int8Array], { type: 'image/png' });
-                serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe();
-                const imageFile = new File([blob], 'sharedImage.png', { type: 'image/png' });
-                console.log('imageFile', imageFile);
+            .then(dataUrl => {
+                serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe(() => this.shareToFacebook(kudoId));
             })
             .catch(function(error) {
                 console.error('oops, something went wrong!', error);
             });
-
-        /* html2canvas(document.querySelector('#capture'), { backgroundColor: '#6d6e72' }).then(canvas => {
-            document.body.appendChild(canvas);
-            console.log('CANVAS', canvas.toDataURL());
-        }); */
-
-        /* html2canvas(document.querySelector('#capture'), {
-            allowTaint: true,
-        }).then(canvas => {
-            document.body.appendChild(canvas);
-        }); */
+    }
+    shareToFacebook(kudoId) {
+        return this.fb
+            .ui({
+                method: 'share_open_graph',
+                action_type: 'og.shares',
+                action_properties: JSON.stringify({
+                    object: {
+                        'og:title': 'THIS is THE title',
+                        'og:site_name': 'This IS the SITE name',
+                        'og:description': 'this IS the DESCRIPTION',
+                        'og:image': `${this.baseLocation}/api/kudo/${kudoId}/getImage`,
+                        'og:image:width': '250',
+                        'og:image:height': '257',
+                        'og:url': `${this.baseLocation}/public-kudo/${kudoId}`,
+                    },
+                }),
+            })
+            .then(response => {
+                console.log('after fb.ui', response);
+            });
     }
 }
