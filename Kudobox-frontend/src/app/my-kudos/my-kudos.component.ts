@@ -47,6 +47,7 @@ export class MyKudosComponent implements OnInit {
                             'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage', //
                         'og:image:width': '250', // size of image in pixel
                         'og:image:height': '257',
+                        'og:url': 'https://kudobox-dev.azurewebsites.net/my-kudos',
                     },
                 }),
             })
