@@ -27,6 +27,7 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+import { FacebookModule } from 'ngx-facebook';
 
 import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
@@ -117,6 +118,7 @@ const customNotifierOptions: NotifierOptions = {
             enabled: environment.production,
             registrationStrategy: 'registerImmediately',
         }),
+        FacebookModule.forRoot(),
     ],
     providers: [
         KudoService,

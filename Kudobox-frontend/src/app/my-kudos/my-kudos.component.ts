@@ -3,6 +3,7 @@ import * as Logger from 'js-logger';
 // import html2canvas from 'html2canvas';
 import htmlToImage from 'html-to-image';
 import { Meta } from '@angular/platform-browser';
+import { FacebookService, InitParams } from 'ngx-facebook';
 
 import { Subscription } from 'rxjs';
 import { KudoService } from '../services/kudo.service';
@@ -22,10 +23,33 @@ export class MyKudosComponent implements OnInit {
     public baseLocation = window.location.origin;
     private log = Logger.get('MyKudosComponent');
 
-    constructor(private _kudoService: KudoService, private meta: Meta) {
-        this.meta.addTag({
+    constructor(private _kudoService: KudoService, private meta: Meta, private fb: FacebookService) {
+        let initParams: InitParams = {
+            appId: '1234566778',
+            xfbml: true,
+            version: 'v2.8',
+        };
+        fb.init(initParams);
+
+        /*this.meta.addTag({
             property: 'og:image',
             content: 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage',
+        });*/
+        fb.ui({
+            method: 'share_open_graph',
+            action_type: 'og.shares',
+            action_properties: JSON.stringify({
+                object: {
+                    'og:title': 'THIS is THE title',
+                    'og:site_name': 'This IS the SITE name',
+                    'og:description': 'this IS the DESCRIPTION',
+                    'og:image': 'https://kudobox-api-dev.azurewebsites.net/api/kudo/5d76381bebbf3a0021481fa6/getImage', //
+                    'og:image:width': '250', //size of image in pixel
+                    'og:image:height': '257',
+                },
+            }),
+        }).then(response => {
+            console.log('after fb.ui', response);
         });
     }
 
