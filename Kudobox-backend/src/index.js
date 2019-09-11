@@ -68,7 +68,8 @@ app.use(passport.session()); // Provides session support
 app.use(helmet());
 
 // using bodyParser to parse JSON bodies into JS objects
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 
 // enabling CORS for all requests
 app.use(cors());
