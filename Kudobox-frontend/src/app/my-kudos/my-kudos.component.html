@@ -1,5 +1,3 @@
-
-
 <h1>My kudos</h1>
 <div class="container" *ngIf="kudos?.length > 0">
   <mat-card class="my-kudo-card" *ngFor="let kudo of kudos; let i = index;">
@@ -12,16 +10,9 @@
         <p>Received from {{ kudo.sender.name }}</p>
         <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
       </div>
-      <share-buttons
-                class="share-buttons-align-center"
-                [theme]="'default'"
-                [include]="['facebook', 'twitter', 'linkedin']"
-                [show]="3"
-                [autoSetMeta]="false"
-                [url]="baseLocation + '/public-kudo/' + kudo._id"
-                [title]="'This is a test title'"
-            >
-            </share-buttons>
+      <share-buttons class="share-buttons-align-center" [theme]="'default'"
+        [include]="['facebook', 'twitter', 'linkedin']" [show]="3" [autoSetMeta]="false">
+      </share-buttons>
       <button type="button" class="btnNext" (click)="shareImage(i,kudo._id)">Share</button>
     </mat-card-footer>
   </mat-card>
