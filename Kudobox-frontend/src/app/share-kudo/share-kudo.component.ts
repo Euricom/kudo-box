@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-share-kudo',
@@ -9,30 +10,32 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ShareKudoComponent implements OnInit {
   public baseLocation = window.location.origin;
-
+  public kudoId;
+  public baseImageLocation;
   constructor(private meta: Meta,private route: ActivatedRoute) {
-    let kudoId;
-    this.route.params.subscribe(routeParams => kudoId =routeParams.id);
+
+    this.route.params.subscribe(routeParams => this.kudoId =routeParams.id);
+    this.baseImageLocation = `${environment.apiUrl}/api/kudo/${this.kudoId}/getImage`;
     this.meta.updateTag({
-      name: 'og:title',content: 'THIS is THE title'
+      property: 'og:title',content: 'THIS is THE title'
      })
      this.meta.updateTag({
-       name: 'og:site_name',content: 'THIS is THE title'
+       property: 'og:site_name',content: 'THIS is THE title'
       })
       this.meta.updateTag({
-       name: 'og:description',content: 'THIS is THE title'
+       property: 'og:description',content: 'THIS is THE title'
       })
       this.meta.updateTag({
-       name: 'og:image',content: `${this.baseLocation}/api/kudo/${kudoId}/getImage`
+       property: 'og:image',content: this.baseImageLocation
       })
       this.meta.updateTag({
-       name: 'og:image:width',content: '250'
+       property: 'og:image:width',content: '250'
       })
       this.meta.updateTag({
-       name: 'og:image:height', content:'257'})
+       property: 'og:image:height', content:'257'})
 
        this.meta.updateTag({
-         name:'og:url', content:`${this.baseLocation}/public-kudo/${kudoId}`
+         property:'og:url', content:`${this.baseLocation}/public-kudo/${this.kudoId}`
        })
   }
 
