@@ -3,7 +3,6 @@ import * as Logger from 'js-logger';
 // import html2canvas from 'html2canvas';
 import htmlToImage from 'html-to-image';
 import { Meta } from '@angular/platform-browser';
-import { FacebookService, InitParams } from 'ngx-facebook';
 
 import { Subscription, observable } from 'rxjs';
 import { KudoService } from '../services/kudo.service';
@@ -22,13 +21,8 @@ export class MyKudosComponent implements OnInit {
     public image = '../../assets/great_job.png';
     private log = Logger.get('MyKudosComponent');
 
-    constructor(private _kudoService: KudoService, private meta: Meta, private fb: FacebookService) {
-        const initParams: InitParams = {
-            appId: '431009970868119',
-            xfbml: true,
-            version: 'v2.8',
-        };
-        this.fb.init(initParams);
+    constructor(private _kudoService: KudoService, private meta: Meta) {
+
     }
 
     ngOnInit() {
