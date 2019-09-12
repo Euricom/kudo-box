@@ -20,4 +20,4 @@ server.get('*', (req, res) => {
         });
     }
 });
-server.listen(4200);
+server.listen(process.env.PORT);
