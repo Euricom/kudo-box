@@ -20,7 +20,6 @@ export class MyKudosComponent implements OnInit {
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
     public image = '../../assets/great_job.png';
-    public baseLocation = window.location.origin;
     private log = Logger.get('MyKudosComponent');
 
     constructor(private _kudoService: KudoService, private meta: Meta, private fb: FacebookService) {
@@ -65,31 +64,11 @@ export class MyKudosComponent implements OnInit {
         htmlToImage
             .toPng(node)
             .then(dataUrl => {
-                serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe(() => this.shareToFacebook(kudoId));
+                serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe();
             })
             .catch(function(error) {
                 console.error('oops, something went wrong!', error);
             });
     }
-    shareToFacebook(kudoId) {
-        return this.fb
-            .ui({
-                method: 'share_open_graph',
-                action_type: 'og.shares',
-                action_properties: JSON.stringify({
-                    object: {
-                        'og:title': 'THIS is THE title',
-                        'og:site_name': 'This IS the SITE name',
-                        'og:description': 'this IS the DESCRIPTION',
-                        'og:image': `${this.baseLocation}/api/kudo/${kudoId}/getImage`,
-                        'og:image:width': '250',
-                        'og:image:height': '257',
-                        'og:url': `${this.baseLocation}/public-kudo/${kudoId}`,
-                    },
-                }),
-            })
-            .then(response => {
-                console.log('after fb.ui', response);
-            });
-    }
+
 }

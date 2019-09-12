@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ShareKudoComponent } from './share-kudo.component';
 
-const routes: Routes = [{ path: '', component: ShareKudoComponent }];
+const routes: Routes = [{ path: ':id', component: ShareKudoComponent }];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

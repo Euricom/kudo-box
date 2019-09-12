@@ -9,4 +9,4 @@ import { ShareKudoComponent } from './share-kudo.component';
     declarations: [ShareKudoComponent],
     imports: [CommonModule, MatCardModule, ShareKudoRoutingModule],
 })
-export class PublicKudoModule {}
+export class ShareKudoModule {}
