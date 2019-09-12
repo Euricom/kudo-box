@@ -29,6 +29,10 @@ const routes: Routes = [
         path: 'public-kudo',
         loadChildren: () => import('./public-kudo/public-kudo.module').then(m => m.PublicKudoModule),
     },
+    {
+      path: 'share-kudo',
+      loadChildren: () => import('./share-kudo/share-kudo.module').then(m => m.ShareKudoModule),
+  },
 ];
 
 @NgModule({
