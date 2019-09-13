@@ -16,27 +16,6 @@ export class ShareKudoComponent implements OnInit {
 
     this.route.params.subscribe(routeParams => this.kudoId =routeParams.id);
     this.baseImageLocation = `${environment.apiUrl}/api/kudo/${this.kudoId}/getImage`;
-    this.meta.updateTag({
-      property: 'og:title',content: 'THIS is THE title'
-     })
-     this.meta.updateTag({
-       property: 'og:site_name',content: 'THIS is THE title'
-      })
-      this.meta.updateTag({
-       property: 'og:description',content: 'THIS is THE title'
-      })
-      this.meta.updateTag({
-       property: 'og:image',content: this.baseImageLocation
-      })
-      this.meta.updateTag({
-       property: 'og:image:width',content: '250'
-      })
-      this.meta.updateTag({
-       property: 'og:image:height', content:'257'})
-
-       this.meta.updateTag({
-         property:'og:url', content:`${this.baseLocation}/public-kudo/${this.kudoId}`
-       })
   }
 
   ngOnInit() {
