@@ -23,14 +23,14 @@ server.get('*', (req, res) => {
             if (req.path.indexOf('share-kudo') !== -1) {
                 const pathArray = req.path.split('/');
                 console.log('ID', pathArray[pathArray.length - 1]);
-                const responseHtml = html.replace(
+                let responseHtml = html.replace(
                     /#IMAGE#/g,
                     `https://kudobox-api-dev.azurewebsites.net/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,
                 );
-                /*responseHtml = responseHtml.replace(
+                responseHtml = responseHtml.replace(
                     /#URL#/g,
                     `https://kudobox-dev.azurewebsites.net/public-kudo/${pathArray[pathArray.length - 1]}`,
-                );*/
+                );
                 res.send(responseHtml);
                 /* const responseHtml = html.replace(
                     /#IMAGE#/g,
