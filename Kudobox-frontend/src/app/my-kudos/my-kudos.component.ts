@@ -56,7 +56,7 @@ export class MyKudosComponent implements OnInit {
         const node = document.getElementById(divId);
         const serv = this._kudoService;
         htmlToImage
-            .toPng(node, { quality: 0.5 })
+            .toPng(node)
             .then(dataUrl => {
                 serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe(() =>
                     this.router.navigateByUrl(`/share-kudo/${kudoId}`),
