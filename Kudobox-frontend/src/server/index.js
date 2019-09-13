@@ -19,7 +19,8 @@ server.get('*', (req, res) => {
         res.sendFile(path.resolve(req.url));
     } else {
         fs.readFile(path.resolve('index.html'), 'utf8', (err, html) => {
-            if (req.path.indexOf('share-kudo')) {
+            console.log('PATHHHHH', req.path);
+            if (req.path.indexOf('share-kudo') !== -1) {
                 const pathArray = req.path.split('/');
                 console.log('ID', pathArray[pathArray.length - 1]);
                 const responseHtml = html.replace(
