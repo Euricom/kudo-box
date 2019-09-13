@@ -27,6 +27,10 @@ server.get('*', (req, res) => {
                     /#IMAGE#/g,
                     `https://kudobox-api-dev.azurewebsites.net/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,
                 );
+                responseHtml = html.replace(
+                    /#URL#/g,
+                    `https://kudobox-dev.azurewebsites.net/public-kudo/${pathArray[pathArray.length - 1]}`,
+                );
                 res.send(responseHtml);
                 /* const responseHtml = html.replace(
                     /#IMAGE#/g,
