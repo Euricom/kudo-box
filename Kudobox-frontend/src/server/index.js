@@ -23,7 +23,7 @@ server.get('*', (req, res) => {
             if (req.path.indexOf('share-kudo') !== -1) {
                 const pathArray = req.path.split('/');
                 console.log('ID', pathArray[pathArray.length - 1]);
-                const responseHtml = html.replace(
+                let responseHtml = html.replace(
                     /#IMAGE#/g,
                     `https://kudobox-api-dev.azurewebsites.net/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,
                 );
