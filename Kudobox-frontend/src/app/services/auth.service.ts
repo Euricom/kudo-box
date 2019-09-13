@@ -75,7 +75,7 @@ export class AuthService {
             .then(user => {
                 this.user = user;
                 this.setUser();
-                this.router.navigateByUrl(this.user.state);
+                this.router.navigateByUrl(this.user ? this.user.state : '/');
             })
             .catch(err => {
                 this.log.error(err);

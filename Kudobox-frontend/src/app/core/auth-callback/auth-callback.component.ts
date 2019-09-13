@@ -8,8 +8,11 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AuthCallbackComponent implements OnInit {
     constructor(public authService: AuthService) {}
-
+    public enteredPaged = 'not entered';
     ngOnInit() {
-        this.authService.completeAuthentication().then();
+        this.enteredPaged = 'entered ng oninit';
+        this.authService.completeAuthentication().then(() => {
+            this.enteredPaged = 'code executed';
+        });
     }
 }

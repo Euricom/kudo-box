@@ -5,7 +5,9 @@ import htmlToImage from 'html-to-image';
 import { Meta } from '@angular/platform-browser';
 
 import { Subscription, observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { KudoService } from '../services/kudo.service';
+// eslint-disable-next-line import/extensions
 import { kudoImages } from '../data/kudoImages.js';
 
 @Component({
@@ -21,9 +23,7 @@ export class MyKudosComponent implements OnInit {
     public image = '../../assets/great_job.png';
     private log = Logger.get('MyKudosComponent');
 
-    constructor(private _kudoService: KudoService, private meta: Meta) {
-
-    }
+    constructor(private _kudoService: KudoService, private meta: Meta, private router: Router) {}
 
     ngOnInit() {
         this.kudoImages = kudoImages;
@@ -58,11 +58,12 @@ export class MyKudosComponent implements OnInit {
         htmlToImage
             .toPng(node)
             .then(dataUrl => {
-                serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe();
+                serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe(() =>
+                    this.router.navigateByUrl(`/share-kudo/${kudoId}`),
+                );
             })
             .catch(function(error) {
                 console.error('oops, something went wrong!', error);
             });
     }
-
 }
