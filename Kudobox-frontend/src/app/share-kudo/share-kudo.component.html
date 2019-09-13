@@ -7,7 +7,7 @@
       <p>{{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
     </div> -->
     <share-buttons class="share-buttons-align-center" [theme]="'default'"
-      [include]="['facebook', 'twitter', 'linkedin']" [show]="3" [autoSetMeta]="false">
+      [include]="['facebook', 'twitter', 'linkedin']" [show]="3" [autoSetMeta]="false" [url]="publicKudoUrl">
     </share-buttons>
   </mat-card-footer>
 </mat-card>
