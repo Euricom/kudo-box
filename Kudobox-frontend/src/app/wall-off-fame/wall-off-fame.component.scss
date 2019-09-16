@@ -70,6 +70,7 @@ h1 {
     position: absolute;
     bottom: 30px;
     left: 70px;
+    font-size: 15px;
 }
 
 @media only screen and (max-width: 1800px) {
@@ -121,7 +122,7 @@ h1 {
         padding-left: 20px;
     }
     .receiverText {
-        font-size: 15px;
+        font-size: 10px;
         bottom: 20px;
         left: 43px;
     }
