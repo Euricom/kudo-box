@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, ViewChild, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faSmile } from '@fortawesome/free-solid-svg-icons';
 
 import { Subscription } from 'rxjs';
 
@@ -25,6 +26,12 @@ export class KudosCreateComponent implements OnInit {
     public kudoId: number;
     public isTextareaFilled: boolean = true;
 
+    public faSmile = faSmile;
+    public showEmojis = false;
+    public kudoText;
+    public emojisPerLine = 9;
+    public totalFrequentLines = 4;
+
     constructor(private route: ActivatedRoute, private router: Router, private _kudoService: KudoService) {}
 
     ngOnInit() {
@@ -33,10 +40,27 @@ export class KudosCreateComponent implements OnInit {
             this.baseImageUrl = image.url;
             this.kudoId = params.id;
         });
+        this.checkWidth();
     }
 
     ngOnDestroy() {
         this.routeSubscription.unsubscribe();
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.checkWidth();
+    }
+
+    public checkWidth() {
+        const width = window.innerWidth;
+        if (width <= 600) {
+            this.emojisPerLine = 6;
+            this.totalFrequentLines = 1;
+        } else {
+            this.emojisPerLine = 9;
+            this.totalFrequentLines = 4;
+        }
     }
 
     changeFont(font) {
@@ -58,5 +82,17 @@ export class KudosCreateComponent implements OnInit {
         } else {
             this.isTextareaFilled = false;
         }
+    }
+
+    showEmoji() {
+        this.showEmojis = !this.showEmojis;
+    }
+
+    addEmoji(event) {
+        this.kudoText += `${event.emoji.native}`;
+    }
+
+    onClickedOutside(e: Event) {
+        this.showEmojis = false;
     }
 }
