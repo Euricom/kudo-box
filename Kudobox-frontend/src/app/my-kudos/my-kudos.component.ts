@@ -52,7 +52,6 @@ export class MyKudosComponent implements OnInit {
 
     shareImage(id, kudoId) {
         const divId = `capture-${id}`;
-        console.log('share image', divId);
         const node = document.getElementById(divId);
         const serv = this._kudoService;
         htmlToImage

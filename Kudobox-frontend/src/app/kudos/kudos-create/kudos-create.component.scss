@@ -107,6 +107,29 @@ li {
     margin: auto 0;
 }
 
+.showEmoji {
+    background: none;
+    border: none;
+    color: #dbdbdb;
+    position: absolute;
+    top: 152px;
+    right: 50px;
+    font-size: 20px;
+    border: 1px solid #dbdbdb;
+    border-radius: 15%;
+}
+
+.showEmoji:hover {
+    color: #72b43c;
+    border-color: #72b43c;
+}
+
+emoji-mart {
+    position: absolute;
+    top: 180px;
+    right: 50px;
+}
+
 @media only screen and (max-width: 992px) {
     #textAreaForImage {
         line-height: 35.5px;
@@ -138,6 +161,16 @@ li {
         line-height: 35.5px;
         width: 352px;
         height: 202px;
+    }
+
+    .showEmoji {
+        top: 100px;
+        right: 25px;
+    }
+
+    emoji-mart {
+        top: 130px;
+        right: 26px;
     }
 }
 

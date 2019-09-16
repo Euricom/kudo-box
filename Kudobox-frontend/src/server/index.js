@@ -9,20 +9,16 @@ const options = {
 };
 // server.use(express.static('/home/site/wwwroot', options));
 const staticPath = path.join(__dirname, '..');
-console.log('PATH', staticPath);
 server.use(express.static(staticPath, options));
 const allowedExt = ['.js', '.ico', '.css', '.png', '.jpg', '.woff2', '.woff', '.ttf', '.svg'];
 
 server.get('*', (req, res) => {
-    console.log('server.get');
     if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
         res.sendFile(path.resolve(req.url));
     } else {
         fs.readFile(path.resolve('index.html'), 'utf8', (err, html) => {
-            console.log('PATHHHHH', req.path);
             if (req.path.indexOf('share-kudo') !== -1 || req.path.indexOf('public-kudo') !== -1) {
                 const pathArray = req.path.split('/');
-                console.log('ID', pathArray[pathArray.length - 1]);
                 let responseHtml = html.replace(
                     /#IMAGE#/g,
                     `https://kudobox-api-dev.azurewebsites.net/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,

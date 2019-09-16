@@ -28,6 +28,10 @@
     flex: 1;
 }
 
+.mat-sidenav-content {
+    height: -webkit-fill-available;
+}
+
 .kudoCount {
     margin-left: 10px;
 }

@@ -68,8 +68,8 @@ app.use(passport.session()); // Provides session support
 app.use(helmet());
 
 // using bodyParser to parse JSON bodies into JS objects
-app.use(bodyParser.json({limit: '10mb'}));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 // enabling CORS for all requests
 app.use(cors());
@@ -95,37 +95,34 @@ app.listen(config.port, function() {
   }
 });
 
-app.post("/api/kudo/:id/saveImage",function(req,res){
+app.post("/api/kudo/:id/saveImage", function(req, res) {
   Kudo.findById(req.params.id).exec((err, kudo) => {
     if (err) {
       res.status(err);
     } else {
-     kudo.image =req.body.data;
-     kudo.save();
-     
-     return res.status(200).end();
+      kudo.image = req.body.data;
+      kudo.save();
+
+      return res.status(200).end();
     }
   });
- 
- });
+});
 
- app.get('/api/kudo/:id/getImage',function(req,res){
+app.get("/api/kudo/:id/getImage", function(req, res) {
   Kudo.findById(req.params.id).exec((err, kudo) => {
     if (err) {
       res.status(err);
     } else {
-      var img = Buffer.from(kudo.image.split(',')[1], 'base64');
+      var img = Buffer.from(kudo.image.split(",")[1], "base64");
 
       res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': img.length
+        "Content-Type": "image/png",
+        "Content-Length": img.length
       });
-      res.end(img); 
+      res.end(img);
     }
   });
-
-  
- })
+});
 
 // defining an endpoint to return all users
 app.get("/api/user", authenticate(), (req, res, next) => {
