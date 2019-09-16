@@ -27,7 +27,6 @@ import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
@@ -118,7 +117,6 @@ const customNotifierOptions: NotifierOptions = {
             enabled: environment.production,
             registrationStrategy: 'registerImmediately',
         }),
-        PickerModule,
     ],
     providers: [
         KudoService,

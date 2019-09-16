@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ClickOutsideModule } from 'ng-click-outside';
 
 import { MatCardModule } from '@angular/material';
 import { KudosRoutingModule } from './kudos-routing.module';
@@ -31,9 +28,6 @@ import { KudosSendComponent } from './kudos-send/kudos-send.component';
         FormsModule,
         ReactiveFormsModule,
         Ng2SearchPipeModule,
-        PickerModule,
-        FontAwesomeModule,
-        ClickOutsideModule,
     ],
 })
 export class KudosModule {}

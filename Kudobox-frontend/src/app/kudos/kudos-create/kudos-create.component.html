@@ -43,21 +43,7 @@
                 placeholder="Type some text here..."
                 #textarea
                 maxLength="180"
-                [(ngModel)]="kudoText"
             ></textarea>
-            <div (clickOutside)="onClickedOutside($event)">
-                <button class="showEmoji" (click)="showEmoji()"><fa-icon [icon]="faSmile"></fa-icon></button>
-                <emoji-mart
-                    *ngIf="showEmojis"
-                    title="Pick your emoji…"
-                    emoji="point_up"
-                    (emojiSelect)="addEmoji($event)"
-                    perLine="{{ emojisPerLine }}"
-                    sheetSize="16"
-                    totalFrequentLines="{{ totalFrequentLines }}"
-                    color="#72b43c"
-                ></emoji-mart>
-            </div>
         </div>
         <div class="containerBtn">
             <span class="invalid" [style.visibility]="isTextareaFilled ? 'hidden' : 'visible'"
