@@ -28,6 +28,10 @@
     flex: 1;
 }
 
+.mat-drawer-content {
+    overflow: unset !important;
+}
+
 .kudoCount {
     margin-left: 10px;
 }
