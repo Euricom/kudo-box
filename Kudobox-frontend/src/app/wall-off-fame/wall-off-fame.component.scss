@@ -1,5 +1,5 @@
 :host {
-    width: 1600px;
+    /*width: 1600px;*/
     margin: 0 auto;
     display: block;
 }
@@ -21,6 +21,8 @@ h1 {
 .mat-card {
     width: 500px;
     box-shadow: none;
+    padding: 0 !important;
+    margin: 16px;
 }
 
 .my-kudo-card-image {
@@ -41,7 +43,7 @@ h1 {
     background: none;
     outline: none;
     resize: none;
-    color: #72b43c;
+    color: rgb(105, 190, 40);
     top: 148px;
     left: 90px;
     width: 355px;
@@ -51,8 +53,17 @@ h1 {
 
 .searchForm {
     position: absolute;
-    right: 20px;
+    right: 16px;
     top: 10px;
+}
+
+.mat-input-element {
+    caret-color: rgb(105, 190, 40);
+}
+
+.formFieldSelect {
+    width: 40px;
+    margin-right: 20px;
 }
 
 ::ng-deep.mat-form-field-ripple {
@@ -66,20 +77,27 @@ h1 {
 }
 
 .receiverText {
-    color: #72b43c;
+    color: rgb(105, 190, 40);
     position: absolute;
     bottom: 30px;
     left: 70px;
     font-size: 15px;
 }
 
+.getMore {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+/*
 @media only screen and (max-width: 1800px) {
     :host {
         max-width: 1064px;
     }
 }
+*/
 
-@media only screen and (max-width: 1200px) {
+/*@media only screen and (max-width: 1200px) {
     :host {
         max-width: 500px;
     }
@@ -90,13 +108,12 @@ h1 {
         margin-left: 20px;
     }
 }
-
-@media only screen and (max-width: 992px) {
+*/
+@media only screen and (max-width: 720px) {
     :host {
-        max-width: 664px;
+        width: 300px;
     }
-
-    .mat-card {
+    /*  .mat-card {
         width: 300px;
     }
 
@@ -111,7 +128,7 @@ h1 {
         width: 225px;
         height: 150px;
         line-height: 21.5px;
-    }
+    }*/
 
     p {
         font-size: 15px;
@@ -119,17 +136,12 @@ h1 {
 
     .searchForm {
         position: relative;
-        padding-left: 20px;
+        padding-left: 16px;
+        margin-left: -110px;
     }
     .receiverText {
         font-size: 10px;
         bottom: 20px;
         left: 43px;
-    }
-}
-
-@media only screen and (max-width: 800px) {
-    :host {
-        max-width: 332px;
     }
 }

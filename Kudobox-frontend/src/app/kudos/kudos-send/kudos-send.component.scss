@@ -23,7 +23,7 @@ option {
     height: 40px;
     width: 70px;
     border: none;
-    background-color: #72b43c;
+    background-color: rgb(105, 190, 40);
     color: white;
     font-size: 20px;
     outline: none;
@@ -52,11 +52,11 @@ option {
 }
 
 option:nth-child(even) {
-    background-color: #72b43c61;
+    background-color: rgb(105, 190, 40) 61;
 }
 
 option:hover {
-    background-color: #72b43c;
+    background-color: rgb(105, 190, 40);
     color: white;
 }
 

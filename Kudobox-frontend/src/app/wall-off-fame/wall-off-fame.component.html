@@ -1,6 +1,25 @@
 <div class="allKudosHeader">
     <h1>Wall Of Fame</h1>
     <form class="searchForm">
+        <mat-form-field class="formFieldSelect" *ngIf="width > 720">
+            <select
+                matNativeControl
+                required
+                [(value)]="selected"
+                (change)="changeNumberOfKudosShown($event.target.value)"
+            >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </mat-form-field>
         <mat-form-field>
             <input
                 matInput
@@ -16,12 +35,16 @@
 </div>
 
 <div class="allKudos">
-    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText">
-        <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" />
-        <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
-        <!--<p class="receiverText" [style.font-family]="kudo.fontFamily">Receiver: {{ kudo.receiver.name }}</p>-->
+    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText" [ngStyle]="styleMatCard">
+        <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" [ngStyle]="styleImage" />
+        <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily" [ngStyle]="styleTextarea">{{
+            kudo.text
+        }}</textarea>
+        <p class="receiverText" [style.font-family]="kudo.fontFamily" [ngStyle]="styleReceiver">
+            Receiver: {{ kudo.receiver.name }}
+        </p>
     </mat-card>
-    <div>
-        <button mat-raised-button type="button" (click)="getWallOfFame()" class="allKudosButton">Get more</button>
-    </div>
+</div>
+<div class="getMore">
+    <button mat-raised-button type="button" (click)="getWallOfFame()" class="allKudosButton">Get more</button>
 </div>

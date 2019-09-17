@@ -28,7 +28,7 @@
     background: none;
     outline: none;
     resize: none;
-    color: #72b43c;
+    color: rgb(105, 190, 40);
     top: 152px;
     left: 94px;
     width: 355px;
@@ -64,7 +64,7 @@ li {
 .fontsBtn {
     background: none;
     border: none;
-    /* color: #72b43c;*/
+    /* color: rgb(105, 190, 40);*/
     color: white;
     outline: none;
     height: 50px;
@@ -91,7 +91,7 @@ li {
     height: 40px;
     width: 70px;
     border: none;
-    background-color: #72b43c;
+    background-color: rgb(105, 190, 40);
     color: white;
     font-size: 20px;
     outline: none;
@@ -120,8 +120,8 @@ li {
 }
 
 .showEmoji:hover {
-    color: #72b43c;
-    border-color: #72b43c;
+    color: rgb(105, 190, 40);
+    border-color: rgb(105, 190, 40);
 }
 
 emoji-mart {
