@@ -12,6 +12,12 @@ export class ErrorHandlerService implements ErrorHandler {
 
     handleError(error: any) {
         this.log.info('Error:', error);
-        this._notifier.notify('error', error);
+        this._notifier.notify(
+            'error',
+            `${error.error.error}: ${error.error.message.substr(
+                0,
+                error.error.message.length > 100 ? 100 : error.error.message.length,
+            )}`,
+        );
     }
 }
