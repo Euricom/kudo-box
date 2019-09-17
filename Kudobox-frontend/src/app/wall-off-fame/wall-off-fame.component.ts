@@ -79,15 +79,11 @@ export class WallOffFameComponent implements OnInit {
     changeNumberOfKudosShown(number) {
         this.numberOfKudos = number;
         if (this.width > 720) {
-            console.log('number', number);
-            console.log('width is bigger then 1200', this.width);
             let widthKudo = (this.width - 100 - number * 2 * 16) / number;
             let scale = 500 / widthKudo;
-            console.log('scale', scale);
             this.styleMatCard = {
                 width: widthKudo + 'px',
                 height: widthKudo + 'px',
-                margin: 16 / scale + 'px',
             };
             this.styleImage = {
                 width: widthKudo + 'px',
@@ -105,12 +101,6 @@ export class WallOffFameComponent implements OnInit {
                 left: 70 / scale / 1.3 + 'px',
                 'font-size': 15 / scale + 'px',
             };
-            let widthOfKudosAndMargin = widthKudo * number + (16 / scale) * 2 * number;
-            console.log('widthOfKudosAndMargin', widthOfKudosAndMargin);
-            let headerWidth = (this.width - widthOfKudosAndMargin) / 2 + widthOfKudosAndMargin - 16 / scale;
-            console.log('headerWidth', headerWidth);
-
-            console.log('widthKudo', widthKudo);
         } else {
             this.styleMatCard = {
                 width: '300px',
