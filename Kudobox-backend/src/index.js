@@ -108,14 +108,13 @@ io.on("connection", function(socket) {
 app.post("/api/kudo/:id/saveImage", function(req, res) {
   try{
   Kudo.findById(req.params.id).exec().then(kudo => {
-    if (err) {
-    } else {
+   
       kudo.image = req.body.data;
       kudo.save();
 
       return res.status(200).end();
     }
-  });
+  );
 }catch(err){
   res.boom.notFound(err);
 }
