@@ -32,6 +32,7 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -45,6 +46,8 @@ import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
+
+const socketIoConfig: SocketIoConfig = { url: environment.socketIo.socketIoUrl, options: {} };
 
 const customNotifierOptions: NotifierOptions = {
     position: {
@@ -119,6 +122,7 @@ const customNotifierOptions: NotifierOptions = {
             registrationStrategy: 'registerImmediately',
         }),
         PickerModule,
+        SocketIoModule.forRoot(socketIoConfig),
     ],
     providers: [
         KudoService,

@@ -9,6 +9,7 @@ const User = require("./models/user");
 var passport = require("passport");
 var OIDCBearerStrategy = require("passport-azure-ad").BearerStrategy;
 const Logger = require("js-logger");
+
 //config
 const config = require("./config/config");
 const httpError = require("./util/httpError");
@@ -57,8 +58,14 @@ var bearerStrategy = new OIDCBearerStrategy(options, async function(
   }
 });
 
-// defining the Express app
+// defining the Express app http server and socketio
 const app = express();
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+
+
+
 passport.use(bearerStrategy);
 
 app.use(passport.initialize()); // Starts passport
@@ -87,7 +94,7 @@ app.use(morgan("combined"));
 
 require("./data/mongo")();
 
-app.listen(config.port, function() {
+http.listen(config.port, function() {
   if (config.env === "development") {
     Logger.info(`API Server listening on port ${config.port}`);
     Logger.info("Open browser at:");
@@ -95,7 +102,11 @@ app.listen(config.port, function() {
   }
 });
 
-app.post("/api/kudo/:id/saveImage", function(req, res) {
+io.on('connection', function(socket){
+  console.log('client connected')
+});
+
+app.post("/api/kudo/:id/saveImage",function(req,res){
   Kudo.findById(req.params.id).exec((err, kudo) => {
     if (err) {
       res.status(err);
@@ -207,6 +218,7 @@ app.post("/api/kudo", authenticate(), async (req, res) => {
 
   const newKudo = new Kudo(req.body);
   await newKudo.save();
+  io.emit('newWallOfFameKudo',[newKudo]);
   res.send({ message: "New kudo inserted." });
 });
 
@@ -218,7 +230,9 @@ app.post("/api/kudo/batch", authenticate(), async (req, res) => {
 
   kudos.forEach(kudo => promiseList.push(new Kudo(kudo).save()));
 
-  await Promise.all(promiseList);
+  const savedKudos = await Promise.all(promiseList);
+  io.emit('newWallOfFameKudo',[savedKudos]);
+
   res.send({ message: "New kudo inserted." });
 });
 

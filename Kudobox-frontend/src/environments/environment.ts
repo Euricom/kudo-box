@@ -5,6 +5,9 @@ export const environment = {
     logLevel: Logger.DEBUG,
     production: false,
     apiUrl: config.apiUrl,
+    socketIo: {
+        socketIoUrl: config.socketIo.socketIoUrl,
+    },
     oidc: {
         authority: 'https://login.microsoftonline.com/0b53d2c1-bc55-4ab3-a161-927d289257f2/v2.0/',
         scope: 'openid profile api://kudobox.euri.com/api',
