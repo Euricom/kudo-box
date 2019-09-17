@@ -41,7 +41,7 @@ export class KudoService implements OnInit {
             tap(() => localStorage.removeItem('offlineKudos')),
             catchError(e => {
                 this.log.error('Error sendKudos():', e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e);
             }),
         );
     }
@@ -51,7 +51,7 @@ export class KudoService implements OnInit {
             return this.http.post(`${environment.apiUrl}/api/kudo`, kudo).pipe(
                 catchError(e => {
                     this.log.error('Error sendKudo():', e);
-                    return throwError('BIGBIG ERROR');
+                    return throwError(e);
                 }),
             );
         }
@@ -69,7 +69,7 @@ export class KudoService implements OnInit {
         return this.http.post(`${environment.apiUrl}/api/kudo/${kudoId}/saveImage`, image).pipe(
             catchError(e => {
                 this.log.error('Error sendKudo():', e);
-                return throwError('BIGBIG ERROR');
+                return throwError(e);
             }),
         );
     }
@@ -85,7 +85,7 @@ export class KudoService implements OnInit {
                 }),
                 catchError(e => {
                     this.log.error('Error getUsersList():', e);
-                    return throwError('BIGBIG ERROR');
+                    return throwError(e);
                 }),
             );
         }
@@ -97,7 +97,7 @@ export class KudoService implements OnInit {
             tap(myKudos => localStorage.setItem('myKudos', JSON.stringify(myKudos))),
             catchError(e => {
                 this.log.error('Error getMyKudos():', e);
-                return throwError(e.statusText);
+                return throwError(e);
             }),
         );
     }
@@ -107,7 +107,7 @@ export class KudoService implements OnInit {
             map(kudo => Object.assign(new Kudo(), kudo)),
             catchError(e => {
                 this.log.error('Error getPublicKudo():', e);
-                return throwError(e.statusText);
+                return throwError(e);
             }),
         );
     }
@@ -117,7 +117,7 @@ export class KudoService implements OnInit {
             return this.http.get<Kudo[]>(`${environment.apiUrl}/api/kudo?skip=${skip}`).pipe(
                 catchError(e => {
                     this.log.error('Error getAllKudos():', e);
-                    return throwError(e.statusText);
+                    return throwError(e);
                 }),
             );
         }
@@ -129,7 +129,7 @@ export class KudoService implements OnInit {
             return this.http.get<number>(`${environment.apiUrl}/api/unreadKudos/`).pipe(
                 catchError(e => {
                     this.log.error('Error getUnreadKudos():', e);
-                    return throwError(e.statusText);
+                    return throwError(e);
                 }),
             );
         }
@@ -140,7 +140,7 @@ export class KudoService implements OnInit {
         return this.http.put(`${environment.apiUrl}/api/changeStatus/`, { status }).pipe(
             catchError(e => {
                 this.log.error('Error changeStatus():', e);
-                return throwError(e.statusText);
+                return throwError(e);
             }),
         );
     }

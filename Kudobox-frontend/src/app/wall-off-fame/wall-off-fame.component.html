@@ -33,9 +33,9 @@
         </mat-form-field>
     </form>
 </div>
-
+<!-- <button (click)="addKudoTest()"></button> -->
 <div class="allKudos">
-    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText" [ngStyle]="styleMatCard">
+    <mat-card @items class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText" [ngStyle]="styleMatCard">
         <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" [ngStyle]="styleImage" />
         <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily" [ngStyle]="styleTextarea">{{
             kudo.text
