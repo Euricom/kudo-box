@@ -117,27 +117,27 @@ export class WallOffFameComponent implements OnInit {
     changeNumberOfKudosShown(number) {
         this.numberOfKudos = number;
         if (this.width > 720) {
-            let widthKudo = (this.width - 100 - number * 2 * 16) / number;
-            let scale = 500 / widthKudo;
+            const widthKudo = (this.width - 100 - number * 2 * 16) / number;
+            const scale = 500 / widthKudo;
             this.styleMatCard = {
-                width: widthKudo + 'px',
-                height: widthKudo + 'px',
+                width: `${widthKudo}px`,
+                height: `${widthKudo}px`,
             };
             this.styleImage = {
-                width: widthKudo + 'px',
+                width: `${widthKudo}px`,
             };
             this.styleTextarea = {
-                top: 148 / scale / 1.12 + 'px',
-                left: 90 / scale / 1.22 + 'px',
-                width: 355 / scale + 'px',
-                height: 225 / scale + 'px',
-                'line-height': 35.5 / scale + 'px',
-                'font-size': 22 / scale + 'px',
+                top: `${148 / scale / 1.12}px`,
+                left: `${90 / scale / 1.22}px`,
+                width: `${355 / scale}px`,
+                height: `${225 / scale}px`,
+                'line-height': `${35.5 / scale}px`,
+                'font-size': `${22 / scale}px`,
             };
             this.styleReceiver = {
-                bottom: 30 / scale / 3.3 + 'px',
-                left: 70 / scale / 1.3 + 'px',
-                'font-size': 15 / scale + 'px',
+                bottom: `${30 / scale / 3.3}px`,
+                left: `${70 / scale / 1.3}px`,
+                'font-size': `${15 / scale}px`,
             };
         } else {
             this.styleMatCard = {
