@@ -100,7 +100,7 @@ export class WallOffFameComponent implements OnInit {
         return image[0].url;
     }
 
-    @HostListener('window:resize', ['$event'])
+    @HostListener('window:resize')
     onResize() {
         this.checkWidth();
         this.changeNumberOfKudosShown(this.numberOfKudos);
