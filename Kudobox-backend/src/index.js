@@ -172,7 +172,7 @@ app.get("/api/mykudo/", authenticate(), async (req, res, next) => {
   try {
     Kudo.find({ receiver: req.currentUser._id })
       .populate("sender")
-      .sort({ createdOn: "bla" })
+      .sort({ createdOn: "descending" })
       .exec()
       .then(kudo => res.json(kudo))
       .catch(err => next(err));
