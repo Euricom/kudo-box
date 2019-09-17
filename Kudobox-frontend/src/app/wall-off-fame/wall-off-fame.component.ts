@@ -51,19 +51,23 @@ export class WallOffFameComponent implements OnInit {
         // this.kudos$.pipe(map(kudos => from(kudos).pipe(delay(200)))).subscribe(x => console.log(x));
         this.breakKudosStreamToSingleKudos$
             .pipe(
-                map((kudos: []) => {
-                    from(kudos).subscribe(kudo => {
-                        this.kudos$.next(kudo);
+                map(data => {
+                    from(data.kudos).subscribe(kudo => {
+                        this.kudos$.next({ kudo, addToFront: data.addToFront });
                     });
                 }),
             )
             .subscribe();
-        this.kudos$.pipe(concatMap(kudo => of(kudo).pipe(delay(575)))).subscribe(kudo => {
-            this.kudos = [kudo, ...this.kudos];
+        this.kudos$.pipe(concatMap(kudo => of(kudo).pipe(delay(575)))).subscribe(data => {
+            if (data.addToFront) {
+                this.kudos = [data.kudo, ...this.kudos];
+            } else {
+                this.kudos = [...this.kudos, data.kudo];
+            }
         });
 
         this._wallOfFameService.updateWallOfFameWithLatestFromEvent().subscribe(kudos => {
-            this.breakKudosStreamToSingleKudos$.next(kudos);
+            this.breakKudosStreamToSingleKudos$.next({ kudos, addToFront: true });
         });
 
         this.onResize();
@@ -75,7 +79,7 @@ export class WallOffFameComponent implements OnInit {
                 if (this.kudos.length === 0) {
                     this.kudos = [...data];
                 } else {
-                    this.breakKudosStreamToSingleKudos$.next(data);
+                    this.breakKudosStreamToSingleKudos$.next({ kudos: data, addToFront: false });
                 }
             }),
         );
