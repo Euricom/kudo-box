@@ -47,7 +47,7 @@ import { ErrorHandlerService } from './services/error-handler.service';
 import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
 
-const socketIoConfig: SocketIoConfig = { url: environment.socketIo.socketIoUrl, options: { autoConnect: true } };
+const socketIoConfig: SocketIoConfig = { url: environment.socketIo.socketIoUrl, options: { autoConnect: false } };
 
 const customNotifierOptions: NotifierOptions = {
     position: {
