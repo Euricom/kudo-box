@@ -7,7 +7,7 @@ import { OfflineGuardService } from './services/OfflineGuardService';
 import { OfflineComponent } from './core/offline/offline.component';
 // canActivate: [OidcGuardService]
 const routes: Routes = [
-    // { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
+    { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
     { path: 'auth', component: AuthCallbackComponent },
     { path: 'offline', component: OfflineComponent },
     {
@@ -21,7 +21,7 @@ const routes: Routes = [
         canActivate: [OidcGuardService, OfflineGuardService],
     },
     {
-        path: '',
+        path: 'kudos',
         loadChildren: () => import('./kudos/kudos.module').then(m => m.KudosModule),
         canActivate: [OidcGuardService],
     },
