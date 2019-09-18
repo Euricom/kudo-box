@@ -7,9 +7,9 @@ import { OfflineGuardService } from './services/OfflineGuardService';
 import { OfflineComponent } from './core/offline/offline.component';
 // canActivate: [OidcGuardService]
 const routes: Routes = [
+    { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
     { path: 'auth', component: AuthCallbackComponent },
     { path: 'offline', component: OfflineComponent },
-    { path: '', redirectTo: 'kudos', pathMatch: 'full', canActivate: [OidcGuardService] },
     {
         path: 'wall-of-fame',
         loadChildren: () => import('./wall-off-fame/wall-off-fame.module').then(m => m.WallOffFameModule),
@@ -30,9 +30,9 @@ const routes: Routes = [
         loadChildren: () => import('./public-kudo/public-kudo.module').then(m => m.PublicKudoModule),
     },
     {
-      path: 'share-kudo',
-      loadChildren: () => import('./share-kudo/share-kudo.module').then(m => m.ShareKudoModule),
-  },
+        path: 'share-kudo',
+        loadChildren: () => import('./share-kudo/share-kudo.module').then(m => m.ShareKudoModule),
+    },
 ];
 
 @NgModule({

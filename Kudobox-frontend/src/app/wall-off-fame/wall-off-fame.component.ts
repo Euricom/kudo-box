@@ -51,19 +51,23 @@ export class WallOffFameComponent implements OnInit {
         // this.kudos$.pipe(map(kudos => from(kudos).pipe(delay(200)))).subscribe(x => console.log(x));
         this.breakKudosStreamToSingleKudos$
             .pipe(
-                map((kudos: []) => {
-                    from(kudos).subscribe(kudo => {
-                        this.kudos$.next(kudo);
+                map(data => {
+                    from(data.kudos).subscribe(kudo => {
+                        this.kudos$.next({ kudo, addToFront: data.addToFront });
                     });
                 }),
             )
             .subscribe();
-        this.kudos$.pipe(concatMap(kudo => of(kudo).pipe(delay(575)))).subscribe(kudo => {
-            this.kudos = [kudo, ...this.kudos];
+        this.kudos$.pipe(concatMap(kudo => of(kudo).pipe(delay(575)))).subscribe(data => {
+            if (data.addToFront) {
+                this.kudos = [data.kudo, ...this.kudos];
+            } else {
+                this.kudos = [...this.kudos, data.kudo];
+            }
         });
 
         this._wallOfFameService.updateWallOfFameWithLatestFromEvent().subscribe(kudos => {
-            this.breakKudosStreamToSingleKudos$.next(kudos);
+            this.breakKudosStreamToSingleKudos$.next({ kudos, addToFront: true });
         });
 
         this.onResize();
@@ -75,7 +79,7 @@ export class WallOffFameComponent implements OnInit {
                 if (this.kudos.length === 0) {
                     this.kudos = [...data];
                 } else {
-                    this.breakKudosStreamToSingleKudos$.next(data);
+                    this.breakKudosStreamToSingleKudos$.next({ kudos: data, addToFront: false });
                 }
             }),
         );
@@ -116,24 +120,24 @@ export class WallOffFameComponent implements OnInit {
             const widthKudo = (this.width - 100 - number * 2 * 16) / number;
             const scale = 500 / widthKudo;
             this.styleMatCard = {
-                width: widthKudo + 'px',
-                height: widthKudo + 'px',
+                width: `${widthKudo}px`,
+                height: `${widthKudo}px`,
             };
             this.styleImage = {
-                width: widthKudo + 'px',
+                width: `${widthKudo}px`,
             };
             this.styleTextarea = {
-                top: 148 / scale / 1.12 + 'px',
-                left: 90 / scale / 1.22 + 'px',
-                width: 355 / scale + 'px',
-                height: 225 / scale + 'px',
-                'line-height': 35.5 / scale + 'px',
-                'font-size': 22 / scale + 'px',
+                top: `${148 / scale / 1.12}px`,
+                left: `${90 / scale / 1.22}px`,
+                width: `${355 / scale}px`,
+                height: `${225 / scale}px`,
+                'line-height': `${35.5 / scale}px`,
+                'font-size': `${22 / scale}px`,
             };
             this.styleReceiver = {
-                bottom: 30 / scale / 3.3 + 'px',
-                left: 70 / scale / 1.3 + 'px',
-                'font-size': 15 / scale + 'px',
+                bottom: `${30 / scale / 3.3}px`,
+                left: `${70 / scale / 1.3}px`,
+                'font-size': `${15 / scale}px`,
             };
         } else {
             this.styleMatCard = {
