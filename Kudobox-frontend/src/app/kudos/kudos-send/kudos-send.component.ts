@@ -32,7 +32,9 @@ export class KudosSendComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.sendKudoSubscription.unsubscribe();
+        if (this.sendKudoSubscription) {
+            this.sendKudoSubscription.unsubscribe();
+        }
     }
 
     sendKudo() {
@@ -40,15 +42,18 @@ export class KudosSendComponent implements OnInit {
             let kudo = this._kudoService.kudo;
             kudo.receiver = this.userForm.value.user;
 
-            this.sendKudoSubscription = this._kudoService.sendKudo(kudo).subscribe(
-                () => {
-                    this._notifier.notify('success', "You're kudo is successfully sent!");
-                    this._router.navigate([`/kudos/`]);
-                },
-                err => {
-                    throw err;
-                },
-            );
+            this.sendKudoSubscription = this._kudoService
+                .sendKudo(kudo)
+                .pipe()
+                .subscribe(
+                    () => {
+                        this._notifier.notify('success', "You're kudo is successfully sent!");
+                        this._router.navigate([`/kudos/`]);
+                    },
+                    err => {
+                        throw err;
+                    },
+                );
         } else {
             this.isFormInvalid = true;
         }
