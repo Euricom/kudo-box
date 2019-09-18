@@ -204,3 +204,9 @@ emoji-mart {
         line-height: 21px;
     }
 }
+
+@media only screen and (max-width: 480px) {
+    .showEmoji {
+        display: none;
+    }
+}

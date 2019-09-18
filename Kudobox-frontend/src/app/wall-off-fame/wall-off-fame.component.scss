@@ -145,3 +145,9 @@ h1 {
         left: 43px;
     }
 }
+
+@media only screen and (max-width: 480px) {
+    .searchForm {
+        margin-left: 55px;
+    }
+}
