@@ -28,7 +28,7 @@ h1 {
     justify-content: space-between;
 }
 
-#textAreaForImage {
+.textAreaForImage {
     position: absolute;
     padding: 0px;
     margin: 0px;
@@ -80,7 +80,7 @@ h1 {
         width: 300px;
     }
 
-    #textAreaForImage {
+    .textAreaForImage {
         top: 79px;
         left: 45px;
         font-size: 14px;

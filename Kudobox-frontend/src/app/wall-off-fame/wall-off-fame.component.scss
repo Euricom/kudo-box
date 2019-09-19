@@ -34,7 +34,7 @@ h1 {
     position: relative;
 }
 
-#textAreaForImage {
+.textAreaForImage {
     position: absolute;
     padding: 0px;
     margin: 0px;
@@ -121,7 +121,7 @@ h1 {
         width: 300px;
     }
 
-    #textAreaForImage {
+    .textAreaForImage {
         top: 95px;
         left: 61px;
         font-size: 14px;

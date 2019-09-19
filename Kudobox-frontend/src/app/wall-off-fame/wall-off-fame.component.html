@@ -37,7 +37,7 @@
 <div class="allKudos">
     <mat-card @items class="my-kudo-card" *ngFor="let kudo of kudos | filter: searchText" [ngStyle]="styleMatCard">
         <img src="{{ getKudoImage(kudo.kudoId) }}" class="my-kudo-card-image" [ngStyle]="styleImage" />
-        <textarea disabled id="textAreaForImage" [style.font-family]="kudo.fontFamily" [ngStyle]="styleTextarea">{{
+        <textarea disabled class="textAreaForImage" [style.font-family]="kudo.fontFamily" [ngStyle]="styleTextarea">{{
             kudo.text
         }}</textarea>
         <p class="receiverText" [style.font-family]="kudo.fontFamily" [ngStyle]="styleReceiver">
