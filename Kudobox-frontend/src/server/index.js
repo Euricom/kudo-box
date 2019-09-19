@@ -1,8 +1,11 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const compression = require('compression');
 
 const server = express();
+server.use(compression);
+
 const options = {
     index: 'index.html',
     redirect: true,
