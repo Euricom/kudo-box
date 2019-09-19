@@ -117,7 +117,7 @@ export class WallOffFameComponent implements OnInit {
     changeNumberOfKudosShown(number) {
         this.numberOfKudos = number;
         if (this.width > 720) {
-            const widthKudo = (this.width - 100 - number * 2 * 16) / number;
+            const widthKudo = (this.width - 100 - number * 2 * 4) / number;
             const scale = 500 / widthKudo;
             this.styleMatCard = {
                 width: `${widthKudo}px`,
