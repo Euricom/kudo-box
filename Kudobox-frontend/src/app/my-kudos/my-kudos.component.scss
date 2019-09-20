@@ -56,7 +56,7 @@ h1 {
 
 .btnNext {
     height: 40px;
-    width: 70px;
+    width: 100px;
     border: none;
     background-color: rgb(105, 190, 40);
     color: white;
@@ -69,6 +69,18 @@ h1 {
 
 .btnNext:hover {
     background-color: #5a8e2f;
+}
+
+.generalInfo {
+  position: absolute;
+  bottom: 8px;
+  left: 50px;
+  color: #69be28;
+  width: 100%;
+}
+
+p {
+  margin: 0;
 }
 
 @media only screen and (max-width: 992px) {
@@ -89,8 +101,13 @@ h1 {
         line-height: 21.5px;
     }
 
+    .generalInfo {
+      bottom: 4px;
+      left: 30px;
+    }
+
     p {
-        font-size: 15px;
+        font-size: 12px;
     }
 }
 
