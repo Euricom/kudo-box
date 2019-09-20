@@ -34,12 +34,12 @@ server.get('*', (req, res) => {
                 const pathArray = req.path.split('/');
                 let responseHtml = html.replace(
                     /#IMAGE#/g,
-                    `https://kudobox-api-dev.azurewebsites.net/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,
+                    `#{apiUrl}#/${pathArray[pathArray.length - 1]}/getImage`,
                     // `http://localhost:4200/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,
                 );
                 responseHtml = responseHtml.replace(
                     /#URL#/g,
-                    `https://kudobox-dev.azurewebsites.net/public-kudo/${pathArray[pathArray.length - 1]}`,
+                    `#{post_logout_redirect_uri}#/${pathArray[pathArray.length - 1]}`,
                     // `http://localhost:4200/public-kudo/${pathArray[pathArray.length - 1]}`,
                 );
                 res.send(responseHtml);

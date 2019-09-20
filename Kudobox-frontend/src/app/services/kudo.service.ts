@@ -4,7 +4,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { throwError, Observable, of, from } from 'rxjs';
 import * as Logger from 'js-logger';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { Kudo } from '../models/kudo';
 import { User } from '../models/user';
 import { IndexedDbService } from './indexed-db.service';
