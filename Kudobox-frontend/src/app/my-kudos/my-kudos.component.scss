@@ -8,9 +8,17 @@ h1 {
     flex-wrap: wrap;
 }
 
-.mat-card {
+.my-kudo-card {
     width: 500px;
     box-shadow: none;
+    margin: 10px;
+    padding-bottom: 30px;
+    border: 1px solid #d7d7d7;
+    border-radius: 10px;
+}
+
+.selected {
+    border: 1px solid #69be28;
 }
 
 .captureContainer {
@@ -23,9 +31,7 @@ h1 {
 }
 
 .mat-card-footer {
-    padding-left: 15px;
-    display: flex;
-    justify-content: space-between;
+    float:right;
 }
 
 .textAreaForImage {
@@ -83,6 +89,51 @@ p {
   margin: 0;
 }
 
+.checkBtn {
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: #69be28;
+  cursor: pointer;
+}
+
+.checkBtn:focus {
+  outline:0;
+}
+
+footer {
+  background-color: #d4d4d4;
+  height: 64px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+-webkit-box-shadow: 0px 5px 20px -1px #424242;
+-moz-box-shadow: 0px 5px 20px -1px #424242;
+box-shadow: 0px 5px 20px -1px #424242;
+}
+
+footer p {
+  font-size: 20px;
+  padding: 20px 0px 20px 50px;
+  color: #424242;
+}
+
+.downloadAllBtn {
+  position: absolute;
+  top: 15px;
+  left: 250px;
+  background-color: white;
+  color: #424242;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.downloadAllBtn:hover {
+  background-color: #e7f5dc;
+}
+
 @media only screen and (max-width: 992px) {
     .mat-card {
         width: 300px;
@@ -110,9 +161,10 @@ p {
         font-size: 12px;
     }
 }
-
+/*
 @media only screen and (max-width: 600px) {
     .mat-card-footer {
         display: block;
     }
 }
+*/

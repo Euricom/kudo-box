@@ -65,7 +65,7 @@ li {
     background: none;
     border: none;
     /* color: rgb(105, 190, 40);*/
-    color: white;
+    color: #424242;
     outline: none;
     height: 50px;
     font-size: 20px;
@@ -73,12 +73,12 @@ li {
 
 .fontsBtn:hover:not(.active) {
     background: url('../../../assets/splatter_small_green_trans.png') no-repeat;
-    color: white;
+    color: #424242;
 }
 
 .active {
     background: url('../../../assets/splatter_small_green.png') no-repeat;
-    color: white;
+    color: #424242;
 }
 
 .containerBtn {

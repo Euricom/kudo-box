@@ -3,6 +3,7 @@ import * as Logger from 'js-logger';
 // import html2canvas from 'html2canvas';
 import htmlToImage from 'html-to-image';
 import { Meta } from '@angular/platform-browser';
+import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
 
 import { Subscription, observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -22,6 +23,9 @@ export class MyKudosComponent implements OnInit {
     changeStatusSubscription: Subscription;
     public image = '../../assets/great_job.png';
     private log = Logger.get('MyKudosComponent');
+    public faSquare = faSquare;
+    public faCheckSquare = faCheckSquare;
+    public selection = [];
 
     constructor(private _kudoService: KudoService, private meta: Meta, private router: Router) {}
 
@@ -47,23 +51,21 @@ export class MyKudosComponent implements OnInit {
             }
             return false;
         });
-        return {
-          url: image[0].url,
-          title: image[0].title};
+        return image[0].url;
     }
 
     shareImage(id, kudoId) {
-        const divId = `capture-${id}`;
-        const node = document.getElementById(divId);
         const serv = this._kudoService;
-        this.htmlToPng(node).then(dataUrl => {
+        this.htmlToPng(id).then(dataUrl => {
             serv.saveKudoImage(kudoId, { data: dataUrl }).subscribe(() =>
                 this.router.navigateByUrl(`/share-kudo/${kudoId}`),
             );
         });
     }
 
-    htmlToPng(node) {
+    htmlToPng(id) {
+      const divId = `capture-${id}`;
+      const node = document.getElementById(divId);
         return htmlToImage
             .toPng(node)
             .then(dataUrl => {
@@ -87,25 +89,43 @@ export class MyKudosComponent implements OnInit {
         return array;
     }
 
-    downloadImage(id) {
-        const divId = `capture-${id}`;
-        const node = document.getElementById(divId);
-        const serv = this._kudoService;
-        this.htmlToPng(node).then(dataUrl => {
-            this.downloadImages(dataUrl);
+    downloadImages(id) {
+      const serv = this._kudoService;
+      if (id !== '') {
+        this.htmlToPng(id).then(dataUrl => {
+            this.downloadImage(dataUrl);
         });
+      }
+      else {
+        this.selection.forEach(imageId => {
+          this.htmlToPng(imageId).then(dataUrl => {
+            this.downloadImage(dataUrl)
+          });
+        });
+      }
+        
     }
 
-    downloadImages(image) {
+    downloadImage(image) {
         const binaryData = this.convertDataURIToBinary(image);
         var url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
         var a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
         a.href = url;
-        a.download = 'test';
+        a.download = 'Kudo';
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
+        
+    }
+
+    addImageToSelection(id) {
+      const index = this.selection.indexOf(id);
+      if (index === -1) {
+        this.selection.push(id);
+      } else {
+        this.selection.splice(index, 1);   
+      }
     }
 }
