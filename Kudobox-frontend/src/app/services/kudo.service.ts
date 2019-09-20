@@ -7,6 +7,7 @@ import * as Logger from 'js-logger';
 import { environment } from 'src/environments/environment';
 import { Kudo } from '../models/kudo';
 import { User } from '../models/user';
+import { IndexedDbService } from './indexed-db.service';
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +16,7 @@ export class KudoService implements OnInit {
     private _kudo: Kudo;
     private log = Logger.get('KudoService');
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private _indexedDbService: IndexedDbService) {}
 
     ngOnInit() {}
 
@@ -80,7 +81,9 @@ export class KudoService implements OnInit {
                 tap(data => {
                     const users = data.map(u => Object.assign(new User(), u));
                     this.log.info('Users are saved');
-                    localStorage.setItem('users', JSON.stringify(users));
+                    // localStorage.setItem('users', JSON.stringify(users));
+                    this._indexedDbService.saveUsers(users);
+
                     return of(users);
                 }),
                 catchError(e => {
@@ -89,7 +92,11 @@ export class KudoService implements OnInit {
                 }),
             );
         }
-        return of(JSON.parse(localStorage.getItem('users')).map(u => Object.assign(new User(), u)));
+        let userStuff: User[] = [];
+        this._indexedDbService.getUsers().then(users => {
+            userStuff = users.map(u => Object.assign(new User(), u));
+        });
+        return of(userStuff);
     }
 
     getMyKudos(): Observable<Kudo[]> {

@@ -39,7 +39,7 @@ export class KudosSendComponent implements OnInit {
 
     sendKudo() {
         if (this.userForm.status === 'VALID') {
-            let kudo = this._kudoService.kudo;
+            const kudo = this._kudoService.kudo;
             kudo.receiver = this.userForm.value.user;
 
             this.sendKudoSubscription = this._kudoService
