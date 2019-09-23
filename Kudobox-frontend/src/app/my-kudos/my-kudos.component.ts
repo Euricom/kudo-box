@@ -11,6 +11,10 @@ import { KudoService } from '../services/kudo.service';
 // eslint-disable-next-line import/extensions
 import { kudoImages } from '../data/kudoImages.js';
 
+export interface KudoSelection {
+    id: number;
+    kudoId: number;
+}
 @Component({
     selector: 'app-my-kudos',
     templateUrl: './my-kudos.component.html',
@@ -25,7 +29,7 @@ export class MyKudosComponent implements OnInit {
     private log = Logger.get('MyKudosComponent');
     public faSquare = faSquare;
     public faCheckSquare = faCheckSquare;
-    public selection = [];
+    public selection: KudoSelection[] = [];
 
     constructor(private _kudoService: KudoService, private meta: Meta, private router: Router) {}
 
@@ -64,8 +68,8 @@ export class MyKudosComponent implements OnInit {
     }
 
     htmlToPng(id) {
-      const divId = `capture-${id}`;
-      const node = document.getElementById(divId);
+        const divId = `capture-${id}`;
+        const node = document.getElementById(divId);
         return htmlToImage
             .toPng(node)
             .then(dataUrl => {
@@ -77,11 +81,11 @@ export class MyKudosComponent implements OnInit {
     }
 
     convertDataURIToBinary(dataUrl) {
-        var base64Index = dataUrl.indexOf(';base64,') + ';base64,'.length;
-        var base64 = dataUrl.substring(base64Index);
-        var raw = window.atob(base64);
-        var rawLength = raw.length;
-        var array = new Uint8Array(new ArrayBuffer(rawLength));
+        const base64Index = dataUrl.indexOf(';base64,') + ';base64,'.length;
+        const base64 = dataUrl.substring(base64Index);
+        const raw = window.atob(base64);
+        const rawLength = raw.length;
+        const array = new Uint8Array(new ArrayBuffer(rawLength));
 
         for (let i = 0; i < rawLength; i++) {
             array[i] = raw.charCodeAt(i);
@@ -89,43 +93,44 @@ export class MyKudosComponent implements OnInit {
         return array;
     }
 
-    downloadImages(id) {
-      const serv = this._kudoService;
-      if (id !== '') {
-        this.htmlToPng(id).then(dataUrl => {
-            this.downloadImage(dataUrl);
-        });
-      }
-      else {
-        this.selection.forEach(imageId => {
-          this.htmlToPng(imageId).then(dataUrl => {
-            this.downloadImage(dataUrl)
-          });
-        });
-      }
-        
+    downloadImages(index, kudoId) {
+        const serv = this._kudoService;
+        if (index !== '') {
+            this.htmlToPng(index).then(dataUrl => {
+                this.downloadImage(dataUrl, kudoId);
+            });
+        } else {
+            this.selection.forEach(kudoImage => {
+                this.htmlToPng(kudoImage.id).then(dataUrl => {
+                    this.downloadImage(dataUrl, kudoImage.kudoId);
+                });
+            });
+        }
     }
 
-    downloadImage(image) {
+    downloadImage(image, id) {
         const binaryData = this.convertDataURIToBinary(image);
-        var url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
-        var a = document.createElement('a');
+        const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
+        const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
         a.href = url;
-        a.download = 'Kudo';
+        a.download = `Kudo_${id}`;
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
-        
     }
 
-    addImageToSelection(id) {
-      const index = this.selection.indexOf(id);
-      if (index === -1) {
-        this.selection.push(id);
-      } else {
-        this.selection.splice(index, 1);   
-      }
+    isSelected(kudoId) {
+        return this.selection.findIndex(s => s.kudoId === kudoId) > -1;
+    }
+
+    addImageToSelection(id, kudoId) {
+        const index = this.selection.findIndex(s => s.kudoId === kudoId);
+        if (index === -1) {
+            this.selection.push(<KudoSelection>{ id, kudoId });
+        } else {
+            this.selection.splice(index, 1);
+        }
     }
 }

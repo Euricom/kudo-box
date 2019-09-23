@@ -1,34 +1,34 @@
 <h1>My kudos</h1>
 <div class="container" *ngIf="kudos?.length > 0">
-    <mat-card class="my-kudo-card" *ngFor="let kudo of kudos; let i = index">
-        <div id="capture-{{ i }}" class="captureContainer">
-            <img src="{{ getKudoImage(kudo.kudoId) }}" alt="Kudo" class="my-kudo-card-image" />
-            <textarea disabled class="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
-            <div class="generalInfo">
-                <p>{{ kudo.sender.name }} - {{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
-            </div>
-        </div>
+  <mat-card class="my-kudo-card" *ngFor="let kudo of kudos; let i = index">
+    <div id="capture-{{ i }}" class="captureContainer">
+      <img src="{{ getKudoImage(kudo.kudoId) }}" alt="Kudo" class="my-kudo-card-image" />
+      <textarea disabled class="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>
+      <div class="generalInfo">
+        <p>{{ kudo.sender.name }} - {{ kudo.createdOn | date: 'EEEE d/M/yy h:mm' }}</p>
+      </div>
+    </div>
 
-        <mat-card-footer>
-            <div class="checkboxWrapper">
-                <button class="checkBtn" (click)="addImageToSelection(i)">
-                    <fa-icon [icon]="faSquare" *ngIf="selection.indexOf(i) === -1"></fa-icon>
-                    <fa-icon class="checked" [icon]="faCheckSquare" *ngIf="selection.indexOf(i) > -1"></fa-icon>
-                </button>
-            </div>
+    <mat-card-footer>
+      <div class="checkboxWrapper">
+        <button class="checkBtn" (click)="addImageToSelection(i,kudo._id)">
+          <fa-icon [icon]="faSquare" *ngIf="!isSelected(kudo._id)"></fa-icon>
+          <fa-icon class="checked" [icon]="faCheckSquare" *ngIf="isSelected(kudo._id)"></fa-icon>
+        </button>
+      </div>
 
-            <!--<share-buttons class="share-buttons-align-center" [theme]="'default'"
+      <!--<share-buttons class="share-buttons-align-center" [theme]="'default'"
         [include]="['facebook', 'twitter', 'linkedin']" [show]="3" [autoSetMeta]="false">
       </share-buttons>-->
-            <button type="button" class="btnNext" (click)="shareImage(i, kudo._id)">Share</button>
-            <button type="button" class="btnNext" (click)="downloadImages(i)">Download</button>
-        </mat-card-footer>
-    </mat-card>
+      <button type="button" class="btnNext" (click)="shareImage(i, kudo._id)">Share</button>
+      <button type="button" class="btnNext" (click)="downloadImages(i,kudo._id)">Download</button>
+    </mat-card-footer>
+  </mat-card>
 </div>
 <div class="noKudos" *ngIf="kudos?.length === 0">
-    <p>I'm sorry, you didn't receive a kudo yet :-(</p>
+  <p>I'm sorry, you didn't receive a kudo yet :-(</p>
 </div>
 <footer *ngIf="selection.length > 0">
-    <p>Selected items: {{ selection.length }}</p>
-    <button class="downloadAllBtn" (click)="downloadImages('')">Download all</button>
+  <p>Selected items: {{ selection.length }}</p>
+  <button class="downloadAllBtn" (click)="downloadImages('')">Download all</button>
 </footer>
