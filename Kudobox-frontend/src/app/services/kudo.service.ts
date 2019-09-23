@@ -1,12 +1,13 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-import { throwError, Observable, of } from 'rxjs';
+import { throwError, Observable, of, from } from 'rxjs';
 import * as Logger from 'js-logger';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { Kudo } from '../models/kudo';
 import { User } from '../models/user';
+import { IndexedDbService } from './indexed-db.service';
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +16,7 @@ export class KudoService implements OnInit {
     private _kudo: Kudo;
     private log = Logger.get('KudoService');
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private _indexedDbService: IndexedDbService) {}
 
     ngOnInit() {}
 
@@ -80,8 +81,10 @@ export class KudoService implements OnInit {
                 tap(data => {
                     const users = data.map(u => Object.assign(new User(), u));
                     this.log.info('Users are saved');
-                    localStorage.setItem('users', JSON.stringify(users));
-                    return of(users);
+                    // localStorage.setItem('users', JSON.stringify(users));
+                    this._indexedDbService.saveUsers(users);
+
+                    return from(this._indexedDbService.getUsers());
                 }),
                 catchError(e => {
                     this.log.error('Error getUsersList():', e);
@@ -89,7 +92,7 @@ export class KudoService implements OnInit {
                 }),
             );
         }
-        return of(JSON.parse(localStorage.getItem('users')).map(u => Object.assign(new User(), u)));
+        return from(this._indexedDbService.getUsers());
     }
 
     getMyKudos(): Observable<Kudo[]> {

@@ -46,6 +46,7 @@ import { ScrollTopComponent } from './core/scroll-top/scroll-top.component';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
+import { IndexedDbService } from './services/indexed-db.service';
 
 const socketIoConfig: SocketIoConfig = { url: environment.socketIo.socketIoUrl, options: { autoConnect: true } };
 
@@ -126,6 +127,7 @@ const customNotifierOptions: NotifierOptions = {
     ],
     providers: [
         KudoService,
+        IndexedDbService,
         OidcGuardService,
         OfflineGuardService,
         AuthService,

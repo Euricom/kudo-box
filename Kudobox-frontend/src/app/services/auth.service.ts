@@ -44,8 +44,10 @@ export class AuthService {
 
     isLoggedIn(): boolean {
         this.log.info('AuthService.isLoggedIn() has been called.');
-
-        return this.user != null && !this.user.expired;
+        if (navigator.onLine) {
+            return this.user != null && !this.user.expired;
+        }
+        return true;
     }
 
     getClaims(): any {
