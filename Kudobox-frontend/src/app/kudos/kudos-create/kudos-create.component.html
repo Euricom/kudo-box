@@ -59,11 +59,13 @@
                 ></emoji-mart>
             </div>
         </div>
-        <div class="containerBtn">
-            <span class="invalid" [style.visibility]="isTextareaFilled ? 'hidden' : 'visible'"
-                >Please, type something nice</span
-            >
-            <button type="button" class="btnNext" (click)="createCanvas(textarea.value)">Next</button>
-        </div>
+        <mat-card-footer>
+            <div class="containerBtn">
+                <span class="invalid" [style.visibility]="isTextareaFilled ? 'hidden' : 'visible'"
+                    >Please, type something nice</span
+                >
+                <button type="button" class="btnNext" (click)="createCanvas(textarea.value)">Next</button>
+            </div>
+        </mat-card-footer>
     </mat-card>
 </div>

@@ -9,10 +9,16 @@
 }
 
 .mat-card {
-    padding: 20px;
+    //padding: 20px;
     width: 500px;
     margin: 0 auto;
-    box-shadow: none;
+    border-radius: 4px;
+    box-shadow: 0 0 12px 2px #d7d7d5;
+}
+
+.mat-card-footer {
+    background-color: #eee;
+    padding: 15px 15px 15px 13px;
 }
 
 .my-kudo-card {
@@ -29,7 +35,7 @@
     outline: none;
     resize: none;
     color: rgb(105, 190, 40);
-    top: 152px;
+    top: 149px;
     left: 94px;
     width: 355px;
     height: 225px;
@@ -84,18 +90,19 @@ li {
 .containerBtn {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
 }
 
 .btnNext {
     height: 40px;
     width: 70px;
-    border: none;
     background-color: rgb(105, 190, 40);
     color: white;
     font-size: 20px;
     outline: none;
     cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: 0.2s background-color ease-in-out;
 }
 
 .btnNext:hover {
@@ -116,7 +123,8 @@ li {
     right: 50px;
     font-size: 20px;
     border: 1px solid #dbdbdb;
-    border-radius: 15%;
+    border-radius: 4px;
+    transition: 0.2s background-color ease-in-out;
 }
 
 .showEmoji:hover {

@@ -1,7 +1,14 @@
+mat-sidenav-container {
+    background-color: red !important;
+}
+
 :host {
     /*width: 1600px;*/
     margin: 0 auto;
     display: block;
+    background-color: #6d6e72 !important;
+    margin-top: -25px;
+    padding-top: 25px;
 }
 
 .allKudosButton {
@@ -16,6 +23,7 @@
 
 h1 {
     text-align: center;
+    color: white;
 }
 
 .mat-card {
@@ -23,6 +31,7 @@ h1 {
     box-shadow: none;
     padding: 0 !important;
     margin: 4px;
+    background-color: #6d6e72;
 }
 
 .my-kudo-card-image {
@@ -64,6 +73,7 @@ h1 {
 .formFieldSelect {
     width: 40px;
     margin-right: 20px;
+    color: white;
 }
 
 ::ng-deep.mat-form-field-ripple {
