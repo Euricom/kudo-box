@@ -1,4 +1,4 @@
-mat-sidenav-container {
+.mat-sidenav-content {
     background-color: red !important;
 }
 
@@ -121,7 +121,8 @@ h1 {
 */
 @media only screen and (max-width: 720px) {
     :host {
-        width: 300px;
+        //width: 300px;
+        min-height: 700px;
     }
     /*  .mat-card {
         width: 300px;
