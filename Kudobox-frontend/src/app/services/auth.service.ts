@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { NotifierService } from 'angular-notifier';
 
 import { environment } from '../../environments/environment';
+import { IndexedDbService } from './indexed-db.service';
 
 @Injectable({
     providedIn: 'root',
@@ -18,7 +19,11 @@ export class AuthService {
     public user: User = null;
     user$: BehaviorSubject<User> = new BehaviorSubject(null);
 
-    constructor(private router: Router, private _notifierService: NotifierService) {
+    constructor(
+        private router: Router,
+        private _notifierService: NotifierService,
+        private _indexedDbService: IndexedDbService,
+    ) {
         this.manager.getUser().then(user => {
             this.user = user;
             this.setUser();
@@ -42,12 +47,19 @@ export class AuthService {
         });
     }
 
+    silentRefresh() {
+        this.manager.signinSilent().then(user => {
+            this.user = user;
+            this.setUser();
+        });
+    }
+
     isLoggedIn(): boolean {
         this.log.info('AuthService.isLoggedIn() has been called.');
         if (navigator.onLine) {
             return this.user != null && !this.user.expired;
         }
-        return true;
+        return false;
     }
 
     getClaims(): any {

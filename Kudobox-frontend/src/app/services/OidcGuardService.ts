@@ -12,10 +12,15 @@ export class OidcGuardService implements CanActivate {
     constructor(private authService: AuthService) {}
 
     canActivate(): boolean | Promise<boolean> {
-        if (this.authService.isLoggedIn()) {
+        if (navigator.onLine) {
+            if (this.authService.isLoggedIn()) {
+                return true;
+            }
+            return this.authService.startLoginAuthentication().then(() => this.authService.isLoggedIn());
+        }
+        if (!navigator.onLine) {
             return true;
         }
-
-        return this.authService.startLoginAuthentication().then(() => this.authService.isLoggedIn());
+        return false;
     }
 }

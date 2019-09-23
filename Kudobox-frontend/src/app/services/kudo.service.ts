@@ -30,25 +30,35 @@ export class KudoService implements OnInit {
     }
 
     syncKudos() {
-        const kudos = JSON.parse(localStorage.getItem('offlineKudos'));
-        if (kudos) {
-            return this.sendKudos(kudos);
-        }
+        // const kudos = JSON.parse(localStorage.getItem('offlineKudos'));
+        this._indexedDbService.getKudos().then(kudos => {
+            if (kudos) {
+                return this.sendKudos(kudos);
+            }
+            return of({});
+        });
+
         return of({});
     }
 
     sendKudos(kudos) {
-        return this.http.post(`${environment.apiUrl}/api/kudo/batch`, kudos).pipe(
-            tap(() => localStorage.removeItem('offlineKudos')),
-            catchError(e => {
-                this.log.error('Error sendKudos():', e);
-                return throwError(e);
-            }),
-        );
+        return this.http
+            .post(`${environment.apiUrl}/api/kudo/batch`, kudos)
+            .pipe(
+                catchError(e => {
+                    this.log.error('Error sendKudos():', e);
+                    return throwError(e);
+                }),
+            )
+            .subscribe(() => {
+                this._indexedDbService.removeAllKudos();
+            });
     }
 
     sendKudo(kudo) {
         if (navigator.onLine) {
+            this.saveKudo(kudo);
+
             return this.http.post(`${environment.apiUrl}/api/kudo`, kudo).pipe(
                 catchError(e => {
                     this.log.error('Error sendKudo():', e);
@@ -61,9 +71,9 @@ export class KudoService implements OnInit {
     }
 
     saveKudo(kudo) {
-        const kudos = JSON.parse(localStorage.getItem('offlineKudos')) || [];
-        kudos.push(kudo);
-        localStorage.setItem('offlineKudos', JSON.stringify(kudos));
+        // const kudos = JSON.parse(localStorage.getItem('offlineKudos')) || [];
+        this._indexedDbService.saveKudo(kudo);
+        // localStorage.setItem('offlineKudos', JSON.stringify(kudos));
     }
 
     saveKudoImage(kudoId, image) {

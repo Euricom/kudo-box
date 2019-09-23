@@ -8,4 +8,5 @@ export class Kudo {
     sender: User;
     status: string;
     createdOn: Date;
+    id: string;
 }
