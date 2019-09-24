@@ -31,9 +31,11 @@ let KudoSchema = new Schema({
 });
 
 KudoSchema.pre("save", function(next) {
-  if (!this.createdOn) {
+  /*if (!this.createdOn) {
     this.createdOn = new Date();
-  }
+  }*/
+
+  this.createdOn = new Date();
 
   next();
 });

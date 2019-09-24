@@ -33,13 +33,13 @@ export class WallOffFameComponent implements OnInit {
     private _allKudosSubscriptions: Subscription[] = [];
     public skip = 0;
     public width;
-    selected = '3';
+    selected = '5';
     public styleImage;
     public styleMatCard;
     public styleTextarea;
     public styleReceiver;
     public styleHeader;
-    public numberOfKudos = 3;
+    public numberOfKudos = 5;
 
     constructor(private _kudoService: KudoService, private _wallOfFameService: WallOfFameService) {}
 
