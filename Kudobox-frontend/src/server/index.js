@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const compression = require('compression');
+const config = require('../environments/settings.json');
 
 const server = express();
 server.use(
@@ -34,12 +35,12 @@ server.get('*', (req, res) => {
                 const pathArray = req.path.split('/');
                 let responseHtml = html.replace(
                     /#IMAGE#/g,
-                    `#{apiUrl}#/${pathArray[pathArray.length - 1]}/getImage`,
+                    `${config.apiUrl}/${pathArray[pathArray.length - 1]}/getImage`,
                     // `http://localhost:4200/api/kudo/${pathArray[pathArray.length - 1]}/getImage`,
                 );
                 responseHtml = responseHtml.replace(
                     /#URL#/g,
-                    `#{post_logout_redirect_uri}#/${pathArray[pathArray.length - 1]}`,
+                    `${config.oidc.post_logout_redirect_uri}/${pathArray[pathArray.length - 1]}`,
                     // `http://localhost:4200/public-kudo/${pathArray[pathArray.length - 1]}`,
                 );
                 res.send(responseHtml);
