@@ -11,7 +11,7 @@
 
     <mat-card-footer>
       <div class="checkboxWrapper">
-        <button class="checkBtn" (click)="addImageToSelection(i,kudo._id)">
+        <button type="button" class="checkBtn" (click)="addImageToSelection(i,kudo._id)">
           <fa-icon [icon]="faSquare" *ngIf="!isSelected(kudo._id)"></fa-icon>
           <fa-icon class="checked" [icon]="faCheckSquare" *ngIf="isSelected(kudo._id)"></fa-icon>
         </button>
@@ -30,5 +30,5 @@
 </div>
 <footer *ngIf="selection.length > 0">
   <p>Selected items: {{ selection.length }}</p>
-  <button class="downloadAllBtn" (click)="downloadImages('')">Download all</button>
+  <button type="button" class="downloadAllBtn" (click)="downloadImages('')">Download all</button>
 </footer>
