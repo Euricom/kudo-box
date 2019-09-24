@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const compression = require('compression');
-const config = require('../environments/settings.json');
+const config = require('./settings.json');
 
 const server = express();
 server.use(
