@@ -26,12 +26,15 @@ let KudoSchema = new Schema({
     type: String
   },
   image: {
-    type:String
+    type: String
   }
 });
 
 KudoSchema.pre("save", function(next) {
-  this.createdOn = new Date();
+  if (!this.createdOn) {
+    this.createdOn = new Date();
+  }
+
   next();
 });
 module.exports = mongoose.model("Kudo", KudoSchema);
