@@ -1,182 +1,186 @@
 h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .my-kudo-card {
-    width: 500px;
-    margin: 20px;
-    border-radius: 4px;
-    box-shadow: 0 0 12px 2px #d7d7d5;
+  width: 500px;
+  margin: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 12px 2px #d7d7d5;
 }
 
 .selected {
-    border: 1px solid #69be28;
+  border: 1px solid #69be28;
 }
 
 .captureContainer {
-    position: relative;
+  position: relative;
 }
 
 .my-kudo-card-image {
-    width: 500px;
-    display: block;
+  width: 500px;
+  display: block;
 }
 
 .mat-card-footer {
-    display: flex;
-    background-color: #eee;
-    padding: 15px 15px 15px 13px;
-    .checkboxWrapper {
-        flex: 1;
+  display: flex;
+  background-color: #eee;
+  padding: 15px 15px 15px 13px;
+
+  .checkboxWrapper {
+    flex: 1;
+  }
+
+  >.btnNext {
+    &:not(:last-of-type) {
+      margin-right: 15px;
     }
-    > .btnNext {
-        &:not(:last-of-type) {
-            margin-right: 15px;
-        }
-    }
+  }
 }
 
 .textAreaForImage {
-    position: absolute;
-    padding: 0px;
-    margin: 0px;
-    font-size: 20px;
-    border: none;
-    background: none;
-    outline: none;
-    resize: none;
-    color: rgb(105, 190, 40);
-    //top: 149px;
-    top: 132px;
-    //top: 0;
-    //left: 89px;
-    left: 77px;
-    width: 355px;
-    height: 225px;
-    line-height: 35.5px;
-    display: block;
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  outline: none;
+  resize: none;
+  color: rgb(105, 190, 40);
+  //top: 149px;
+  top: 132px;
+  //top: 0;
+  //left: 89px;
+  left: 77px;
+  width: 355px;
+  height: 225px;
+  line-height: 35.5px;
+  display: block;
 }
 
 .noKudos {
-    font-size: 25px;
-    text-align: center;
+  font-size: 25px;
+  text-align: center;
 }
 
 .btnNext {
-    height: 40px;
-    padding: 0px 15px;
-    border: none;
-    background-color: #b6b6b6;
-    color: white;
-    font-size: 13px;
-    outline: none;
-    cursor: pointer;
-    border-radius: 4px;
-    text-transform: uppercase;
-    transition: 0.2s background-color ease-in-out;
+  height: 40px;
+  padding: 0px 15px;
+  border: none;
+  background-color: #b6b6b6;
+  color: white;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+  text-transform: uppercase;
+  transition: 0.2s background-color ease-in-out;
 }
 
 .btnNext:hover {
-    //background-color: #5a8e2f;
-    background-color: #756f6f;
+  //background-color: #5a8e2f;
+  background-color: #756f6f;
 }
 
 .generalInfo {
-    position: absolute;
-    bottom: 8px;
-    left: 50px;
-    color: #69be28;
-    width: 80%;
+  position: absolute;
+  bottom: 8px;
+  left: 50px;
+  color: #69be28;
+  width: 80%;
 }
 
 p {
-    margin: 0;
+  margin: 0;
 }
 
 .checkBtn {
-    background: none;
-    border: none;
-    font-size: 30px;
-    color: #b6b6b6;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: #b6b6b6;
+  cursor: pointer;
 }
 
 .checked {
-    color: #69be28;
+  color: #69be28;
 }
 
 .checkBtn:focus {
-    outline: 0;
+  outline: 0;
 }
 
 footer {
-    background-color: white;
-    height: 64px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    -webkit-box-shadow: 0px 5px 20px -1px #424242;
-    -moz-box-shadow: 0px 5px 20px -1px #424242;
-    box-shadow: 0px 5px 20px -1px #424242;
+  background-color: white;
+  height: 64px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-box-shadow: 0px 5px 20px -1px #424242;
+  -moz-box-shadow: 0px 5px 20px -1px #424242;
+  box-shadow: 0px 5px 20px -1px #424242;
 }
 
 footer p {
-    font-size: 20px;
-    padding: 20px 0px 20px 50px;
-    color: #424242;
+  font-size: 20px;
+  padding: 20px 0px 20px 50px;
+  color: #424242;
 }
 
 .downloadAllBtn {
-    position: absolute;
-    top: 15px;
-    left: 250px;
-    background-color: #d4d4d4;
-    color: #424242;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: 0.2s background-color ease-in-out;
+  position: absolute;
+  top: 15px;
+  left: 250px;
+  background-color: #d4d4d4;
+  color: #424242;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s background-color ease-in-out;
 }
 
 .downloadAllBtn:hover {
-    background-color: #e7f5dc;
+  background-color: #e7f5dc;
 }
 
 @media only screen and (max-width: 992px) {
-    .mat-card {
-        width: 300px;
-    }
+  .mat-card {
+    width: 300px;
+  }
 
-    .my-kudo-card-image {
-        width: 300px;
-    }
+  .my-kudo-card-image {
+    width: 300px;
+  }
 
-    .textAreaForImage {
-        top: 79px;
-        left: 45px;
-        font-size: 14px;
-        width: 225px;
-        height: 125px;
-        line-height: 21.5px;
-    }
+  .textAreaForImage {
+    top: 79px;
+    left: 45px;
+    font-size: 14px;
+    width: 225px;
+    height: 125px;
+    line-height: 21.5px;
+  }
 
-    .generalInfo {
-        bottom: 4px;
-        left: 30px;
-    }
+  .generalInfo {
+    bottom: 4px;
+    left: 30px;
+    width: 80%;
+  }
 
-    p {
-        font-size: 12px;
-    }
+  p {
+    font-size: 12px;
+  }
 }
+
 /*
 @media only screen and (max-width: 600px) {
     .mat-card-footer {
