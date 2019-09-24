@@ -26,5 +26,14 @@
         ]
       }
     }
-  ]
+  ],
+  "dataGroups": [{
+    "name": "share",
+    "urls": ["!/**/*share-kudo*", "!/**/*public-kudo*"],
+    "cacheConfig": {
+      "maxSize": 0,
+      "maxAge": "0u",
+      "strategy": "freshness"
+    }
+  }]
 }
