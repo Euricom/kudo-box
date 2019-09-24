@@ -31,6 +31,9 @@ server.get('*', (req, res) => {
     } else {
         console.log('wut 2');
         fs.readFile(path.resolve('index.html'), 'utf8', (err, html) => {
+            console.log('share-kudo:', req.path.indexOf('share-kudo'));
+            console.log('public-kudo:', req.path.indexOf('public-kudo'));
+
             if (req.path.indexOf('share-kudo') !== -1 || req.path.indexOf('public-kudo') !== -1) {
                 const pathArray = req.path.split('/');
                 let responseHtml = html.replace(
