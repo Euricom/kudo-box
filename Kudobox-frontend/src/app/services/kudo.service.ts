@@ -57,8 +57,6 @@ export class KudoService implements OnInit {
 
     sendKudo(kudo) {
         if (navigator.onLine) {
-            this.saveKudo(kudo);
-
             return this.http.post(`${environment.apiUrl}/api/kudo`, kudo).pipe(
                 catchError(e => {
                     this.log.error('Error sendKudo():', e);
