@@ -29,7 +29,7 @@
   ],
   "dataGroups": [{
     "name": "share",
-    "urls": ["/share-kudo/*", "/public-kudo/*", "/socket.io/*"],
+    "urls": ["share-kudo", "public-kudo", "socket.io"],
     "cacheConfig": {
       "maxSize": 0,
       "maxAge": "0u",
