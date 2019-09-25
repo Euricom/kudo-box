@@ -29,7 +29,6 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
-import { config } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -49,11 +48,10 @@ import { OfflineGuardService } from './services/OfflineGuardService';
 import { IndexedDbService } from './services/indexed-db.service';
 
 const socketIoConfig: SocketIoConfig = {
-  url: 'https://kudobox-api-dev.azurewebsites.net',
+  url: `${environment.socketIo.socketIoUrl}`,
     options: {
       autoConnect: true,
       secure:true,
-      reconnect:true,
       rejectUnauthorized : false
 } };
 
