@@ -145,12 +145,14 @@ export class AppModule {
         Logger.useDefaults();
         Logger.setLevel(environment.logLevel);
         Logger.setHandler((messages, context) => {
-            if (isDevMode()) {
+            //if (isDevMode()) {
                 consoleHandler(messages, context);
-            }
+            //}
         });
 
         const icons = [faFacebookF, faTwitter, faLinkedinIn];
         library.addIcons(...icons);
+        console.log('socketIoUrl',environment.socketIo.socketIoUrl)
+        Logger.error('socketIoUrl',environment.socketIo.socketIoUrl)
     }
 }
