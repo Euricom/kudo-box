@@ -60,8 +60,7 @@ var bearerStrategy = new OIDCBearerStrategy(options, async function(
 
 // defining the Express app http server and socketio
 const app = express();
-var http = require("http").createServer(app);
-var io = require("socket.io")(http);
+// var http = require("http").createServer(app);
 
 passport.use(bearerStrategy);
 
@@ -93,13 +92,15 @@ app.use(morgan("combined"));
 
 require("./data/mongo")();
 
-http.listen(config.port, function() {
+
+var server = app.listen(config.port, function() {
   if (config.env === "development") {
     Logger.info(`API Server listening on port ${config.port}`);
     Logger.info("Open browser at:");
     Logger.info(`http://localhost:${config.port}`);
   }
 });
+var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
   console.log("client connected");

@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-import { throwError, Observable, of, from } from 'rxjs';
+import { throwError, Observable, of, from, empty } from 'rxjs';
 import * as Logger from 'js-logger';
 
 import { environment } from '../../environments/environment';
@@ -32,13 +32,13 @@ export class KudoService implements OnInit {
     syncKudos() {
         // const kudos = JSON.parse(localStorage.getItem('offlineKudos'));
         this._indexedDbService.getKudos().then(kudos => {
-            if (kudos) {
+            if (kudos && kudos.length > 0) {
                 return this.sendKudos(kudos);
             }
-            return of({});
+            return empty();
         });
 
-        return of({});
+        return empty();
     }
 
     sendKudos(kudos) {
@@ -65,7 +65,7 @@ export class KudoService implements OnInit {
             );
         }
         this.saveKudo(kudo);
-        return of({});
+        return empty();
     }
 
     saveKudo(kudo) {
