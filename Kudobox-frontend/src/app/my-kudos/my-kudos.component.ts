@@ -25,7 +25,6 @@ export class MyKudosComponent implements OnInit {
     public kudoImages;
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
-    public image = '../../assets/great_job.png';
     private log = Logger.get('MyKudosComponent');
     public faSquare = faSquare;
     public faCheckSquare = faCheckSquare;
@@ -110,7 +109,7 @@ export class MyKudosComponent implements OnInit {
 
     downloadImage(image, id) {
         const binaryData = this.convertDataURIToBinary(image);
-        const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
+        const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/jpg' }));
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');

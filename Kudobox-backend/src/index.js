@@ -100,7 +100,7 @@ var server = app.listen(config.port, function() {
     Logger.info(`http://localhost:${config.port}`);
   }
 });
-var io = require("socket.io")(server);
+var io = require("socket.io").listen(server);
 
 io.on("connection", function(socket) {
   console.log("client connected");
@@ -128,7 +128,7 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
       var img = Buffer.from(kudo.image.split(",")[1], "base64");
 
       res.writeHead(200, {
-        "Content-Type": "image/png",
+        "Content-Type": "image/jpg",
         "Content-Length": img.length
       });
       res.end(img);
@@ -218,6 +218,7 @@ app.post("/api/kudo", authenticate(), async (req, res) => {
     const newKudo = new Kudo(req.body);
     await newKudo.save().then(kudo => {
       io.emit("newWallOfFameKudo", [kudo]);
+      console.log(kudo)
       res.send({ message: "New kudo inserted." });
     });
   } catch (err) {

@@ -33,8 +33,11 @@ server.get('*', (req, res) => {
         fs.readFile(path.resolve('index.html'), 'utf8', (err, html) => {
             console.log('share-kudo:', req.path.indexOf('share-kudo'));
             console.log('public-kudo:', req.path.indexOf('public-kudo'));
+            console.log('share', req.path.indexOf('share-kudo') !== -1);
+            console.log('public', req.path.indexOf('public-kudo') !== -1);
 
             if (req.path.indexOf('share-kudo') !== -1 || req.path.indexOf('public-kudo') !== -1) {
+                console.log('replacing stuff');
                 const pathArray = req.path.split('/');
                 console.log(`${config.apiUrl}/${pathArray[pathArray.length - 1]}/getImage`);
 
