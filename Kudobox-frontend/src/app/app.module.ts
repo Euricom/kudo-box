@@ -48,7 +48,13 @@ import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
 import { IndexedDbService } from './services/indexed-db.service';
 
-const socketIoConfig: SocketIoConfig = { url: environment.socketIo.socketIoUrl, options: { autoConnect: true } };
+const socketIoConfig: SocketIoConfig = { url: environment.socketIo.socketIoUrl,
+  options: {
+      autoConnect: true,
+      secure:true,
+      reconnect:true,
+      rejectUnauthorized : false
+} };
 
 const customNotifierOptions: NotifierOptions = {
     position: {
