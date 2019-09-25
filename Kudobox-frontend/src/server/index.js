@@ -35,8 +35,9 @@ server.get('*', (req, res) => {
             console.log('public-kudo:', req.path.indexOf('public-kudo'));
 
             if (req.path.indexOf('share-kudo') !== -1 || req.path.indexOf('public-kudo') !== -1) {
-                console.log(`${config.apiUrl}/${pathArray[pathArray.length - 1]}/getImage`);
                 const pathArray = req.path.split('/');
+                console.log(`${config.apiUrl}/${pathArray[pathArray.length - 1]}/getImage`);
+
                 let responseHtml = html.replace(
                     /#IMAGE#/g,
                     `${config.apiUrl}/${pathArray[pathArray.length - 1]}/getImage`,
