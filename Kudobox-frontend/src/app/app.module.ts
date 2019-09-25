@@ -122,12 +122,13 @@ const customNotifierOptions: NotifierOptions = {
         }),
         PickerModule,
         SocketIoModule.forRoot(<SocketIoConfig>{
-          url: `${environment.socketIo.socketIoUrl}`,
+            url: 'https://kudobox-api-dev.azurewebsites.net',
             options: {
-              autoConnect: true,
-              secure:true,
-              rejectUnauthorized : false
-        } }),
+                autoConnect: true,
+                secure: true,
+                rejectUnauthorized: false,
+            },
+        }),
     ],
     providers: [
         KudoService,
@@ -150,13 +151,13 @@ export class AppModule {
         Logger.setLevel(environment.logLevel);
         Logger.setHandler((messages, context) => {
             //if (isDevMode()) {
-                consoleHandler(messages, context);
+            consoleHandler(messages, context);
             //}
         });
 
         const icons = [faFacebookF, faTwitter, faLinkedinIn];
         library.addIcons(...icons);
-        console.log('socketIoUrl',environment.socketIo.socketIoUrl)
-        Logger.error('socketIoUrl',environment.socketIo.socketIoUrl)
+        console.log('socketIoUrl', environment.socketIo.socketIoUrl);
+        Logger.error('socketIoUrl', environment.socketIo.socketIoUrl);
     }
 }
