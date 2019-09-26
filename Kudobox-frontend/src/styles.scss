@@ -43,3 +43,15 @@ body {
 textarea {
     -webkit-appearance: none;
 }
+
+input[disabled] {
+    color: #69be28 !important;
+    background: none !important;
+    opacity: 1 !important;
+}
+
+textarea[disabled] {
+    color: #69be28 !important;
+    background: none !important;
+    opacity: 1 !important;
+}
