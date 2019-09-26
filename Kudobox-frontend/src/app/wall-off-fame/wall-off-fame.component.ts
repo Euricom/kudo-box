@@ -144,7 +144,7 @@ export class WallOffFameComponent implements OnInit {
                 'font-size': `${15 / scale}px`,
             };
             this.styleCornerTopLeft = {
-                top: `${5 / scale}px`,
+                top: `${5 / scale }px`,
                 left: `${5 / scale}px`,
                 width: `${46 / scale}px`,
             };
@@ -185,6 +185,26 @@ export class WallOffFameComponent implements OnInit {
                 bottom: '5px',
                 left: '30px',
                 'font-size': '10px',
+            };
+            this.styleCornerTopLeft = {
+                top: '2px',
+                left: '2px',
+                width: '27px'
+            };
+            this.styleCornerTopRight = {
+                top: '2px',
+                right: '2px',
+                width: '27px',
+            };
+            this.styleCornerBottomRight = {
+                bottom: '2px',
+                right: '2px',
+                width: '27px',
+            };
+            this.styleCornerBottomLeft = {
+                bottom: '2px',
+                left: '2px',
+                width: '27px',
             };
         }
     }
