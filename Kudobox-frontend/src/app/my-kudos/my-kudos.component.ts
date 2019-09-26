@@ -110,11 +110,13 @@ export class MyKudosComponent implements OnInit {
     downloadImage(image, id) {
         const binaryData = this.convertDataURIToBinary(image);
         const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
+
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
         a.href = url;
         a.download = `Kudo_${id}`;
+        a.target = '_blank';
         a.click();
         window.URL.revokeObjectURL(url);
         a.remove(); // remove the element
