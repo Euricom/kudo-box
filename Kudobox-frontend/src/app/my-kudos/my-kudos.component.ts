@@ -109,7 +109,7 @@ export class MyKudosComponent implements OnInit {
 
     downloadImage(image, id) {
         const binaryData = this.convertDataURIToBinary(image);
-        const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/jpg' }));
+        const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
         const a = document.createElement('a');
         document.body.appendChild(a);
         a.setAttribute('style', 'display: none');
