@@ -149,9 +149,9 @@ export class AppModule {
         Logger.useDefaults();
         Logger.setLevel(environment.logLevel);
         Logger.setHandler((messages, context) => {
-            if (isDevMode()) {
-                consoleHandler(messages, context);
-            }
+            // if (isDevMode()) {
+            consoleHandler(messages, context);
+            // }
         });
 
         const icons = [faFacebookF, faTwitter, faLinkedinIn];

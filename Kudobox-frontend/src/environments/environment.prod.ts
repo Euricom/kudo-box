@@ -4,7 +4,7 @@ import config from './settings.json';
 export const environment = {
     logLevel: Logger.DEBUG,
     production: true,
-    apiUrl: config.apiUrl,
+    apiUrl: 'https://kudobox-api-dev.azurewebsites.net',
     socketIo: {
         socketIoUrl: config.socketIo.socketIoUrl,
     },
