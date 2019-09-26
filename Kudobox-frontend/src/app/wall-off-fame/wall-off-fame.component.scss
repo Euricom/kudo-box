@@ -34,6 +34,35 @@ h1 {
     background-color: #6d6e72;
 }
 
+.corner {
+    position: absolute;
+    width: 46px;
+}
+
+.topLeft {
+    top: 5px;
+    left: 5px;
+    transform: rotate(0deg);
+}
+
+.topRight {
+    top: 5px;
+    right: 5px;
+    transform: rotate(90deg);
+}
+
+.bottomLeft {
+    bottom: 5px;
+    left: 5px;
+    transform: rotate(270deg);
+}
+
+.bottomRight {
+    bottom: 5px;
+    right: 5px;
+    transform: rotate(180deg);
+}
+
 .my-kudo-card-image {
     width: 500px;
 }

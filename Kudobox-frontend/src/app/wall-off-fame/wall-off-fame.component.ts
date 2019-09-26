@@ -40,6 +40,10 @@ export class WallOffFameComponent implements OnInit {
     public styleTextarea;
     public styleReceiver;
     public styleHeader;
+    public styleCornerTopLeft;
+    public styleCornerTopRight;
+    public styleCornerBottomLeft;
+    public styleCornerBottomRight;
     public numberOfKudos = 5;
 
     constructor(private _kudoService: KudoService, private _wallOfFameService: WallOfFameService) {}
@@ -137,9 +141,29 @@ export class WallOffFameComponent implements OnInit {
                 'font-size': `${22 / scale}px`,
             };
             this.styleReceiver = {
-                bottom: `${30 / scale / 3.3}px`,
+                bottom: `${5 / scale / 3.3}px`,
                 left: `${70 / scale / 1.3}px`,
                 'font-size': `${15 / scale}px`,
+            };
+            this.styleCornerTopLeft = {
+                top: `${5 / scale}px`,
+                left: `${5 / scale}px`,
+                width: `${46 / scale}px`,
+            };
+            this.styleCornerTopRight = {
+                top: `${5 / scale}px`,
+                right: `${5 / scale}px`,
+                width: `${46 / scale}px`,
+            };
+            this.styleCornerBottomRight = {
+                bottom: `${5 / scale}px`,
+                right: `${5 / scale}px`,
+                width: `${46 / scale}px`,
+            };
+            this.styleCornerBottomLeft = {
+                bottom: `${5 / scale}px`,
+                left: `${5 / scale}px`,
+                width: `${46 / scale}px`,
             };
         } else {
             this.styleMatCard = {
