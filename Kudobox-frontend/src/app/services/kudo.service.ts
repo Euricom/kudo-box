@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
-import { throwError, Observable, of, from, empty } from 'rxjs';
+import { throwError, Observable, of, from } from 'rxjs';
 import * as Logger from 'js-logger';
 
 import { environment } from '../../environments/environment';
@@ -35,10 +35,10 @@ export class KudoService implements OnInit {
             if (kudos && kudos.length > 0) {
                 return this.sendKudos(kudos);
             }
-            return empty();
+            return of({});
         });
 
-        return empty();
+        return of({});
     }
 
     sendKudos(kudos) {
@@ -67,7 +67,7 @@ export class KudoService implements OnInit {
         }
         Logger.error('savingKudoOffline');
         this.saveKudo(kudo);
-        return empty();
+        return of({});
     }
 
     saveKudo(kudo) {
