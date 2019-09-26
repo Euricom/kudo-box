@@ -240,7 +240,8 @@ app.post("/api/kudo/batch", authenticate(), async (req, res, next) => {
     promiseList.push(newKudo.save());
   });
   const savedKudos = await Promise.all(promiseList);
-  io.emit("newWallOfFameKudo", [savedKudos]);  
+  
+  io.emit("newWallOfFameKudo", [...savedKudos]);  
   res.send({ message: "New kudo inserted." });
 }catch(err){
   res.boom.badRequest(err);
