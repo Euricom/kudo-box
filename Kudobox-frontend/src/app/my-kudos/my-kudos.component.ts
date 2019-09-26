@@ -4,6 +4,7 @@ import * as Logger from 'js-logger';
 import htmlToImage from 'html-to-image';
 import { Meta } from '@angular/platform-browser';
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import { saveAs } from 'file-saver';
 
 import { Subscription, observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -66,7 +67,7 @@ export class MyKudosComponent implements OnInit {
         });
     }
 
-    htmlToPng(id) {
+    htmlToPng(id): Promise<string> {
         const divId = `capture-${id}`;
         const node = document.getElementById(divId);
         return htmlToImage
@@ -76,6 +77,7 @@ export class MyKudosComponent implements OnInit {
             })
             .catch(function(error) {
                 console.error('oops, something went wrong!', error);
+                throw error;
             });
     }
 
@@ -96,12 +98,15 @@ export class MyKudosComponent implements OnInit {
         const serv = this._kudoService;
         if (index !== '') {
             this.htmlToPng(index).then(dataUrl => {
-                this.downloadImage(dataUrl, kudoId);
+                // this.downloadImage(dataUrl, kudoId);
+                saveAs(dataUrl, `Kudo_${kudoId}.png`);
             });
         } else {
             this.selection.forEach(kudoImage => {
                 this.htmlToPng(kudoImage.id).then(dataUrl => {
-                    this.downloadImage(dataUrl, kudoImage.kudoId);
+                    saveAs(dataUrl, `Kudo_${kudoImage.id}.png`);
+
+                    // this.downloadImage(dataUrl, kudoImage.kudoId);
                 });
             });
         }
