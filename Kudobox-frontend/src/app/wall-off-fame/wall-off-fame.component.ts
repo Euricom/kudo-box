@@ -101,16 +101,11 @@ export class WallOffFameComponent implements OnInit {
     }
 
     getKudoImage(id: number) {
-        const image = this.kudoImages.filter(kudo => {
-            if (kudo.id === id) {
-                Logger.info(`kudo found: kudoId:${id} - kudoUrl:${this.kudoImages[0].url}`);
-
-                return kudo.url;
-            }
-            return null;
-        });
-        Logger.info(`kudoId:${id} - kudoUrl:${this.kudoImages[0].url}`);
-        return this.kudoImages[0].url;
+        const image = this.kudoImages.find(kudo => kudo.id === id);
+        if (image && image.url) {
+            return image.url;
+        }
+        return '';
     }
 
     @HostListener('window:resize')

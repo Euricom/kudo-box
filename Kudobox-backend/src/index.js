@@ -92,7 +92,6 @@ app.use(morgan("combined"));
 
 require("./data/mongo")();
 
-
 var server = app.listen(config.port, function() {
   if (config.env === "development") {
     Logger.info(`API Server listening on port ${config.port}`);
@@ -107,35 +106,36 @@ io.on("connection", function(socket) {
 });
 
 app.post("/api/kudo/:id/saveImage", function(req, res) {
-  try{
-  Kudo.findById(req.params.id).exec().then(kudo => {
-   
-      kudo.image = req.body.data;
-      kudo.save();
+  try {
+    Kudo.findById(req.params.id)
+      .exec()
+      .then(kudo => {
+        kudo.image = req.body.data;
+        kudo.save();
 
-      return res.status(200).end();
-    }
-  );
-}catch(err){
-  res.boom.notFound(err);
-}
+        return res.status(200).end();
+      });
+  } catch (err) {
+    res.boom.notFound(err);
+  }
 });
 
 app.get("/api/kudo/:id/getImage", function(req, res) {
-  try{
-  Kudo.findById(req.params.id).exec().then(kudo => {
+  try {
+    Kudo.findById(req.params.id)
+      .exec()
+      .then(kudo => {
+        var img = Buffer.from(kudo.image.split(",")[1], "base64");
 
-      var img = Buffer.from(kudo.image.split(",")[1], "base64");
-
-      res.writeHead(200, {
-        "Content-Type": "image/jpg",
-        "Content-Length": img.length
+        res.writeHead(200, {
+          "Content-Type": "image/jpg",
+          "Content-Length": img.length
+        });
+        res.end(img);
       });
-      res.end(img);
-    });  
-}catch(err){
-  res.boom.badRequest(err);
-}
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
 });
 
 // defining an endpoint to return all users
@@ -151,19 +151,20 @@ app.get("/api/user", authenticate(), (req, res, next) => {
 });
 // defining an endpoint to return 50 kudos
 app.get("/api/kudo", authenticate(), (req, res, next) => {
-  try{
-  const skip = parseInt(req.query.skip) || 0;
-  Logger.info("skip", skip);
-  Kudo.find()
-    .populate("receiver")
-    .sort({ createdOn: "descending" })
-    .limit(50)
-    .skip(skip)
-    .exec().then(kudos=>{
+  try {
+    const skip = parseInt(req.query.skip) || 0;
+    Logger.info("skip", skip);
+    Kudo.find()
+      .populate("receiver")
+      .sort({ createdOn: "descending" })
+      .limit(50)
+      .skip(skip)
+      .exec()
+      .then(kudos => {
         Logger.info(kudos.length);
         res.json(kudos);
       });
-  }catch(err){
+  } catch (err) {
     res.boom.badRequest(err);
   }
 });
@@ -216,9 +217,10 @@ app.post("/api/kudo", authenticate(), async (req, res) => {
     kudo.status = "unread";
 
     const newKudo = new Kudo(req.body);
-    await newKudo.save().then(kudo => {
-      io.emit("newWallOfFameKudo", [kudo]);
-      console.log(kudo)
+    await newKudo.save().then(async kudo => {
+      const test =await kudo.getLatest();
+      io.emit("newWallOfFameKudo", [test]);
+      console.log(kudo);
       res.send({ message: "New kudo inserted." });
     });
   } catch (err) {
@@ -227,37 +229,38 @@ app.post("/api/kudo", authenticate(), async (req, res) => {
 });
 
 app.post("/api/kudo/batch", authenticate(), async (req, res, next) => {
-  try{
-  let kudos = req.body;
-  const sender = req.currentUser._id;
-  const status = "unread";
-  let promiseList = [];
-  kudos.forEach(kudo => {
-    kudo._id = undefined
-    let newKudo = new Kudo(kudo);
-    newKudo.sender = sender;
-    newKudo.status = status;
-    promiseList.push(newKudo.save());
-  });
-  const savedKudos = await Promise.all(promiseList);
-  
-  io.emit("newWallOfFameKudo", [...savedKudos]);  
-  res.send({ message: "New kudo inserted." });
-}catch(err){
-  res.boom.badRequest(err);
-}
+  try {
+    let kudos = req.body;
+    const sender = req.currentUser._id;
+    const status = "unread";
+    let promiseList = [];
+    kudos.forEach(kudo => {
+      kudo._id = undefined;
+      let newKudo = new Kudo(kudo);
+      newKudo.sender = sender;
+      newKudo.status = status;
+      promiseList.push(newKudo.save().then(kudo => kudo.getLatest()));
+    });
+    const savedKudos = await Promise.all(promiseList);
+
+    io.emit("newWallOfFameKudo", [...savedKudos]);
+    res.send({ message: "New kudo inserted." });
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
 });
 
 //public kudo
 app.get("/api/publicKudo/:id", (req, res, next) => {
-  try{
-  Kudo.findById(req.params.id)
-    .populate("sender")
-    .sort({ createdOn: "descending" })
-    .exec().then(kudos => {     
-        res.json(kudos);      
-    });
-  }catch(err){
+  try {
+    Kudo.findById(req.params.id)
+      .populate("sender")
+      .sort({ createdOn: "descending" })
+      .exec()
+      .then(kudos => {
+        res.json(kudos);
+      });
+  } catch (err) {
     res.boom.badRequest(err);
   }
 });
