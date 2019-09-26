@@ -67,13 +67,13 @@ export class MyKudosComponent implements OnInit {
         });
     }
 
-    htmlToPng(id): Promise<string> {
+    htmlToPng(id): Promise<Blob> {
         const divId = `capture-${id}`;
         const node = document.getElementById(divId);
         return htmlToImage
-            .toPng(node)
-            .then(dataUrl => {
-                return dataUrl;
+            .toBlob(node)
+            .then(blob => {
+                return blob;
             })
             .catch(function(error) {
                 console.error('oops, something went wrong!', error);
@@ -99,12 +99,12 @@ export class MyKudosComponent implements OnInit {
         if (index !== '') {
             this.htmlToPng(index).then(dataUrl => {
                 // this.downloadImage(dataUrl, kudoId);
-                saveAs(dataUrl, `Kudo_${kudoId}.png`);
+                saveAs(dataUrl, `Kudo_${kudoId}.png`, { autoBom: true });
             });
         } else {
             this.selection.forEach(kudoImage => {
                 this.htmlToPng(kudoImage.id).then(dataUrl => {
-                    saveAs(dataUrl, `Kudo_${kudoImage.id}.png`);
+                    saveAs(dataUrl, `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
 
                     // this.downloadImage(dataUrl, kudoImage.kudoId);
                 });
