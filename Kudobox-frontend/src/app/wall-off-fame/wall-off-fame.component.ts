@@ -3,6 +3,7 @@ import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
 import { Subscription, Subject, from, of } from 'rxjs';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { delay, map, concatMap, catchError } from 'rxjs/operators';
+import * as Logger from 'js-logger';
 import { kudoImages } from '../data/kudoImages';
 import { KudoService } from '../services/kudo.service';
 import { WallOfFameService } from '../services/wall-of-fame.service';
@@ -67,6 +68,7 @@ export class WallOffFameComponent implements OnInit {
         });
 
         this._wallOfFameService.updateWallOfFameWithLatestFromEvent().subscribe(kudos => {
+            Logger.info('updateFromSocketIo:', kudos);
             this.breakKudosStreamToSingleKudos$.next({ kudos, addToFront: true });
         });
 
