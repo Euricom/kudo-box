@@ -56,6 +56,7 @@ export class KudoService implements OnInit {
     }
 
     sendKudo(kudo) {
+        Logger.error('navigator.onLine:', navigator.onLine);
         if (navigator.onLine) {
             return this.http.post(`${environment.apiUrl}/api/kudo`, kudo).pipe(
                 catchError(e => {
@@ -64,6 +65,7 @@ export class KudoService implements OnInit {
                 }),
             );
         }
+        Logger.error('savingKudoOffline');
         this.saveKudo(kudo);
         return empty();
     }

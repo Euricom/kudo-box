@@ -4,6 +4,7 @@ import { NotifierService } from 'angular-notifier';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
+import Logger from 'js-logger';
 import { KudoService } from '../../services/kudo.service';
 
 @Component({
@@ -38,10 +39,11 @@ export class KudosSendComponent implements OnInit {
     }
 
     sendKudo() {
+        Logger.error("this.userForm.status === 'VALID' :", this.userForm.status === 'VALID');
         if (this.userForm.status === 'VALID') {
             const kudo = this._kudoService.kudo;
             kudo.receiver = this.userForm.value.user;
-
+            Logger.error('sending kudo');
             this.sendKudoSubscription = this._kudoService
                 .sendKudo(kudo)
                 .pipe()

@@ -47,7 +47,6 @@ import { OfflineComponent } from './core/offline/offline.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
 import { IndexedDbService } from './services/indexed-db.service';
 
-
 const customNotifierOptions: NotifierOptions = {
     position: {
         horizontal: {
@@ -122,7 +121,7 @@ const customNotifierOptions: NotifierOptions = {
         }),
         PickerModule,
         SocketIoModule.forRoot(<SocketIoConfig>{
-            url: 'https://kudobox-api-dev.azurewebsites.net',
+            url: environment.apiUrl,
             options: {
                 autoConnect: true,
                 secure: true,
@@ -150,14 +149,12 @@ export class AppModule {
         Logger.useDefaults();
         Logger.setLevel(environment.logLevel);
         Logger.setHandler((messages, context) => {
-            //if (isDevMode()) {
-            consoleHandler(messages, context);
-            //}
+            if (isDevMode()) {
+                consoleHandler(messages, context);
+            }
         });
 
         const icons = [faFacebookF, faTwitter, faLinkedinIn];
         library.addIcons(...icons);
-        console.log('socketIoUrl', environment.socketIo.socketIoUrl);
-        Logger.error('socketIoUrl', environment.socketIo.socketIoUrl);
     }
 }
