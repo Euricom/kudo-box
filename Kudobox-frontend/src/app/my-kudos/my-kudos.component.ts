@@ -22,7 +22,7 @@ export interface KudoSelection {
     styleUrls: ['./my-kudos.component.scss'],
 })
 export class MyKudosComponent implements OnInit {
-    public kudos;
+    public kudos = [];
     public kudoImages;
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
