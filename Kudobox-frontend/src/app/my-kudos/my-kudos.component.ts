@@ -67,13 +67,13 @@ export class MyKudosComponent implements OnInit {
         });
     }
 
-    htmlToPng(id): Promise<Blob> {
+    htmlToPng(id): Promise<string> {
         const divId = `capture-${id}`;
         const node = document.getElementById(divId);
         return htmlToImage
-            .toBlob(node)
-            .then(blob => {
-                return blob;
+            .toPng(node)
+            .then(stringUrl => {
+                return stringUrl;
             })
             .catch(function(error) {
                 console.error('oops, something went wrong!', error);
@@ -97,14 +97,14 @@ export class MyKudosComponent implements OnInit {
     downloadImages(index, kudoId) {
         const serv = this._kudoService;
         if (index !== '') {
-            this.htmlToPng(index).then(dataUrl => {
+            this.htmlToPng(index).then(stringUrl => {
                 // this.downloadImage(dataUrl, kudoId);
-                saveAs(dataUrl, `Kudo_${kudoId}.png`, { autoBom: true });
+                saveAs(this.createBlob(stringUrl), `Kudo_${kudoId}.png`, { autoBom: true });
             });
         } else {
             this.selection.forEach(kudoImage => {
-                this.htmlToPng(kudoImage.id).then(dataUrl => {
-                    saveAs(dataUrl, `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
+                this.htmlToPng(kudoImage.id).then(stringUrl => {
+                    saveAs(this.createBlob(stringUrl), `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
 
                     // this.downloadImage(dataUrl, kudoImage.kudoId);
                 });
@@ -112,19 +112,9 @@ export class MyKudosComponent implements OnInit {
         }
     }
 
-    downloadImage(image, id) {
+    createBlob(image): Blob {
         const binaryData = this.convertDataURIToBinary(image);
-        const url = window.URL.createObjectURL(new Blob([binaryData], { type: 'image/png' }));
-
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.setAttribute('style', 'display: none');
-        a.href = url;
-        a.download = `Kudo_${id}`;
-        a.target = '_blank';
-        a.click();
-        window.URL.revokeObjectURL(url);
-        a.remove(); // remove the element
+        return new Blob([binaryData], { type: 'image/png' });
     }
 
     isSelected(kudoId) {
