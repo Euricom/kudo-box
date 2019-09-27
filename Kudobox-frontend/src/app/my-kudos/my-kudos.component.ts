@@ -44,8 +44,8 @@ export class MyKudosComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.myKudosSubscription.unsubscribe();
-        this.changeStatusSubscription.unsubscribe();
+        // this.myKudosSubscription.unsubscribe();
+        // this.changeStatusSubscription.unsubscribe();
     }
 
     getKudoImage(id: number) {
