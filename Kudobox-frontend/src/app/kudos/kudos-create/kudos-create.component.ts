@@ -24,7 +24,7 @@ export class KudosCreateComponent implements OnInit {
     public baseImageUrl: string;
     public fontFamily = 'Comic Sans MS';
     public kudoId: number;
-    public isTextareaFilled: boolean = true;
+    public isTextareaFilled = true;
 
     public faSmile = faSmile;
     public showEmojis = false;
@@ -44,7 +44,9 @@ export class KudosCreateComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.routeSubscription.unsubscribe();
+        if (this.routeSubscription) {
+            this.routeSubscription.unsubscribe();
+        }
     }
 
     @HostListener('window:resize', ['$event'])
@@ -71,7 +73,7 @@ export class KudosCreateComponent implements OnInit {
         if (text) {
             const kudo = {
                 kudoId: this.kudoId,
-                text: text,
+                text,
                 fontFamily: this.fontFamily,
                 receiver: '',
             };

@@ -13,7 +13,7 @@ import { KudoService } from './services/kudo.service';
 })
 export class AppComponent implements AfterViewInit {
     @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
-    public kudoCount: number = 0;
+    public kudoCount = 0;
     title = 'kudobox';
     sideNavSubscription: Subscription;
 
@@ -34,7 +34,9 @@ export class AppComponent implements AfterViewInit {
     }
 
     ngOnDestroy() {
-        this.sideNavSubscription.unsubscribe();
+        if (this.sideNavSubscription) {
+            this.sideNavSubscription.unsubscribe();
+        }
     }
 
     logout() {
