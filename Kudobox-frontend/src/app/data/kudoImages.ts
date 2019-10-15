@@ -1,3 +1,5 @@
+import { KudoImage } from '../models/kudoImage';
+
 export const kudoImages = [
     { id: 1, url: '/assets/bravocado.png' },
     { id: 2, url: '/assets/nailed_it.png' },
@@ -6,4 +8,4 @@ export const kudoImages = [
     { id: 5, url: '/assets/yoda_best.png' },
     { id: 6, url: '/assets/you_got_me_hooker.png' },
     { id: 7, url: '/assets/you_rock.png' },
-];
+] as KudoImage[];

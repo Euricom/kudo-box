@@ -6,11 +6,14 @@ import { Meta } from '@angular/platform-browser';
 import { faSquare, faCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { saveAs } from 'file-saver';
 
-import { Subscription, observable } from 'rxjs';
+import { Subscription, observable, EMPTY, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { mergeMap, map, finalize } from 'rxjs/operators';
 import { KudoService } from '../services/kudo.service';
 // eslint-disable-next-line import/extensions
-import { kudoImages } from '../data/kudoImages.js';
+import { kudoImages } from '../data/kudoImages';
+import { KudoImage } from '../models/kudoImage';
+import { Kudo } from '../models/kudo';
 
 export interface KudoSelection {
     id: number;
@@ -22,25 +25,30 @@ export interface KudoSelection {
     styleUrls: ['./my-kudos.component.scss'],
 })
 export class MyKudosComponent implements OnInit {
-    public kudos = [];
-    public kudoImages;
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
+
+    private changeStatus$: Subject<any> = new Subject();
     private log = Logger.get('MyKudosComponent');
+    public kudoImages: KudoImage[];
+    public kudos$: Observable<Kudo[]> = this._kudoService.getMyKudos();
     public faSquare = faSquare;
     public faCheckSquare = faCheckSquare;
     public selection: KudoSelection[] = [];
 
-    constructor(private _kudoService: KudoService, private meta: Meta, private router: Router) {}
+    constructor(private _kudoService: KudoService, private router: Router) {}
 
     ngOnInit() {
         this.kudoImages = kudoImages;
-        this.myKudosSubscription = this._kudoService.getMyKudos().subscribe(data => {
-            this.kudos = data;
-            this.changeStatusSubscription = this._kudoService.changeStatus('read').subscribe(() => {
+        this.myKudosSubscription = this.kudos$
+            .pipe(finalize(() => this.changeStatus$.next(EMPTY)))
+            .subscribe(() => console.log('kudos'));
+
+        this.changeStatusSubscription = this.changeStatus$
+            .pipe(mergeMap(() => this._kudoService.changeStatus('read')))
+            .subscribe(() => {
                 this.log.info('Kudos are updated.');
             });
-        });
     }
 
     ngOnDestroy() {
@@ -85,7 +93,7 @@ export class MyKudosComponent implements OnInit {
             });
     }
 
-    convertDataURIToBinary(dataUrl) {
+    convertDataURIToBinary(dataUrl): Uint8Array {
         const base64Index = dataUrl.indexOf(';base64,') + ';base64,'.length;
         const base64 = dataUrl.substring(base64Index);
         const raw = window.atob(base64);
@@ -121,7 +129,7 @@ export class MyKudosComponent implements OnInit {
         return new Blob([binaryData], { type: 'image/png' });
     }
 
-    isSelected(kudoId) {
+    isSelected(kudoId): boolean {
         return this.selection.findIndex(s => s.kudoId === kudoId) > -1;
     }
 

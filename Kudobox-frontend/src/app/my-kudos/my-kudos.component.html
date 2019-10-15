@@ -1,6 +1,6 @@
 <h1>My kudos</h1>
-<div class="container" *ngIf="kudos?.length > 0">
-  <mat-card class="my-kudo-card" *ngFor="let kudo of kudos; let i = index">
+<div class="container" *ngIf="(kudos$ | async)?.length > 0">
+  <mat-card class="my-kudo-card" *ngFor="let kudo of kudos$ | async as kudos; let i = index">
     <div id="capture-{{ i }}" class="captureContainer">
       <img src="{{ getKudoImage(kudo.kudoId) }}" alt="Kudo" class="my-kudo-card-image" />
       <textarea disabled class="textAreaForImage" [style.font-family]="kudo.fontFamily">{{ kudo.text }}</textarea>

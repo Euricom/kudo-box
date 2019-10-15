@@ -218,7 +218,7 @@ app.post("/api/kudo", authenticate(), async (req, res) => {
 
     const newKudo = new Kudo(req.body);
     await newKudo.save().then(async kudo => {
-      const test =await kudo.getLatest();
+      const test = await kudo.getLatestPrivate();
       io.emit("newWallOfFameKudo", [test]);
       console.log(kudo);
       res.send({ message: "New kudo inserted." });
@@ -239,10 +239,9 @@ app.post("/api/kudo/batch", authenticate(), async (req, res, next) => {
       let newKudo = new Kudo(kudo);
       newKudo.sender = sender;
       newKudo.status = status;
-      promiseList.push(newKudo.save().then(kudo => kudo.getLatest()));
+      promiseList.push(newKudo.save().then(kudo => kudo.getLatestPrivate()));
     });
     const savedKudos = await Promise.all(promiseList);
-
     io.emit("newWallOfFameKudo", [...savedKudos]);
     res.send({ message: "New kudo inserted." });
   } catch (err) {
