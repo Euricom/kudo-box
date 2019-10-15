@@ -3,7 +3,7 @@ import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as Logger from 'js-logger';
-import { Kudo } from '../core/models/kudo';
+import { Kudo } from '../models/kudo';
 
 @Injectable()
 export class WallOfFameService {

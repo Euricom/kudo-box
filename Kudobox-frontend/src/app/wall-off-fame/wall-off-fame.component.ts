@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { Component, OnInit, HostListener, HostBinding } from '@angular/core';
 
 import { Subscription, Subject, from, of } from 'rxjs';
@@ -7,6 +8,7 @@ import * as Logger from 'js-logger';
 import { kudoImages } from '../data/kudoImages';
 import { KudoService } from '../services/kudo.service';
 import { WallOfFameService } from '../services/wall-of-fame.service';
+import { Kudo } from '../models/kudo';
 
 @Component({
     selector: 'app-wall-off-fame',
@@ -26,9 +28,15 @@ import { WallOfFameService } from '../services/wall-of-fame.service';
 })
 export class WallOffFameComponent implements OnInit {
     public kudoImages;
-    public kudos = [];
-    public kudos$: Subject<any> = new Subject<any>();
-    public breakKudosStreamToSingleKudos$: Subject<any> = new Subject<any>();
+    public kudos = [] as Kudo[];
+    public kudos$: Subject<{ kudo: Kudo; addToFront: boolean }> = new Subject<{
+        kudo: Kudo;
+        addToFront: boolean;
+    }>();
+    public breakKudosStreamToSingleKudos$: Subject<{ kudos: Kudo[]; addToFront: boolean }> = new Subject<{
+        kudos: Kudo[];
+        addToFront: boolean;
+    }>();
     public searchText;
     public isOnline = false;
     private _allKudosSubscriptions: Subscription[] = [];
@@ -57,7 +65,7 @@ export class WallOffFameComponent implements OnInit {
         this.breakKudosStreamToSingleKudos$
             .pipe(
                 map(data => {
-                    from(data.kudos).subscribe(kudo => {
+                    from(data.kudos as Kudo[]).subscribe(kudo => {
                         this.kudos$.next({ kudo, addToFront: data.addToFront });
                     });
                 }),
@@ -83,7 +91,7 @@ export class WallOffFameComponent implements OnInit {
         this._allKudosSubscriptions.push(
             this._kudoService.getAllKudos(this.skip).subscribe(data => {
                 if (this.kudos.length === 0) {
-                    this.kudos = [...data];
+                    this.kudos = [...data] as Kudo[];
                 } else {
                     this.breakKudosStreamToSingleKudos$.next({ kudos: data, addToFront: false });
                 }
@@ -100,7 +108,7 @@ export class WallOffFameComponent implements OnInit {
         this._allKudosSubscriptions.forEach(s => s.unsubscribe());
     }
 
-    getKudoImage(id: number) {
+    getKudoImage(id: number): string {
         const image = this.kudoImages.find(kudo => kudo.id === id);
         if (image && image.url) {
             return image.url;
@@ -109,16 +117,16 @@ export class WallOffFameComponent implements OnInit {
     }
 
     @HostListener('window:resize')
-    onResize() {
+    onResize(): void {
         this.checkWidth();
         this.changeNumberOfKudosShown(this.numberOfKudos);
     }
 
-    checkWidth() {
+    checkWidth(): void {
         this.width = window.innerWidth;
     }
 
-    changeNumberOfKudosShown(number) {
+    changeNumberOfKudosShown(number): void {
         this.numberOfKudos = number;
         if (this.width > 720) {
             const widthKudo = (this.width - 100 - number * 2 * 4) / number;
@@ -144,7 +152,7 @@ export class WallOffFameComponent implements OnInit {
                 'font-size': `${15 / scale}px`,
             };
             this.styleCornerTopLeft = {
-                top: `${5 / scale }px`,
+                top: `${5 / scale}px`,
                 left: `${5 / scale}px`,
                 width: `${46 / scale}px`,
             };
@@ -189,7 +197,7 @@ export class WallOffFameComponent implements OnInit {
             this.styleCornerTopLeft = {
                 top: '2px',
                 left: '2px',
-                width: '27px'
+                width: '27px',
             };
             this.styleCornerTopRight = {
                 top: '2px',

@@ -33,9 +33,14 @@ let KudoSchema = new Schema({
 KudoSchema.methods.getLatest = function() {
   return this.model("Kudo")
     .findById(this.id)
-    .populate("receiver").populate("sender");
+    .populate("receiver")
+    .populate("sender");
 };
-
+KudoSchema.methods.getLatestPrivate = function() {
+  return this.model("Kudo")
+    .findById(this.id)
+    .populate("receiver", "-_id")
+};
 KudoSchema.pre("save", function(next) {
   /*if (!this.createdOn) {
     this.createdOn = new Date();
