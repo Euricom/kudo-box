@@ -125,13 +125,17 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
   }
 });
 
-app.get("/api/kudo/:id/getImage", async function(req, res) {
+app.get("/api/kudo/:id/getImage", function(req, res) {
   try {
+    Logger.info("getimage start");
     baseUrl = req.protocol + "://" + req.get("host");
+    Logger.info("getimage baseUrl ", baseUrl);
+
     Kudo.findById(req.params.id)
       .populate("sender")
       .exec()
       .then(async kudo => {
+        Logger.info("getimage kudo ", kudo);
         var img = await screenshotDOMElement(kudo, baseUrl, {
           selector: "#captureThis",
           encoding: "binary"
@@ -144,11 +148,12 @@ app.get("/api/kudo/:id/getImage", async function(req, res) {
 });
 
 async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
+  Logger.info("screenshotDOMElement ", kudo);
+
   var htmlstring = `
       <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
-        <img src="${baseUrl}${kudoImages.find(
-    image => image.id === kudo.kudoId
-  ).url || kudoImages[0].url}" 
+        <img src="${baseUrl}${kudoImages.find(image => image.id === kudo.kudoId)
+    .url || kudoImages[0].url}" 
           alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
         <textarea  class="textAreaForImage" style="font-family: '${
           kudo.fontFamily
@@ -165,6 +170,8 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
         </div>
       </div>
         `;
+  Logger.info("screenshotDOMElement htmlstring", htmlstring);
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   page.setContent(htmlstring);
@@ -195,6 +202,8 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
     }
   });
   await browser.close();
+  Logger.info("screenshotDOMElement done");
+
   return image;
 }
 
