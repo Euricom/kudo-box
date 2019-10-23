@@ -10,6 +10,9 @@ var passport = require("passport");
 var OIDCBearerStrategy = require("passport-azure-ad").BearerStrategy;
 const Logger = require("js-logger");
 var boom = require("express-boom");
+const puppeteer = require("puppeteer");
+const kudoImages = require("./data/kudoImages");
+var dateFormat = require("dateformat");
 
 //config
 const config = require("./config/config");
@@ -83,7 +86,9 @@ authenticate = function() {
     session: false
   });
 };
-//  app.use("/api");
+
+app.use(express.static("/src/assets/images"));
+app.use("/images", express.static(__dirname + "/assets/images"));
 
 // add morgan to log HTTP requests
 app.use(morgan("combined"));
@@ -120,16 +125,15 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
   }
 });
 
-app.get("/api/kudo/:id/getImage", function(req, res) {
+app.get("/api/kudo/:id/getImage", async function(req, res) {
   try {
-    Kudo.findById(req.params.id)
+    Kudo.findById(req.params.id)      
+      .populate("sender")
       .exec()
-      .then(kudo => {
-        var img = Buffer.from(kudo.image.split(",")[1], "base64");
-
-        res.writeHead(200, {
-          "Content-Type": "image/jpg",
-          "Content-Length": img.length
+      .then(async kudo => {
+        var img = await screenshotDOMElement(kudo, {
+          selector: "#captureThis",
+          encoding: "binary"
         });
         res.end(img);
       });
@@ -137,6 +141,61 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
     res.boom.badRequest(err);
   }
 });
+
+async function screenshotDOMElement(kudo, opts = {}) {
+  var htmlstring = `
+      <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
+        <img src="http://localhost:${config.port}${kudoImages.find(
+    image => image.id === kudo.kudoId
+  ).url || kudoImages[0].url}" 
+          alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
+        <textarea  class="textAreaForImage" style="font-family: '${
+          kudo.fontFamily
+        }'; position: absolute; padding: 0px; margin: 0px; 
+        font-size: 20px; border: none; background: none; outline: none; resize: none; color: rgb(105, 190, 40); //top: 149px; top: 132px; //top: 0; //left: 89px; 
+        left: 77px; width: 355px; height: 225px; line-height: 35.5px; display: block;">${
+          kudo.text
+        }</textarea>
+        <div class="generalInfo" style="position: absolute; bottom: 8px; left: 50px; color: #69be28; width: 80%; text-align: center;">
+          <p>${kudo.sender.name} - ${dateFormat(
+    kudo.createdOn,
+    "dddd d/m/yy h:mm"
+  )}</p>
+        </div>
+      </div>
+        `;
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  page.setContent(htmlstring);
+
+  const padding = "padding" in opts ? opts.padding : 0;
+  const path = "path" in opts ? opts.path : null;
+  const selector = opts.selector;
+
+  if (!selector) throw Error("Please provide a selector.");
+
+  const rect = await page.evaluate(selector => {
+    const element = document.querySelector(selector);
+    if (!element) return null;
+    const { x, y, width, height } = element.getBoundingClientRect();
+    return { left: x, top: y, width, height, id: element.id };
+  }, selector);
+
+  if (!rect)
+    throw Error(`Could not find element that matches selector: ${selector}.`);
+
+  var image = await page.screenshot({
+    path,
+    clip: {
+      x: rect.left - padding,
+      y: rect.top - padding,
+      width: rect.width + padding * 2,
+      height: rect.height + padding * 2
+    }
+  });
+  await browser.close();
+  return image;
+}
 
 // defining an endpoint to return all users
 app.get("/api/user", authenticate(), (req, res, next) => {

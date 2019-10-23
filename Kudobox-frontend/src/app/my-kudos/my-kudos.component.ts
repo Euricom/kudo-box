@@ -27,7 +27,7 @@ export interface KudoSelection {
 export class MyKudosComponent implements OnInit {
     myKudosSubscription: Subscription;
     changeStatusSubscription: Subscription;
-
+    downloadKudoSubscriptions: Subscription[] = [];
     private changeStatus$: Subject<any> = new Subject();
     private log = Logger.get('MyKudosComponent');
     public kudoImages: KudoImage[];
@@ -78,7 +78,6 @@ export class MyKudosComponent implements OnInit {
             );
         });
     }
-
     htmlToPng(id): Promise<string> {
         const divId = `capture-${id}`;
         const node = document.getElementById(divId);
@@ -109,17 +108,26 @@ export class MyKudosComponent implements OnInit {
     downloadImages(index, kudoId) {
         const serv = this._kudoService;
         if (index !== '') {
-            this.htmlToPng(index).then(stringUrl => {
-                // this.downloadImage(dataUrl, kudoId);
-                saveAs(this.createBlob(stringUrl), `Kudo_${kudoId}.png`, { autoBom: true });
-            });
+            this.downloadKudoSubscriptions.push(
+                serv.getKudoImageForDownload(kudoId).subscribe(x => {
+                    return saveAs(x, `Kudo_${kudoId}.png`, { autoBom: true });
+                }),
+            );
+            // this.htmlToPng(index).then(stringUrl => {
+            //     // this.downloadImage(dataUrl, kudoId);
+            //     saveAs(this.createBlob(stringUrl), `Kudo_${kudoId}.png`, { autoBom: true });
+            // });
         } else {
             this.selection.forEach(kudoImage => {
-                this.htmlToPng(kudoImage.id).then(stringUrl => {
-                    saveAs(this.createBlob(stringUrl), `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
+                this.downloadKudoSubscriptions.push(
+                    serv.getKudoImageForDownload(kudoImage.kudoId).subscribe(x => {
+                        return saveAs(x, `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
+                    }),
+                );
+                // this.htmlToPng(kudoImage.id).then(stringUrl => {
+                //     saveAs(this.createBlob(stringUrl), `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
 
-                    // this.downloadImage(dataUrl, kudoImage.kudoId);
-                });
+                // this.downloadImage(dataUrl, kudoImage.kudoId);
             });
         }
     }

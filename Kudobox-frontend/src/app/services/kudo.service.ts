@@ -84,7 +84,14 @@ export class KudoService implements OnInit {
             }),
         );
     }
-
+    getKudoImageForDownload(kudoId): Observable<Blob> {
+        return this.http.get(`${environment.apiUrl}/api/kudo/${kudoId}/getImage`, { responseType: 'blob' }).pipe(
+            catchError(e => {
+                this.log.error('Error getKudoImageForDownload():', e);
+                return throwError(e);
+            }),
+        );
+    }
     getUsersList(): Observable<User[]> {
         if (navigator.onLine) {
             return this.http.get<User[]>(`${environment.apiUrl}/api/user`).pipe(
