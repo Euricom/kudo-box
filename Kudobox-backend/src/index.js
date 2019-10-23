@@ -127,11 +127,12 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
 
 app.get("/api/kudo/:id/getImage", async function(req, res) {
   try {
-    Kudo.findById(req.params.id)      
+    baseUrl = req.protocol + "://" + req.get("host");
+    Kudo.findById(req.params.id)
       .populate("sender")
       .exec()
       .then(async kudo => {
-        var img = await screenshotDOMElement(kudo, {
+        var img = await screenshotDOMElement(kudo, baseUrl, {
           selector: "#captureThis",
           encoding: "binary"
         });
@@ -142,10 +143,10 @@ app.get("/api/kudo/:id/getImage", async function(req, res) {
   }
 });
 
-async function screenshotDOMElement(kudo, opts = {}) {
+async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   var htmlstring = `
       <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
-        <img src="http://localhost:${config.port}${kudoImages.find(
+        <img src="${baseUrl}${kudoImages.find(
     image => image.id === kudo.kudoId
   ).url || kudoImages[0].url}" 
           alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">

@@ -25,7 +25,7 @@
     </mat-card-footer>
   </mat-card>
 </div>
-<div class="noKudos" *ngIf="kudos?.length === 0">
+<div class="noKudos" *ngIf="(kudos$ | async)?.length === 0">
   <p>I'm sorry, you didn't receive a kudo yet :-(</p>
 </div>
 <footer *ngIf="selection.length > 0">
