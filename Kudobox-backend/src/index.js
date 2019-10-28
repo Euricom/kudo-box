@@ -23,9 +23,9 @@ const consoleHandler = Logger.createDefaultHandler();
 Logger.useDefaults();
 Logger.setLevel(config.logLevel);
 Logger.setHandler((messages, context) => {
-  if (config.env === "development") {
+  //if (config.env === "development") {
     consoleHandler(messages, context);
-  }
+  //}
 });
 //options for bearerStrategy
 var options = {

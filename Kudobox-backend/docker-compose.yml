@@ -1,4 +1,4 @@
-version: '2.1'
+version: "2.1"
 
 services:
   kudobox-backend:
@@ -6,5 +6,6 @@ services:
     build: .
     environment:
       NODE_ENV: production
+      mongo:
     ports:
       - 3000:3000

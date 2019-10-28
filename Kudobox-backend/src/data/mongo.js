@@ -7,6 +7,8 @@ const Logger = require("js-logger");
 
 module.exports = function() {
   Logger.info("Initialize mongodb...");
+  Logger.info(
+    "DEZE VALUE ZOEKT GE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" , process.env.mongo  );
   const connectionString = config.mongo;
   mongoose.connect(connectionString, {
     useNewUrlParser: true,
