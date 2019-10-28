@@ -125,13 +125,13 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
   }
 });
 
-app.get("/api/kudo/:id/getImage", function(req, res) {
+app.get("/api/kudo/:id/getImage", async function(req, res) {
   try {
     Logger.info("getimage start");
     baseUrl = req.protocol + "://" + req.get("host");
     Logger.info("getimage baseUrl ", baseUrl);
 
-    Kudo.findById(req.params.id)
+    await Kudo.findById(req.params.id)
       .populate("sender")
       .exec()
       .then(async kudo => {
@@ -174,7 +174,7 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
 
   const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
-  page.setContent(htmlstring);
+  await page.setContent(htmlstring);
 
   const padding = "padding" in opts ? opts.padding : 0;
   const path = "path" in opts ? opts.path : null;
