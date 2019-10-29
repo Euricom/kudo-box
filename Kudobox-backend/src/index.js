@@ -125,13 +125,13 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
   }
 });
 
-app.get("/api/kudo/:id/getImage", async function(req, res) {
+app.get("/api/kudo/:id/getImage", function(req, res) {
   try {
     Logger.info("getimage start");
     baseUrl = req.protocol + "://" + req.get("host");
     Logger.info("getimage baseUrl ", baseUrl);
 
-    await Kudo.findById(req.params.id)
+    Kudo.findById(req.params.id)
       .populate("sender")
       .exec()
       .then(async kudo => {

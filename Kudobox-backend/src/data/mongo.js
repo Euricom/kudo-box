@@ -7,15 +7,15 @@ const Logger = require("js-logger");
 
 module.exports = function() {
   Logger.info("Initialize mongodb...");
-  Logger.info(
-    "DEZE VALUE ZOEKT GE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-    process.env.mongo
-  );
+  // Logger.info(
+  //   "DEZE VALUE ZOEKT GE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+  //   process.env.mongo
+  // );
   const connectionString = config.mongo;
-  Logger.info(
-    "DEZE VALUE ZOEKT GE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-    config.mongo
-  );
+  // Logger.info(
+  //   "DEZE VALUE ZOEKT GE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+  //   config.mongo
+  // );
   mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true

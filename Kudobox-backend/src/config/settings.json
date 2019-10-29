@@ -11,6 +11,7 @@
     "loggingNoPII": false
   },
   "connectionStrings": {
-    "mongo": "mongodb://host.docker.internal:27017/kudobox"
+    "mongo": "mongodb://localhost:27017/kudobox",
+    "mongoDocker": "mongodb://host.docker.internal:27017/kudobox"
   }
 }
