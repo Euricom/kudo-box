@@ -47,10 +47,10 @@ var bearerStrategy = new OIDCBearerStrategy(options, async function(
   token,
   done
 ) {
-  Logger.info("DO USER STUFF HERE");
-  Logger.info("=========== START TOKEN RECEIVED ===========");
-  Logger.info(token);
-  Logger.info("=========== END TOKEN RECEIVED ===========");
+  // Logger.info("DO USER STUFF HERE");
+  // Logger.info("=========== START TOKEN RECEIVED ===========");
+  // Logger.info(token);
+  // Logger.info("=========== END TOKEN RECEIVED ===========");
   Logger.info("url:" + req.originalUrl);
   const currentUser = await User.findOne({ email: token.preferred_username });
   if (currentUser) {
@@ -135,7 +135,7 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
       .populate("sender")
       .exec()
       .then(async kudo => {
-        Logger.info("getimage kudo ", kudo);
+        // Logger.info("getimage kudo ", kudo);
         var img = await screenshotDOMElement(kudo, baseUrl, {
           selector: "#captureThis",
           encoding: "binary"
