@@ -182,7 +182,7 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
       "--no-first-run",
       "--no-sandbox",
       "--no-zygote",
-      // "--single-process"
+       "--single-process"
     ]
   });
   Logger.info("launch new page");
