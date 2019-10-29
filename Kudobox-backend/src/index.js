@@ -152,7 +152,9 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
 
   var htmlstring = `
       <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
-        <img src=""  alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
+        <img src="${baseUrl}${kudoImages.find(image => image.id === kudo.kudoId)
+    .url || kudoImages[0].url}" 
+          alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
         <textarea  class="textAreaForImage" style="font-family: '${
           kudo.fontFamily
         }'; position: absolute; padding: 0px; margin: 0px; 
@@ -177,7 +179,8 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
       "--proxy-server='direct://'",
       "--proxy-bypass-list=*",
       "--enable-local-file-accesses",
-      "--allow-file-access-from-files"
+      "--allow-file-access-from-files",
+      "--disable-dev-shm-usage"
     ]
   });
   const page = await browser.newPage();
