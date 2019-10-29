@@ -176,11 +176,13 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   const browser = await puppeteer.launch({
     args: [
       "--no-sandbox",
-      "--proxy-server='direct://'",
-      "--proxy-bypass-list=*",
-      "--enable-local-file-accesses",
-      "--allow-file-access-from-files",
-      "--disable-dev-shm-usage"
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+      "--disable-setuid-sandbox",
+      "--no-first-run",
+      "--no-sandbox",
+      "--no-zygote",
+      // "--single-process"
     ]
   });
   Logger.info("launch new page");
