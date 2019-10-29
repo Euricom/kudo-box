@@ -178,8 +178,9 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
       "--no-sandbox",
       "--disable-dev-shm-usage",
       "--disable-setuid-sandbox",
-      "--no-first-run",
-    ]
+      "--no-first-run"
+    ],
+    headless: true
   });
   Logger.info("launch new page");
 
