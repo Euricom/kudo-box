@@ -148,7 +148,7 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
 });
 
 async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
-  Logger.info("screenshotDOMElement ", kudo);
+  // Logger.info("screenshotDOMElement ", kudo);
 
   var htmlstring = `
       <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
@@ -171,8 +171,8 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
       </div>
         `;
 
-  Logger.info("screenshotDOMElement htmlstring", htmlstring);
-
+  // Logger.info("screenshotDOMElement htmlstring", htmlstring);
+  Logger.info("launch puppeteer");
   const browser = await puppeteer.launch({
     args: [
       "--no-sandbox",
@@ -183,10 +183,16 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
       "--disable-dev-shm-usage"
     ]
   });
+  Logger.info("launch new page");
+
   const page = await browser.newPage();
+  Logger.info("setUserAgent");
+
   await page.setUserAgent(
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
   );
+  Logger.info("setContent");
+
   await page.setContent(htmlstring);
 
   const padding = "padding" in opts ? opts.padding : 0;
@@ -194,6 +200,7 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   const selector = opts.selector;
 
   if (!selector) throw Error("Please provide a selector.");
+  Logger.info("eval");
 
   const rect = await page.evaluate(selector => {
     const element = document.querySelector(selector);
@@ -204,6 +211,7 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
 
   if (!rect)
     throw Error(`Could not find element that matches selector: ${selector}.`);
+  Logger.info("screenshot");
 
   var image = await page.screenshot({
     path,
@@ -214,6 +222,8 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
       height: rect.height + padding * 2
     }
   });
+  Logger.info("close");
+
   await browser.close();
   Logger.info("screenshotDOMElement done");
 
