@@ -24,7 +24,7 @@ Logger.useDefaults();
 Logger.setLevel(config.logLevel);
 Logger.setHandler((messages, context) => {
   //if (config.env === "development") {
-    consoleHandler(messages, context);
+  consoleHandler(messages, context);
   //}
 });
 //options for bearerStrategy
@@ -140,7 +140,7 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
           selector: "#captureThis",
           encoding: "binary"
         });
-        res.end(img);
+        res.type("image/png").send(img);
       });
   } catch (err) {
     res.boom.badRequest(err);
@@ -172,7 +172,10 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
         `;
   Logger.info("screenshotDOMElement htmlstring", htmlstring);
 
-  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox"],
+    headless: false
+  });
   const page = await browser.newPage();
   await page.setContent(htmlstring);
 
