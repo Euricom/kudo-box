@@ -150,29 +150,9 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
 async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   Logger.info("screenshotDOMElement ", kudo);
 
-  // var htmlstring = `
-  //     <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
-  //       <img src="${baseUrl}${kudoImages.find(image => image.id === kudo.kudoId)
-  //   .url || kudoImages[0].url}" 
-  //         alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
-  //       <textarea  class="textAreaForImage" style="font-family: '${
-  //         kudo.fontFamily
-  //       }'; position: absolute; padding: 0px; margin: 0px; 
-  //       font-size: 20px; border: none; background: none; outline: none; resize: none; color: rgb(105, 190, 40); //top: 149px; top: 132px; //top: 0; //left: 89px; 
-  //       left: 77px; width: 355px; height: 225px; line-height: 35.5px; display: block;">${
-  //         kudo.text
-  //       }</textarea>
-  //       <div class="generalInfo" style="position: absolute; bottom: 8px; left: 50px; color: #69be28; width: 80%; text-align: center;">
-  //         <p>${kudo.sender.name} - ${dateFormat(
-  //   kudo.createdOn,
-  //   "dddd d/m/yy h:mm"
-  // )}</p>
-  //       </div>
-  //     </div>
-  //       `;
   var htmlstring = `
       <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
-       
+        <img src=""  alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
         <textarea  class="textAreaForImage" style="font-family: '${
           kudo.fontFamily
         }'; position: absolute; padding: 0px; margin: 0px; 
@@ -188,13 +168,16 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
         </div>
       </div>
         `;
+
   Logger.info("screenshotDOMElement htmlstring", htmlstring);
 
   const browser = await puppeteer.launch({
     args: [
       "--no-sandbox",
       "--proxy-server='direct://'",
-      "--proxy-bypass-list=*"
+      "--proxy-bypass-list=*",
+      "--enable-local-file-accesses",
+      "--allow-file-access-from-files"
     ]
   });
   const page = await browser.newPage();
