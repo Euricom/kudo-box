@@ -173,8 +173,12 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   Logger.info("screenshotDOMElement htmlstring", htmlstring);
 
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox"],
-    headless: false
+    args: [
+      "--no-sandbox",
+      "--proxy-server='direct://'",
+      "--proxy-bypass-list=*"
+    ]
+    
   });
   const page = await browser.newPage();
   await page.setContent(htmlstring);
