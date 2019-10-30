@@ -16,4 +16,8 @@ Install mongo add db 'kudobox'
 1. npm install
 2. npm run start
 
+# CI
+https://euricom.visualstudio.com/Test%20DevOps
 
+Deployed on azure 
+https://portal.azure.com/#home
