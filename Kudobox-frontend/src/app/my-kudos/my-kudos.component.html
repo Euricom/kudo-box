@@ -21,7 +21,12 @@
         [include]="['facebook', 'twitter', 'linkedin']" [show]="3" [autoSetMeta]="false">
       </share-buttons>-->
       <!-- <button type="button" class="btnNext" (click)="shareImage(i, kudo._id)">Share</button> -->
-      <button type="button" class="btnNext" (click)="downloadImages(i,kudo._id)">Download</button>
+      <button style="width: 100px;" type="button" class="btnNext" (click)="downloadImages(i,kudo._id)"
+        [disabled]="isLoading(kudo._id)">
+        <p *ngIf="!isLoading(kudo._id)">Download</p>
+        <mat-spinner style="margin-left: auto;margin-right: auto;" *ngIf="isLoading(kudo._id)" [diameter]="25">
+        </mat-spinner>
+      </button>
     </mat-card-footer>
   </mat-card>
 </div>

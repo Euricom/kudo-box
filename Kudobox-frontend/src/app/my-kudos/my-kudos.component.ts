@@ -35,6 +35,7 @@ export class MyKudosComponent implements OnInit {
     public faSquare = faSquare;
     public faCheckSquare = faCheckSquare;
     public selection: KudoSelection[] = [];
+    private kudosThatAreLoading = [];
 
     constructor(private _kudoService: KudoService, private router: Router) {}
 
@@ -105,11 +106,18 @@ export class MyKudosComponent implements OnInit {
         return array;
     }
 
+    isLoading(kudoId) {
+        return this.kudosThatAreLoading.includes(kudoId);
+    }
+
     downloadImages(index, kudoId) {
         const serv = this._kudoService;
         if (index !== '') {
+            this.kudosThatAreLoading.push(kudoId);
+
             this.downloadKudoSubscriptions.push(
                 serv.getKudoImageForDownload(kudoId).subscribe(x => {
+                    this.kudosThatAreLoading = this.kudosThatAreLoading.filter(k => k !== kudoId);
                     return saveAs(x, `Kudo_${kudoId}.png`, { autoBom: true });
                 }),
             );
@@ -119,8 +127,12 @@ export class MyKudosComponent implements OnInit {
             // });
         } else {
             this.selection.forEach(kudoImage => {
+                // this.kudosThatAreLoading.push(kudoImage.kudoId);
+
                 this.downloadKudoSubscriptions.push(
                     serv.getKudoImageForDownload(kudoImage.kudoId).subscribe(x => {
+                        // this.kudosThatAreLoading = this.kudosThatAreLoading.filter(k => k === kudoImage.kudoId);
+
                         return saveAs(x, `Kudo_${kudoImage.kudoId}.png`, { autoBom: true });
                     }),
                 );
