@@ -13,6 +13,7 @@ var boom = require("express-boom");
 const puppeteer = require("puppeteer");
 const kudoImages = require("./data/kudoImages");
 var dateFormat = require("dateformat");
+const { getBrowserInstance } = require("./services/puppeteerBrowser");
 
 //config
 const config = require("./config/config");
@@ -171,19 +172,7 @@ function screenshotDOMElement(kudo, baseUrl, opts = {}) {
         `;
     // Logger.info("screenshotDOMElement htmlstring", htmlstring);
     Logger.info("launch puppeteer");
-    return puppeteer
-      .launch({
-        args: [
-          "--no-sandbox",
-          "--disable-dev-shm-usage",
-          "--disable-setuid-sandbox",
-          "--no-first-run",
-          "--deterministic-fetch",
-          '--proxy-server="direct://"',
-          "--proxy-bypass-list=*",
-          "--disable-gpu"
-        ]
-      })
+    return  getBrowserInstance()     
       .then(browser => {
         Logger.info("launch new page");
 
@@ -196,35 +185,36 @@ function screenshotDOMElement(kudo, baseUrl, opts = {}) {
             if (!selector) throw Error("Please provide a selector.");
             Logger.info("eval");
 
-            return page.evaluate(selector => {
-              const element = document.querySelector(selector);
-              if (!element) return null;
-              const { x, y, width, height } = element.getBoundingClientRect();
-              return { left: x, top: y, width, height, id: element.id };
-            }, selector).then((rect)=> {
-
-            if (!rect)
-              throw Error(
-                `Could not find element that matches selector: ${selector}.`
-              );
-            Logger.info("screenshot");
-
             return page
-              .screenshot({
-                path,
-                clip: {
-                  x: rect.left - padding,
-                  y: rect.top - padding,
-                  width: rect.width + padding * 2,
-                  height: rect.height + padding * 2
-                }
-              })
-              .then(image => {
-                browser.close();
-                return image;
+              .evaluate(selector => {
+                const element = document.querySelector(selector);
+                if (!element) return null;
+                const { x, y, width, height } = element.getBoundingClientRect();
+                return { left: x, top: y, width, height, id: element.id };
+              }, selector)
+              .then(rect => {
+                if (!rect)
+                  throw Error(
+                    `Could not find element that matches selector: ${selector}.`
+                  );
+                Logger.info("screenshot");
+
+                return page
+                  .screenshot({
+                    path,
+                    clip: {
+                      x: rect.left - padding,
+                      y: rect.top - padding,
+                      width: rect.width + padding * 2,
+                      height: rect.height + padding * 2
+                    }
+                  })
+                  .then(image => {
+                    // browser.close();
+                    return image;
+                  });
               });
           });
-        });
         });
       });
 
