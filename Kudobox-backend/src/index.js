@@ -125,7 +125,7 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
   }
 });
 
-app.get("/api/kudo/:id/getImage", function(req, res) {
+app.get("/api/kudo/:id/getImage", async function(req, res) {
   try {
     Logger.info("getimage start");
     baseUrl = req.protocol + "://" + req.get("host");
@@ -149,11 +149,11 @@ app.get("/api/kudo/:id/getImage", function(req, res) {
 
 async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   // Logger.info("screenshotDOMElement ", kudo);
-
-  var htmlstring = `
+  try {
+    var htmlstring = `
       <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
         <img src="${baseUrl}${kudoImages.find(image => image.id === kudo.kudoId)
-    .url || kudoImages[0].url}" 
+      .url || kudoImages[0].url}" 
           alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
         <textarea  class="textAreaForImage" style="font-family: '${
           kudo.fontFamily
@@ -164,69 +164,74 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
         }</textarea>
         <div class="generalInfo" style="position: absolute; bottom: 8px; left: 50px; color: #69be28; width: 80%; text-align: center;">
           <p>${kudo.sender.name} - ${dateFormat(
-    kudo.createdOn,
-    "dddd d/m/yy h:mm"
-  )}</p>
+      kudo.createdOn,
+      "dddd d/m/yy h:mm"
+    )}</p>
         </div>
       </div>
         `;
+    // Logger.info("screenshotDOMElement htmlstring", htmlstring);
+    Logger.info("launch puppeteer");
+    const browser = await puppeteer.launch({
+      args: [
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-setuid-sandbox",
+        "--no-first-run",
+        "--deterministic-fetch",
+        '--proxy-server="direct://"',
+        "--proxy-bypass-list=*",
+        "--disable-gpu"
+      ]
+    });
+    Logger.info("launch new page");
 
-  // Logger.info("screenshotDOMElement htmlstring", htmlstring);
-  Logger.info("launch puppeteer");
-  const browser = await puppeteer.launch({
-    args: [
-      "--no-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-setuid-sandbox",
-      "--no-first-run",
-      "--deterministic-fetch"
-    ]
-  });
-  Logger.info("launch new page");
+    const page = await browser.newPage();
+    Logger.info("setUserAgent");
 
-  const page = await browser.newPage();
-  Logger.info("setUserAgent");
+    await page.setUserAgent(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+    );
+    Logger.info("setContent");
 
-  await page.setUserAgent(
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-  );
-  Logger.info("setContent");
+    await page.setContent(htmlstring);
 
-  await page.setContent(htmlstring);
+    const padding = "padding" in opts ? opts.padding : 0;
+    const path = "path" in opts ? opts.path : null;
+    const selector = opts.selector;
 
-  const padding = "padding" in opts ? opts.padding : 0;
-  const path = "path" in opts ? opts.path : null;
-  const selector = opts.selector;
+    if (!selector) throw Error("Please provide a selector.");
+    Logger.info("eval");
 
-  if (!selector) throw Error("Please provide a selector.");
-  Logger.info("eval");
+    const rect = await page.evaluate(selector => {
+      const element = document.querySelector(selector);
+      if (!element) return null;
+      const { x, y, width, height } = element.getBoundingClientRect();
+      return { left: x, top: y, width, height, id: element.id };
+    }, selector);
 
-  const rect = await page.evaluate(selector => {
-    const element = document.querySelector(selector);
-    if (!element) return null;
-    const { x, y, width, height } = element.getBoundingClientRect();
-    return { left: x, top: y, width, height, id: element.id };
-  }, selector);
+    if (!rect)
+      throw Error(`Could not find element that matches selector: ${selector}.`);
+    Logger.info("screenshot");
 
-  if (!rect)
-    throw Error(`Could not find element that matches selector: ${selector}.`);
-  Logger.info("screenshot");
+    var image = await page.screenshot({
+      path,
+      clip: {
+        x: rect.left - padding,
+        y: rect.top - padding,
+        width: rect.width + padding * 2,
+        height: rect.height + padding * 2
+      }
+    });
+    Logger.info("close");
 
-  var image = await page.screenshot({
-    path,
-    clip: {
-      x: rect.left - padding,
-      y: rect.top - padding,
-      width: rect.width + padding * 2,
-      height: rect.height + padding * 2
-    }
-  });
-  Logger.info("close");
+    await browser.close();
+    Logger.info("screenshotDOMElement done");
 
-  await browser.close();
-  Logger.info("screenshotDOMElement done");
-
-  return image;
+    return image;
+  } catch (error) {
+    throw error;
+  }
 }
 
 // defining an endpoint to return all users
