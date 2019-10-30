@@ -1,0 +1,11 @@
+version: "2.1"
+
+services:
+  kudobox-backend:
+    image: kudobox-backend
+    build: .
+    environment:
+      NODE_ENV: production
+      mongo:
+    ports:
+      - 3000:3000

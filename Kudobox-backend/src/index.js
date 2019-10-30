@@ -10,6 +10,10 @@ var passport = require("passport");
 var OIDCBearerStrategy = require("passport-azure-ad").BearerStrategy;
 const Logger = require("js-logger");
 var boom = require("express-boom");
+const puppeteer = require("puppeteer");
+const kudoImages = require("./data/kudoImages");
+var dateFormat = require("dateformat");
+const { getBrowserInstance } = require("./services/puppeteerBrowser");
 
 //config
 const config = require("./config/config");
@@ -20,9 +24,9 @@ const consoleHandler = Logger.createDefaultHandler();
 Logger.useDefaults();
 Logger.setLevel(config.logLevel);
 Logger.setHandler((messages, context) => {
-  if (config.env === "development") {
-    consoleHandler(messages, context);
-  }
+  //if (config.env === "development") {
+  consoleHandler(messages, context);
+  //}
 });
 //options for bearerStrategy
 var options = {
@@ -44,10 +48,10 @@ var bearerStrategy = new OIDCBearerStrategy(options, async function(
   token,
   done
 ) {
-  Logger.info("DO USER STUFF HERE");
-  Logger.info("=========== START TOKEN RECEIVED ===========");
-  Logger.info(token);
-  Logger.info("=========== END TOKEN RECEIVED ===========");
+  // Logger.info("DO USER STUFF HERE");
+  // Logger.info("=========== START TOKEN RECEIVED ===========");
+  // Logger.info(token);
+  // Logger.info("=========== END TOKEN RECEIVED ===========");
   Logger.info("url:" + req.originalUrl);
   const currentUser = await User.findOne({ email: token.preferred_username });
   if (currentUser) {
@@ -83,7 +87,9 @@ authenticate = function() {
     session: false
   });
 };
-//  app.use("/api");
+
+app.use(express.static("/src/assets/images"));
+app.use("/images", express.static(__dirname + "/assets/images"));
 
 // add morgan to log HTTP requests
 app.use(morgan("combined"));
@@ -122,21 +128,142 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
 
 app.get("/api/kudo/:id/getImage", function(req, res) {
   try {
-    Kudo.findById(req.params.id)
+    Logger.info("getimage start");
+    baseUrl = req.protocol + "://" + req.get("host");
+    Logger.info("getimage baseUrl ", baseUrl);
+
+    return Kudo.findById(req.params.id)
+      .populate("sender")
       .exec()
       .then(kudo => {
-        var img = Buffer.from(kudo.image.split(",")[1], "base64");
-
-        res.writeHead(200, {
-          "Content-Type": "image/jpg",
-          "Content-Length": img.length
-        });
-        res.end(img);
+        // Logger.info("getimage kudo ", kudo);
+        return screenshotDOMElement(kudo, baseUrl, {
+          selector: "#captureThis",
+          encoding: "binary"
+        }).then(img => res.type("image/png").send(img));
       });
   } catch (err) {
     res.boom.badRequest(err);
   }
 });
+
+function screenshotDOMElement(kudo, baseUrl, opts = {}) {
+  // Logger.info("screenshotDOMElement ", kudo);
+  try {
+    var htmlstring = `
+      <div id="captureThis" class="captureContainer my-kudo-card" style="position: relative; width: 500px; border-radius: 4px; box-shadow: 0 0 12px 2px #d7d7d5;">
+        <img src="${baseUrl}${kudoImages.find(image => image.id === kudo.kudoId)
+      .url || kudoImages[0].url}" 
+          alt="Kudo" class="my-kudo-card-image" style="width: 500px; height:500px; display: block;" width="500">
+        <textarea  class="textAreaForImage" style="font-family: '${
+          kudo.fontFamily
+        }'; position: absolute; padding: 0px; margin: 0px; 
+        font-size: 20px; border: none; background: none; outline: none; resize: none; color: rgb(105, 190, 40); //top: 149px; top: 132px; //top: 0; //left: 89px; 
+        left: 77px; width: 355px; height: 225px; line-height: 35.5px; display: block;">${
+          kudo.text
+        }</textarea>
+        <div class="generalInfo" style="position: absolute; bottom: 8px; left: 50px; color: #69be28; width: 80%; text-align: center;">
+          <p>${kudo.sender.name} - ${dateFormat(
+      kudo.createdOn,
+      "dddd d/m/yy h:mm"
+    )}</p>
+        </div>
+      </div>
+        `;
+    // Logger.info("screenshotDOMElement htmlstring", htmlstring);
+    Logger.info("launch puppeteer");
+    return  getBrowserInstance()     
+      .then(browser => {
+        Logger.info("launch new page");
+
+        return browser.newPage().then(page => {
+          return page.setContent(htmlstring).then(() => {
+            const padding = "padding" in opts ? opts.padding : 0;
+            const path = "path" in opts ? opts.path : null;
+            const selector = opts.selector;
+
+            if (!selector) throw Error("Please provide a selector.");
+            Logger.info("eval");
+
+            return page
+              .evaluate(selector => {
+                const element = document.querySelector(selector);
+                if (!element) return null;
+                const { x, y, width, height } = element.getBoundingClientRect();
+                return { left: x, top: y, width, height, id: element.id };
+              }, selector)
+              .then(rect => {
+                if (!rect)
+                  throw Error(
+                    `Could not find element that matches selector: ${selector}.`
+                  );
+                Logger.info("screenshot");
+
+                return page
+                  .screenshot({
+                    path,
+                    clip: {
+                      x: rect.left - padding,
+                      y: rect.top - padding,
+                      width: rect.width + padding * 2,
+                      height: rect.height + padding * 2
+                    }
+                  })
+                  .then(image => {
+                    // browser.close();
+                    return image;
+                  });
+              });
+          });
+        });
+      });
+
+    // Logger.info("setUserAgent");
+
+    // page.setUserAgent(
+    //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+    // );
+    // Logger.info("setContent");
+
+    // page.setContent(htmlstring);
+
+    // const padding = "padding" in opts ? opts.padding : 0;
+    // const path = "path" in opts ? opts.path : null;
+    // const selector = opts.selector;
+
+    // if (!selector) throw Error("Please provide a selector.");
+    // Logger.info("eval");
+
+    // const rect = page.evaluate(selector => {
+    //   const element = document.querySelector(selector);
+    //   if (!element) return null;
+    //   const { x, y, width, height } = element.getBoundingClientRect();
+    //   return { left: x, top: y, width, height, id: element.id };
+    // }, selector);
+
+    // if (!rect)
+    //   throw Error(`Could not find element that matches selector: ${selector}.`);
+    // Logger.info("screenshot");
+
+    // var image = page.screenshot({
+    //   path,
+    //   clip: {
+    //     x: rect.left - padding,
+    //     y: rect.top - padding,
+    //     width: rect.width + padding * 2,
+    //     height: rect.height + padding * 2
+    //   }
+    // });
+    // Logger.info("close");
+
+    // browser.close();
+    // Logger.info("screenshotDOMElement done");
+
+    // return image;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // defining an endpoint to return all users
 app.get("/api/user", authenticate(), (req, res, next) => {
