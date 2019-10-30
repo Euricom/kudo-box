@@ -125,29 +125,28 @@ app.post("/api/kudo/:id/saveImage", function(req, res) {
   }
 });
 
-app.get("/api/kudo/:id/getImage", async function(req, res) {
+app.get("/api/kudo/:id/getImage", function(req, res) {
   try {
     Logger.info("getimage start");
     baseUrl = req.protocol + "://" + req.get("host");
     Logger.info("getimage baseUrl ", baseUrl);
 
-    Kudo.findById(req.params.id)
+    return Kudo.findById(req.params.id)
       .populate("sender")
       .exec()
-      .then(async kudo => {
+      .then(kudo => {
         // Logger.info("getimage kudo ", kudo);
-        var img = await screenshotDOMElement(kudo, baseUrl, {
+        return screenshotDOMElement(kudo, baseUrl, {
           selector: "#captureThis",
           encoding: "binary"
-        });
-        res.type("image/png").send(img);
+        }).then(img => res.type("image/png").send(img));
       });
   } catch (err) {
     res.boom.badRequest(err);
   }
 });
 
-async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
+function screenshotDOMElement(kudo, baseUrl, opts = {}) {
   // Logger.info("screenshotDOMElement ", kudo);
   try {
     var htmlstring = `
@@ -172,63 +171,105 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
         `;
     // Logger.info("screenshotDOMElement htmlstring", htmlstring);
     Logger.info("launch puppeteer");
-    const browser = await puppeteer.launch({
-      args: [
-        "--no-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-setuid-sandbox",
-        "--no-first-run",
-        "--deterministic-fetch",
-        '--proxy-server="direct://"',
-        "--proxy-bypass-list=*",
-        "--disable-gpu"
-      ]
-    });
-    Logger.info("launch new page");
+    return puppeteer
+      .launch({
+        args: [
+          "--no-sandbox",
+          "--disable-dev-shm-usage",
+          "--disable-setuid-sandbox",
+          "--no-first-run",
+          "--deterministic-fetch",
+          '--proxy-server="direct://"',
+          "--proxy-bypass-list=*",
+          "--disable-gpu"
+        ]
+      })
+      .then(browser => {
+        Logger.info("launch new page");
 
-    const page = await browser.newPage();
-    Logger.info("setUserAgent");
+        return browser.newPage().then(page => {
+          return page.setContent(htmlstring).then(() => {
+            const padding = "padding" in opts ? opts.padding : 0;
+            const path = "path" in opts ? opts.path : null;
+            const selector = opts.selector;
 
-    await page.setUserAgent(
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
-    );
-    Logger.info("setContent");
+            if (!selector) throw Error("Please provide a selector.");
+            Logger.info("eval");
 
-    await page.setContent(htmlstring);
+            return page.evaluate(selector => {
+              const element = document.querySelector(selector);
+              if (!element) return null;
+              const { x, y, width, height } = element.getBoundingClientRect();
+              return { left: x, top: y, width, height, id: element.id };
+            }, selector).then((rect)=> {
 
-    const padding = "padding" in opts ? opts.padding : 0;
-    const path = "path" in opts ? opts.path : null;
-    const selector = opts.selector;
+            if (!rect)
+              throw Error(
+                `Could not find element that matches selector: ${selector}.`
+              );
+            Logger.info("screenshot");
 
-    if (!selector) throw Error("Please provide a selector.");
-    Logger.info("eval");
+            return page
+              .screenshot({
+                path,
+                clip: {
+                  x: rect.left - padding,
+                  y: rect.top - padding,
+                  width: rect.width + padding * 2,
+                  height: rect.height + padding * 2
+                }
+              })
+              .then(image => {
+                browser.close();
+                return image;
+              });
+          });
+        });
+        });
+      });
 
-    const rect = await page.evaluate(selector => {
-      const element = document.querySelector(selector);
-      if (!element) return null;
-      const { x, y, width, height } = element.getBoundingClientRect();
-      return { left: x, top: y, width, height, id: element.id };
-    }, selector);
+    // Logger.info("setUserAgent");
 
-    if (!rect)
-      throw Error(`Could not find element that matches selector: ${selector}.`);
-    Logger.info("screenshot");
+    // page.setUserAgent(
+    //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36"
+    // );
+    // Logger.info("setContent");
 
-    var image = await page.screenshot({
-      path,
-      clip: {
-        x: rect.left - padding,
-        y: rect.top - padding,
-        width: rect.width + padding * 2,
-        height: rect.height + padding * 2
-      }
-    });
-    Logger.info("close");
+    // page.setContent(htmlstring);
 
-    // await browser.close();
-    Logger.info("screenshotDOMElement done");
+    // const padding = "padding" in opts ? opts.padding : 0;
+    // const path = "path" in opts ? opts.path : null;
+    // const selector = opts.selector;
 
-    return image;
+    // if (!selector) throw Error("Please provide a selector.");
+    // Logger.info("eval");
+
+    // const rect = page.evaluate(selector => {
+    //   const element = document.querySelector(selector);
+    //   if (!element) return null;
+    //   const { x, y, width, height } = element.getBoundingClientRect();
+    //   return { left: x, top: y, width, height, id: element.id };
+    // }, selector);
+
+    // if (!rect)
+    //   throw Error(`Could not find element that matches selector: ${selector}.`);
+    // Logger.info("screenshot");
+
+    // var image = page.screenshot({
+    //   path,
+    //   clip: {
+    //     x: rect.left - padding,
+    //     y: rect.top - padding,
+    //     width: rect.width + padding * 2,
+    //     height: rect.height + padding * 2
+    //   }
+    // });
+    // Logger.info("close");
+
+    // browser.close();
+    // Logger.info("screenshotDOMElement done");
+
+    // return image;
   } catch (error) {
     throw error;
   }
