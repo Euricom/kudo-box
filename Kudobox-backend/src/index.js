@@ -225,7 +225,7 @@ async function screenshotDOMElement(kudo, baseUrl, opts = {}) {
     });
     Logger.info("close");
 
-    await browser.close();
+    // await browser.close();
     Logger.info("screenshotDOMElement done");
 
     return image;
