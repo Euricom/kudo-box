@@ -1,0 +1,39 @@
+<mat-card class="my-kudo-card">
+  <form [formGroup]="addUserForm" (ngSubmit)="addUser(addUserForm)">
+    Add User
+    <div>
+      <label for="name">
+        Name
+      </label>
+      <input id="name" type="text" formControlName="name">
+    </div>
+
+    <div>
+      <label for="email">
+        Email
+      </label>
+      <input id="email" type="text" formControlName="email">
+    </div>
+    <div>
+      <label for="admin">
+        Admin
+      </label>
+      <input id="admin" type="checkbox" formControlName="admin">
+    </div>
+    <input type="submit" value="Add User">
+
+  </form>
+  <form [formGroup]="makeAdminForm" (ngSubmit)="makeAdmin(makeAdminForm)">
+    Make Admin
+    <div>
+      <label for="email">
+        Email
+      </label>
+      <input id="email" type="text" formControlName="email">
+    </div>
+    <input type="submit" value="Make Admin">
+  </form>
+
+  <input type="button" value="Delete All Kudos" (click)="deleteAllKudos()">
+
+</mat-card>

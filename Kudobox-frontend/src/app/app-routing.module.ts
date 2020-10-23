@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import { OidcGuardService } from './services/OidcGuardService';
+import { IsAdminGuardService } from './services/IsAdminGuardService';
 import { AuthCallbackComponent } from './core/auth-callback/auth-callback.component';
 import { OfflineGuardService } from './services/OfflineGuardService';
 import { OfflineComponent } from './core/offline/offline.component';
@@ -32,6 +33,11 @@ const routes: Routes = [
     {
         path: 'share-kudo',
         loadChildren: () => import('./share-kudo/share-kudo.module').then(m => m.ShareKudoModule),
+    },
+    {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+        canActivate: [OidcGuardService, IsAdminGuardService],
     },
 ];
 

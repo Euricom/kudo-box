@@ -309,6 +309,17 @@ app.get("/api/mykudo/", authenticate(), async (req, res, next) => {
   }
 });
 
+app.get("/api/myuser", authenticate(), async (req, res, next) => {
+  try {
+    User.findOne({ _id: req.currentUser._id })
+      .exec()
+      .then((user) => res.json(user))
+      .catch((err) => next(err));
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
+});
+
 app.get("/api/unreadKudos/", authenticate(), (req, res, next) => {
   try {
     Kudo.find({ receiver: req.currentUser._id, status: "unread" })
@@ -395,4 +406,66 @@ app.get("/api/publicKudo/:id", (req, res, next) => {
 app.delete("/api/kudo/:id", authenticate(), async (req, res) => {
   await Kudo.deleteOne({ _id: req.params.id });
   res.send({ message: "Kudo removed." });
+});
+
+
+
+
+app.delete("/api/user/:email", authenticate(), async (req, res, next) => {
+  // exclude own user from users list
+  try {
+    if (req.currentUser.admin) {
+      return await User.remove({email:req.params.email})
+        .then(() => res.send({ message: "user removed" }));
+    } else {
+      res.boom.badRequest("not an admin");
+    }
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
+});
+
+app.delete("/api/kudo", authenticate(), async (req, res, next) => {
+  // exclude own user from users list
+  try {
+    await Kudo.deleteMany({});
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
+});
+
+app.post("/api/user", authenticate(), async (req, res, next) => {
+  // exclude own user from users list
+  try {
+    if (req.currentUser.admin) {
+      let userData = req.body.body;
+       var user = new User(userData);
+      await user
+        .save()
+        .then((user) =>
+          res.send({
+            message: `user added ${user.admin} ${user.email} ${user.name}`,
+          })
+        );
+    } else {
+      res.boom.badRequest("not an admin");
+    }
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
+});
+app.put("/api/user", authenticate(), async (req, res) => {
+  try {
+    await User.findOne({ email: req.body.email })
+      .then(async (user) => {
+        user.admin = true;
+        await user.save().then(async (user) => {
+          res.send({ message: "User Adminned." });
+        });
+      });
+  
+    
+  } catch (err) {
+    res.boom.badRequest(err);
+  }
 });

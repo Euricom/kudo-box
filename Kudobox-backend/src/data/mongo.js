@@ -29,7 +29,7 @@ module.exports = function() {
     if (!user) {
       await initDataGenerator.generateUsers();
     }
-
+    
     if (config.env === "development") {
       mongoose.set("debug", true);
       Kudo.findOne({}).then(async kudo => {
@@ -39,4 +39,12 @@ module.exports = function() {
       });
     }
   });
+  User.findOne({admin:true}).then(async user=>{
+    if(!user){
+      User.findOne({email:"matthias.ooye@euri.com"}).then(async userToAdmin=>{
+        userToAdmin.admin = true;
+        return userToAdmin.save();
+      })
+      };    
+  })
 };
