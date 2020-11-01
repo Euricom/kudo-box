@@ -9,6 +9,7 @@ import { NotifierService } from 'angular-notifier';
 
 import { environment } from '../../environments/environment';
 import { IndexedDbService } from './indexed-db.service';
+import { KudoService } from './kudo.service';
 
 @Injectable({
     providedIn: 'root',
@@ -18,15 +19,20 @@ export class AuthService {
     private log = Logger.get('AuthService');
     public user: User = null;
     user$: BehaviorSubject<User> = new BehaviorSubject(null);
-
+    public mongoUser = null;
     constructor(
         private router: Router,
         private _notifierService: NotifierService,
         private _indexedDbService: IndexedDbService,
+        private kudoService: KudoService,
     ) {
         this.manager.getUser().then(user => {
             this.user = user;
-            this.setUser();
+            this.setUser().subscribe(() => {
+                this.kudoService.getMyUser().subscribe(mongoUser => {
+                    this.mongoUser = mongoUser;
+                });
+            });
         });
     }
     setUser(): Observable<User> {

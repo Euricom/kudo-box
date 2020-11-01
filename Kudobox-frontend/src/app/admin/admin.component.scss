@@ -1,0 +1,44 @@
+.mat-card {
+  width: 500px;
+  box-shadow: none;
+  margin: 0 auto;
+}
+
+.my-kudo-card-image {
+  width: 500px;
+}
+
+#textAreaForImage {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  font-size: 20px;
+  border: none;
+  background: none;
+  outline: none;
+  resize: none;
+  color: rgb(105, 190, 40);
+  top: 149px;
+  left: 89px;
+  width: 355px;
+  height: 225px;
+  line-height: 35.5px;
+}
+
+.mat-card-footer {
+  padding-left: 16px;
+}
+
+.admin-container {
+  margin-top: 14px;
+
+  .mat-card {
+    margin-top: 5px;
+    width: 300px;
+    background-color: #6d6e72;
+  }
+
+  button {
+    margin-top: 5px;
+  }
+}

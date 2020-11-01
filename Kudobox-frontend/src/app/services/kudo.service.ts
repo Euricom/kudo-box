@@ -13,6 +13,30 @@ import { IndexedDbService } from './indexed-db.service';
     providedIn: 'root',
 })
 export class KudoService implements OnInit {
+    addUser(value: any) {
+        return this.http.post(`${environment.apiUrl}/api/user`, value).pipe(
+            catchError(e => {
+                this.log.error('Error addUser():', e);
+                return throwError(e);
+            }),
+        );
+    }
+    deleteAllKudos() {
+        return this.http.delete(`${environment.apiUrl}/api/kudo`).pipe(
+            catchError(e => {
+                this.log.error('Error addUser():', e);
+                return throwError(e);
+            }),
+        );
+    }
+    makeAdmin(value: any) {
+        return this.http.put(`${environment.apiUrl}/api/user`, value).pipe(
+            catchError(e => {
+                this.log.error('Error addUser():', e);
+                return throwError(e);
+            }),
+        );
+    }
     private _kudo: Kudo;
     private log = Logger.get('KudoService');
 
@@ -117,6 +141,14 @@ export class KudoService implements OnInit {
             tap(myKudos => localStorage.setItem('myKudos', JSON.stringify(myKudos))),
             catchError(e => {
                 this.log.error('Error getMyKudos():', e);
+                return throwError(e);
+            }),
+        );
+    }
+    getMyUser(): Observable<User> {
+        return this.http.get<User>(`${environment.apiUrl}/api/myuser/`).pipe(
+            catchError(e => {
+                this.log.error('Error getMyUser():', e);
                 return throwError(e);
             }),
         );

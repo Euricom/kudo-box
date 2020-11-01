@@ -49,7 +49,7 @@ export class KudosSendComponent implements OnInit {
                 .pipe()
                 .subscribe(
                     () => {
-                        this._notifier.notify('success', "You're kudo is successfully sent!");
+                        this._notifier.notify('success', 'Your kudo is successfully sent!');
                         this._router.navigate([`/kudos/`]);
                     },
                     err => {
