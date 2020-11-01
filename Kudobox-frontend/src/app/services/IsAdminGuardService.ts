@@ -15,7 +15,7 @@ export class IsAdminGuardService implements CanActivate, OnInit {
     canActivate(): boolean | Promise<boolean> {
         if (navigator.onLine) {
             if (this.authService.isLoggedIn()) {
-                return this.authService.mongoUser.admin === true;
+                return this.authService.mongoUser !== null && this.authService.mongoUser.admin === true;
             }
             return this.authService.startLoginAuthentication().then(() => this.authService.isLoggedIn());
         }

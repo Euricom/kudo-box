@@ -428,7 +428,7 @@ app.delete("/api/user/:email", authenticate(), async (req, res, next) => {
 app.delete("/api/kudo", authenticate(), async (req, res, next) => {
   // exclude own user from users list
   try {
-    await Kudo.deleteMany({});
+    await Kudo.deleteMany({}).then(() => res.send({ message: "kudos deleted" }));;
   } catch (err) {
     res.boom.badRequest(err);
   }

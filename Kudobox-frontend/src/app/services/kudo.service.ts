@@ -14,37 +14,28 @@ import { IndexedDbService } from './indexed-db.service';
 })
 export class KudoService implements OnInit {
     addUser(value: any) {
-        return this.http
-            .post(`${environment.apiUrl}/api/user`, value)
-            .pipe(
-                catchError(e => {
-                    this.log.error('Error addUser():', e);
-                    return throwError(e);
-                }),
-            )
-            .subscribe(() => {});
+        return this.http.post(`${environment.apiUrl}/api/user`, value).pipe(
+            catchError(e => {
+                this.log.error('Error addUser():', e);
+                return throwError(e);
+            }),
+        );
     }
     deleteAllKudos() {
-        return this.http
-            .delete(`${environment.apiUrl}/api/kudo`)
-            .pipe(
-                catchError(e => {
-                    this.log.error('Error addUser():', e);
-                    return throwError(e);
-                }),
-            )
-            .subscribe(() => {});
+        return this.http.delete(`${environment.apiUrl}/api/kudo`).pipe(
+            catchError(e => {
+                this.log.error('Error addUser():', e);
+                return throwError(e);
+            }),
+        );
     }
     makeAdmin(value: any) {
-        return this.http
-            .put(`${environment.apiUrl}/api/user`, value)
-            .pipe(
-                catchError(e => {
-                    this.log.error('Error addUser():', e);
-                    return throwError(e);
-                }),
-            )
-            .subscribe(() => {});
+        return this.http.put(`${environment.apiUrl}/api/user`, value).pipe(
+            catchError(e => {
+                this.log.error('Error addUser():', e);
+                return throwError(e);
+            }),
+        );
     }
     private _kudo: Kudo;
     private log = Logger.get('KudoService');

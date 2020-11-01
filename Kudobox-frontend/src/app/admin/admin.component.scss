@@ -29,26 +29,16 @@
   padding-left: 16px;
 }
 
-@media only screen and (max-width: 992px) {
+.admin-container {
+  margin-top: 14px;
+
   .mat-card {
+    margin-top: 5px;
     width: 300px;
-    color: black !important;
+    background-color: #6d6e72;
   }
 
-  .my-kudo-card-image {
-    width: 300px;
+  button {
+    margin-top: 5px;
   }
-
-  #textAreaForImage {
-    top: 95px;
-    left: 58px;
-    font-size: 14px;
-    width: 225px;
-    height: 125px;
-    line-height: 21.5px;
-  }
-}
-
-.mat-card {
-  color: black !important;
 }
